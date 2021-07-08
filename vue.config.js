@@ -1,5 +1,5 @@
 module.exports = {
-    outputDir: '../backend/frontend',
+    outputDir: 'dist',
     chainWebpack: config => {
         config
             .plugin('html')
