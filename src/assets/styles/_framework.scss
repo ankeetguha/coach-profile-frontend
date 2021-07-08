@@ -1,0 +1,869 @@
+.btn {
+    display: inline-block;
+    background-color: transparent;
+    font-family: $bodyFont;
+    font-size: $smallFontSize;
+    font-weight: $mediumFontWeight;
+    color: $greyColor;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    line-height: 1;
+    border-radius: .5rem;
+    padding: .85rem 1rem;
+    background: transparent;
+    cursor: pointer;
+
+    &:hover {
+        background-color: lighten($purpleColor, 40%);
+        color: darken($purpleColor, 10%);
+    }
+}
+
+.btn-invert {
+    background-color: $darkBlueColor;
+}
+
+.btn-invert span {
+    font-size: $smallFontSize;
+    color: rgba(255, 255, 255, .75);
+}
+
+.btn-border {
+    @include transition;
+    border: 1px solid $greyBorderColor;
+
+    &.btn-border-color,
+    &:hover {
+        background-color: lighten($purpleColor, 38%);
+        color: $purpleColor;
+        border: 1px solid $purpleColor;
+
+        .unicon svg {
+            fill: lighten($purpleColor, 0%);
+        }
+    }
+
+    &.btn-border-color:hover.btn,
+    &.btn-border-alt:hover {
+        background-color: lighten($purpleColor, 0%);
+        color: lighten($purpleColor, 45%);
+        border: 1px solid $purpleColor;
+
+        .unicon svg {
+            fill: lighten($purpleColor, 45%);
+        }
+    }
+}
+
+
+
+.btn-invert:hover {
+    background-color: lighten($darkBlueColor, 8%);
+
+    span {
+        color: lighten($darkBlueColor, 75%);
+    }
+
+    [data-icon] {
+        color: lighten($darkBlueColor, 75%);
+    }
+}
+
+.btn .unicon,
+.btn [data-icon] {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: $smallestFontSize;
+    opacity: $mediumOpacity;
+    margin-left: .25rem;
+}
+
+.btn .unicon:first-child,
+.btn [data-icon]:first-child {
+    margin-left: 0;
+    margin-right: .25rem;
+}
+
+.btn span {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.btn .unicon {
+    line-height: .9;
+}
+
+.btn .unicon svg {
+    width: $smallFontSize;
+    height: auto;
+    fill: $greyColor;
+}
+
+.btn-icon {
+    padding: .35rem .5rem;
+
+    .unicon {
+        margin-right: 0 !important;
+    }
+
+    .unicon svg {
+        width: 1.15rem;
+    }
+
+    &:hover .unicon svg {
+        fill: $purpleColor;
+    }
+}
+
+.btn-small {
+    font-size: $smallestFontSize;
+    padding: .45rem .45rem;
+
+    .unicon {
+        margin-right: .25rem !important;
+        line-height: $smallestFontSize !important;
+    }
+
+    .unicon svg {
+        width: $smallerFontSize !important;
+    }
+}
+
+.btn-primary {
+    font-size: $normalFontSize;
+    transition: all $transitionSpeed;
+    color: #0a4a1d;
+    background-color: $darkGreenColor;
+    border: 1px solid #5df1b1;
+
+    .unicon svg {
+        fill: darken($greenColor, 50%);
+    }
+}
+
+.btn-primary:hover {
+    color: darken($greenColor, 45%);
+    background-color: lighten($darkGreenColor, 3%);
+    border-color: lighten($darkGreenColor, 5%);
+}
+
+.btn-delete {
+    color: lighten($redColor, 45%);
+    background-color: $redColor;
+    border: 1px solid lighten($redColor, 10%);
+
+    &:hover {
+        color: lighten($redColor, 45%);
+        background-color: darken($redColor, 15%);
+        border: 1px solid lighten($redColor, 10%);
+    }
+}
+
+.btn-filled {
+    background-color: lighten($purpleColor, 38%);
+    color: $purpleColor;
+    border: 1px solid $purpleColor;
+
+    .unicon svg {
+        fill: lighten($purpleColor, 0%);
+    }
+}
+
+.btn[disabled] {
+    color: #81819e !important;
+    background-color: #fafafb !important;
+    border: 1px solid #d8d9e5 !important;
+
+    svg {
+        fill: #81819e !important;
+    }
+}
+
+/* START: Input Styling */
+input,
+textarea {
+    transition: all $transitionSpeed;
+    display: block;
+    font-size: $normalFontSize;
+    outline: none;
+    color: darken($purpleColor, 25%);
+    background-color: #f7f6ff;
+    width: calc(100% - 2.5rem);
+    padding: .75rem 1.15rem;
+    border: 1px solid #e7e6ef;
+    border-radius: 0.75rem;
+    -webkit-appearance: none;
+
+    &::placeholder {
+        color: #9390a7;
+    }
+}
+
+input:focus,
+textarea:focus {
+    border-color: lighten($purpleColor, 0%);
+}
+
+textarea.form-error,
+input.form-error {
+    border-color: $redColor !important;
+}
+
+.field-radio-item {
+    position: relative;
+
+    label {
+        cursor: pointer;
+        color: $greyColor;
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: .35rem;
+    }
+}
+
+.vdp-datepicker input {
+    width: 100%;
+}
+
+.vdp-datepicker.error input {
+    border-color: $redColor !important;
+}
+
+.vdp-datepicker__calendar {
+    border-radius: .5rem;
+    width: 16rem !important;
+    position: absolute !important;
+    bottom: 0;
+
+    header span,
+    .month__year_btn,
+    .day__month_btn {
+        font-size: $smallerFontSize;
+        color: $darkBlueColor;
+    }
+
+    .cell.year,
+    .cell.month,
+    .cell.day {
+        color: $greyColor !important;
+        font-size: $smallFontSize;
+        line-height: 30px !important;
+        padding: 0 !important;
+        height: 30px !important;
+        margin: 2px 0;
+        border-radius: .3rem;
+
+        &:hover {
+            border-color: $purpleColor !important;
+        }
+    }
+
+    .cell.day-header {
+        color: $purpleColor !important;
+        font-weight: $mediumFontWeight;
+    }
+
+    .cell.today {
+        background-color: $greenColor;
+        color: darken($greenColor, 50%) !important;
+    }
+
+    .cell.selected {
+        background-color: $purpleColor !important;
+        color: lighten($purpleColor, 45%) !important;
+    }
+}
+
+.vdp-datepicker__calendar header .prev:not(.disabled):hover,
+.vdp-datepicker__calendar header .next:not(.disabled):hover,
+.vdp-datepicker__calendar header .up:not(.disabled):hover {
+    background: #f7f6ff;
+}
+
+.vdp-datepicker__calendar header .next:after {
+    border-left: 10px solid $purpleColor !important;
+}
+
+.vdp-datepicker__calendar header .prev:after {
+    border-right: 10px solid $purpleColor !important;
+}
+
+.field-toggle-item {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+
+    .field-toggle-button {
+        position: relative;
+        align-self: center;
+        width: 2.5rem;
+        height: 1.5rem;
+    }
+
+    label {
+        color: $greyColor;
+        font-size: $smallerFontSize;
+        align-self: center;
+        line-height: 1.4;
+        width: calc(100% - 3rem);
+        margin-left: .75rem;
+    }
+
+    input {
+        position: relative;
+        cursor: pointer;
+        padding: 0;
+        border: none;
+        z-index: 10;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .field-toggle-button span {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: .5rem;
+        background-color: lighten($purpleColor, 35%);
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .field-toggle-button span::before {
+        @include transition;
+        position: absolute;
+        content: "";
+        height: 1.15rem;
+        width: 1.15rem;
+        top: 50%;
+        transform: translate(0.25rem, -50%);
+        left: 0;
+        border-radius: 50%;
+        background-color: white;
+    }
+
+    input:checked+span {
+        background-color: lighten($purpleColor, 0%);
+    }
+
+    input:checked+span::before {
+        transform: translate(calc(2.5rem - 1.45rem), -50%);
+    }
+}
+
+.field-radio-highlight-wrapper {
+    display: flex;
+
+    .field-radio-item label {
+        @include transition;
+        font-size: $normalFontSize;
+        padding: .5rem .75rem .5rem 2rem;
+        border-radius: .5rem;
+        background-color: #f7f6ff;
+        border: 1px solid darken($whiteColor, 10%);
+        margin-left: 0;
+        margin-right: .5rem;
+    }
+
+    .field-radio-item input[type="radio"] {
+        @include vertical-center-align;
+        left: .75rem;
+    }
+
+    .field-radio-item:hover label {
+        color: darken($purpleColor, 5%);
+        background-color: lighten($purpleColor, 40%);
+        border: 1px solid lighten($purpleColor, 30%);
+    }
+
+    .field-radio-item:hover input[type="radio"]::before {
+        background: lighten($purpleColor, 15%);
+    }
+
+    .field-radio-item input[type="radio"]:checked+label {
+        color: darken($purpleColor, 15%);
+        background-color: lighten($purpleColor, 40%);
+        border: 1px solid lighten($purpleColor, 0%);
+    }
+
+    .field-radio-item input[type="radio"]:checked {
+        background: #15a240;
+    }
+}
+
+.field-radio-toggle-wrapper {
+    display: flex;
+    border: 1px solid $greyBorderColor;
+    border-radius: .5rem;
+    padding: .25rem;
+    width: fit-content;
+
+    .field-radio-item label {
+        @include transition;
+        font-size: $smallerFontSize;
+        padding: .5rem .75rem .5rem 2rem;
+        border-radius: .5rem;
+        margin-left: 0;
+    }
+
+    .field-radio-item input[type="radio"] {
+        @include vertical-center-align;
+        left: .75rem;
+    }
+
+    .field-radio-item:hover label {
+        color: darken($purpleColor, 5%);
+    }
+
+    .field-radio-item:hover input[type="radio"]::before {
+        background: lighten($purpleColor, 15%);
+    }
+
+    .field-radio-item input[type="radio"]:checked+label {
+        font-weight: $mediumFontWeight;
+        color: darken($purpleColor, 0%);
+        background-color: #e6e2f9;
+    }
+}
+
+input[type="radio"] {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    opacity: 1;
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    width: auto;
+    border-radius: 100%;
+    overflow: hidden;
+    border: 1px solid #a4a4a4;
+    background: lighten($greyColor, 50%);
+
+    &::before {
+        content: "";
+        display: block;
+        border-radius: 50%;
+        background: lighten($greyColor, 25%);
+        border: 3px solid lighten($greyColor, 50%);
+        width: 6px;
+        height: 6px;
+        position: relative;
+        top: 0;
+        cursor: pointer;
+        text-align: center;
+        transition: all 250ms ease;
+    }
+
+    &:checked {
+        border-color: lighten(#15a240, 25%);
+        background: #10fc56;
+    }
+
+    &:checked::before {
+        background: #15a240;
+        border-color: #10fc56;
+    }
+}
+
+.field-radio-toggle-wrapper {
+    input[type="radio"] {
+        display: none;
+    }
+
+    .field-radio-item label {
+        padding: .5rem .75rem;
+    }
+}
+
+.field-radio-item.error label,
+input.error {
+    border-color: $redColor;
+}
+
+.field-title {
+    display: block;
+    font-size: $smallFontSize;
+    color: $greyColor;
+    margin-left: .15rem;
+    margin-bottom: 0.75rem;
+}
+
+.field-label {
+    display: block;
+    font-size: $smallestFontSize;
+    font-weight: $mediumFontWeight;
+    color: $greyColor;
+    opacity: $mediumOpacity;
+    text-transform: uppercase;
+    letter-spacing: .75px;
+    margin-bottom: 0.75rem;
+}
+
+.field-main-item {
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.field-main-item .field-main-item {
+    margin-bottom: 0;
+}
+
+.field-wrapper {
+    display: block;
+}
+
+.checkbox-field {
+    position: relative;
+    display: inline-block;
+    background-color: lighten($purpleColor, 40%);
+    // border: 1px solid darken($purpleColor, 5%);
+    vertical-align: middle;
+    overflow: hidden;
+    border-radius: .25rem;
+    height: 1.25rem;
+    width: 1.25rem;
+    cursor: pointer;
+}
+
+.checkbox-field input {
+    position: absolute;
+    cursor: pointer;
+    opacity: 0;
+    padding: 0;
+    margin: 0;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+}
+
+.checkmark {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+}
+
+.checkbox-field input:checked~.checkmark {
+    background-color: $purpleColor;
+}
+
+input~.checkmark:after {
+    display: block;
+    content: "";
+    position: absolute;
+    left: .4rem;
+    top: .2rem;
+    width: 5px;
+    height: 10px;
+    border: solid lighten($greyColor, 20%);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    transform-origin: center center;
+}
+
+input:checked~.checkmark:after {
+    border: solid lighten($purpleColor, 40%);
+    border-width: 0 2px 2px 0;
+}
+
+
+.field-radio-wrapper {
+    margin-bottom: 1.75rem;
+}
+
+.field-group-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .field-main-item {
+        flex: 1;
+        align-self: center;
+        margin-right: .75rem;
+    }
+
+    &>.field-main-item {
+        flex-basis: calc(50% - .75rem);
+    }
+
+    .field-main-item:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    .field-main-item:nth-child(n + 3) {
+        margin-top: 1rem;
+    }
+
+    .field-radio-wrapper {
+        margin-bottom: 0;
+    }
+}
+
+.field-label+.field-group-wrapper {
+    margin-bottom: 1.75rem;
+}
+
+.dropdown-wrapper {
+    position: relative;
+
+    .dropdown-block {
+        display: none;
+        background-color: $whiteColor;
+        box-shadow: 0 0 0.7rem -0.1rem rgba(0, 0, 0, .05);
+        border: 1px solid #eee8fe;
+        position: absolute;
+        width: max-content;
+        max-width: 20rem;
+        top: 100%;
+        left: 0;
+        padding: .75rem;
+        border-radius: .5rem;
+    }
+
+    .dropdown-block.show {
+        display: block;
+    }
+}
+
+.field-money-item {
+    position: relative;
+
+    .money-label {
+        font-size: $normalFontSize;
+        color: $purpleColor;
+        line-height: 2.5rem;
+        background-color: lighten(#cbc7ec, 10%);
+        border-top-left-radius: .75rem;
+        border-bottom-left-radius: .75rem;
+        text-align: center;
+        position: absolute;
+        top: 1px;
+        left: 1px;
+        height: calc(100% - 2px);
+        width: 2rem;
+    }
+
+    input {
+        padding: .75rem 1.15rem .75rem 2.5rem;
+        width: calc(100% - 3.85rem)
+    }
+}
+
+/* END: Input Styling */
+
+/* START: Menus */
+.site-menu-dropdown-wrapper {
+    position: relative;
+}
+
+.site-menu-dropdown {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0;
+}
+
+.site-menu-dropdown-right {
+    left: auto;
+    right: 0;
+}
+
+.site-menu-dropdown-wrapper:hover .site-menu-dropdown {
+    opacity: 1;
+    visibility: visible;
+}
+
+.site-menu-dropdown {
+    background-color: $whiteColor;
+    box-shadow: 0 0 .7rem -.1rem rgba(0, 0, 0, .05);
+    border: 1px solid lighten($purpleColor, 38%);
+    border-radius: .5rem;
+    padding: .5rem 0;
+}
+
+.site-menu-list {
+    position: relative;
+    margin: 0;
+}
+
+.site-menu-list::before {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 80%;
+    margin: auto;
+    background-color: lighten($purpleColor, 40%);
+}
+
+.site-menu-list:first-child:before {
+    display: none;
+}
+
+.site-menu-list-item a,
+.site-menu-list-item span {
+    @include transition;
+    font-size: $smallerFontSize;
+    cursor: pointer;
+    display: block;
+    background-color: transparent;
+    color: $greyColor;
+    border: none;
+    padding: .75rem 1.75rem;
+}
+
+.site-menu-list-item a:hover,
+.site-menu-list-item span:hover {
+    background-color: lighten($purpleColor, 40%);
+}
+
+/* END: Menus */
+
+.tooltip-wrapper {
+    position: relative;
+
+    .tooltip {
+        @include transition;
+        z-index: -1;
+        opacity: 0;
+        background-color: $blackColor;
+        font-size: $smallestFontSize;
+        color: $whiteColor;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%) translateY(1rem);
+        bottom: calc(100% + 1rem);
+        padding: .75rem;
+        border-radius: .5rem;
+
+        &.show {
+            z-index: -1;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    }
+}
+
+/*Vue 2 Editor*/
+.text-editor {
+
+    .ql-snow .ql-toolbar button svg,
+    .ql-snow.ql-toolbar button svg {
+        width: 1rem !important;
+        height: auto !important;
+    }
+
+    .ql-snow.ql-toolbar {
+        display: inline-block;
+        padding: 0.5rem !important;
+        border-radius: 0.5rem;
+        border-color: $greyBorderColor;
+    }
+
+    .ql-formats:last-child {
+        margin-right: 0 !important;
+    }
+
+    .ql-container.ql-snow {
+        margin-top: 1rem;
+        border: none;
+        border-bottom: 1px solid $greyBorderColor;
+    }
+
+    .ql-snow.ql-toolbar .ql-formats {
+        margin-bottom: 0 !important;
+    }
+
+    .ql-editor.ql-blank::before {
+        color: $greyColor;
+        font-size: $largeFontSize;
+        font-weight: $normalFontWeight;
+        opacity: $lightOpacity;
+        font-style: normal;
+    }
+
+    .ql-editor ol li:not(.ql-direction-rtl),
+    .ql-editor ul li:not(.ql-direction-rtl) {
+        color: $blackColor;
+    }
+
+    .ql-editor p,
+    .ql-editor ol,
+    .ql-editor ul {
+        margin: 0 0 1rem;
+    }
+
+    .ql-snow .ql-stroke {
+        stroke: $greyColor !important;
+    }
+
+    .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke,
+    .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter,
+    .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke,
+    .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
+    .ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke,
+    .ql-snow .ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,
+    .ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke,
+    .ql-snow .ql-toolbar .ql-picker-label:hover .ql-stroke-miter,
+    .ql-snow .ql-toolbar button.ql-active .ql-stroke,
+    .ql-snow .ql-toolbar button.ql-active .ql-stroke-miter,
+    .ql-snow .ql-toolbar button:focus .ql-stroke,
+    .ql-snow .ql-toolbar button:focus .ql-stroke-miter,
+    .ql-snow .ql-toolbar button:hover .ql-stroke,
+    .ql-snow .ql-toolbar button:hover .ql-stroke-miter,
+    .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke,
+    .ql-snow.ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter,
+    .ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke,
+    .ql-snow.ql-toolbar .ql-picker-item:hover .ql-stroke-miter,
+    .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke,
+    .ql-snow.ql-toolbar .ql-picker-label.ql-active .ql-stroke-miter,
+    .ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke,
+    .ql-snow.ql-toolbar .ql-picker-label:hover .ql-stroke-miter,
+    .ql-snow.ql-toolbar button.ql-active .ql-stroke,
+    .ql-snow.ql-toolbar button.ql-active .ql-stroke-miter,
+    .ql-snow.ql-toolbar button:focus .ql-stroke,
+    .ql-snow.ql-toolbar button:focus .ql-stroke-miter,
+    .ql-snow.ql-toolbar button:hover .ql-stroke,
+    .ql-snow.ql-toolbar button:hover .ql-stroke-miter {
+        stroke: $purpleColor !important;
+    }
+
+    .ql-snow .ql-toolbar .ql-picker-item.ql-selected,
+    .ql-snow .ql-toolbar .ql-picker-item:hover,
+    .ql-snow .ql-toolbar .ql-picker-label.ql-active,
+    .ql-snow .ql-toolbar .ql-picker-label:hover,
+    .ql-snow .ql-toolbar button.ql-active,
+    .ql-snow .ql-toolbar button:focus,
+    .ql-snow .ql-toolbar button:hover,
+    .ql-snow.ql-toolbar .ql-picker-item.ql-selected,
+    .ql-snow.ql-toolbar .ql-picker-item:hover,
+    .ql-snow.ql-toolbar .ql-picker-label.ql-active,
+    .ql-snow.ql-toolbar .ql-picker-label:hover,
+    .ql-snow.ql-toolbar button.ql-active,
+    .ql-snow.ql-toolbar button:focus,
+    .ql-snow.ql-toolbar button:hover {
+        background-color: #e6e2f9;
+        border-radius: 0.15rem;
+    }
+
+    strong {
+        font-weight: $boldFontWeight;
+    }
+
+    em {
+        font-style: italic;
+    }
+}
+
+/*Vue2 Editor*/

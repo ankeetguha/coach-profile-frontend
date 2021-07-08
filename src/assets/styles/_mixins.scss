@@ -1,0 +1,9 @@
+@mixin vertical-center-align {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@mixin transition {
+    transition: all $transitionSpeed;
+}

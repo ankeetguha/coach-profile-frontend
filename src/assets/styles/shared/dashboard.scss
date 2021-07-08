@@ -1,0 +1,50 @@
+.module-dashboard {
+    background-color: $whiteColor;
+    min-height: calc(100vh - 3.5rem);
+}
+
+.dashboard-wrapper {
+    margin-top: 3.5rem;
+    padding: 3rem 15%;
+}
+
+.module-title {
+    font-family: $titleFont;
+    font-size: $largeFontSize;
+    margin: 0 0 .25rem;
+}
+
+.module-description {
+    color: $greyColor;
+    font-size: $smallFontSize;
+}
+
+.module-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.module-actions-wrapper,
+.module-info-wrapper {
+    align-self: flex-end;
+}
+
+.module-actions-wrapper {
+    margin-bottom: .25rem;
+}
+
+.module-actions-wrapper .btn {
+    margin-left: 1rem;
+}
+
+
+@media only screen and (max-width: 768px) {
+    .module-header {
+        display: block;
+    }
+
+    .dashboard-wrapper {
+        padding: 3rem 2rem;
+    }
+}

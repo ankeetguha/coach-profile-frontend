@@ -1,0 +1,222 @@
+//START: Global Styles
+body {
+    background-color: #272727;
+    overflow-x: hidden;
+    font-family: $bodyFont;
+    font-size: $normalFontSize;
+    font-weight: $normalFontWeight;
+    -webkit-overflow-scrolling: touch;
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: $bodyFont;
+    font-weight: $boldFontWeight;
+    color: $blackColor;
+    font-size: $largestFontSize;
+    margin-bottom: 0.3em;
+    line-height: normal;
+}
+
+p {
+    font-family: $bodyFont;
+    color: $blackColor;
+    line-height: 1.4;
+    word-spacing: normal;
+    letter-spacing: normal;
+}
+
+b {
+    font-weight: bold;
+}
+
+i {
+    font-style: italic;
+}
+
+ul {
+    font-family: $bodyFont;
+    margin-left: 3em;
+}
+
+span {
+    font-family: $bodyFont;
+}
+
+a {
+    font-size: $normalFontSize;
+    font-family: $bodyFont;
+    color: $blueColor;
+    text-decoration: none;
+    padding-bottom: .15rem;
+    border-bottom: 1px solid $blueColor;
+}
+
+.rel-wrapper {
+    position: relative;
+}
+
+.bg-overlay {
+    z-index: -1;
+    opacity: 0;
+    transition: all $transitionSpeed;
+    background-color: darken($purpleColor, 55%);
+    cursor: pointer;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+}
+
+.bg-overlay.show {
+    opacity: .85;
+    z-index: 100;
+}
+
+.modal {
+    @include transition;
+    z-index: -1;
+    opacity: 0;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, calc(-50% + 2rem));
+    padding: 1.75rem 2rem 2rem;
+    border-radius: 1rem;
+    max-height: 80vh;
+    width: 23rem;
+    background-color: $whiteColor;
+}
+
+.modal-medium-size {
+    width: 27rem;
+}
+
+.modal.show {
+    opacity: 1;
+    z-index: 101;
+    transform: translate(-50%, calc(-50% - 1rem));
+}
+
+.modal-scroll-wrapper {
+    max-height: calc(80vh - 4.5rem);
+    overflow-y: scroll;
+}
+
+.modal-block-wrapper {
+    position: relative;
+}
+
+.modal-block-wrapper.hide {
+    display: none;
+}
+
+.modal-close {
+    @include transition;
+    cursor: pointer;
+    background-color: #f7f6ff;
+    border-radius: .25rem;
+    padding: .35rem .5rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+
+    .unicon svg {
+        @include transition;
+        display: block;
+        width: $largeFontSize;
+        fill: darken($purpleColor, 5%);
+    }
+}
+
+.modal-close:hover {
+    background-color: $purpleColor;
+
+    .unicon svg {
+        fill: lighten($purpleColor, 45%);
+    }
+}
+
+.modal-block-info {
+    margin-bottom: 1rem;
+
+    h2 {
+        font-size: $largeFontSize;
+        margin-bottom: .3rem;
+    }
+
+    p {
+        color: $greyColor;
+        width: 80%;
+    }
+}
+
+.accordion-block {
+    display: none;
+}
+
+.accordion-block.show {
+    display: block;
+}
+
+.label-small {
+    display: block;
+    color: darken($lightWhiteColor, 30%);
+    letter-spacing: .15rem;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase; 
+
+    em {
+        display: inline-block;
+        vertical-align: middle;
+        font-size: $mediumFontSize;
+        margin-top: -.15rem;
+    }
+}
+
+.slick-slider {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -khtml-user-select: none;
+    touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.slick-list {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    transform: translateZ(0);
+}
+
+.slick-track {
+    position: relative;
+    top: 0;
+    left: 0;
+    display: block;
+    transform: translateZ(0);
+}
+
+.slick-slide {
+    float: left;
+    height: 100%;
+    min-height: 1px;
+}
