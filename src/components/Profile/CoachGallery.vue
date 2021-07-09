@@ -30,6 +30,7 @@ export default {
 <style scoped lang="scss">
 .coach-gallery {
   margin-top: 4rem;
+  margin-bottom: 1rem;
   display: flex;
   flex-wrap: wrap;
 }

@@ -74,10 +74,6 @@
         :qualifications="coach.qualifications"
       ></CoachQualifications>
       <!--END: Qualifications-->
-
-      <!--START: Social Handles-->
-      <CoachPromotions :promotion="coach.promotion"></CoachPromotions>
-      <!--END: Social Handles-->
     </div>
     <!--END: Profile Wrapper-->
 
@@ -95,6 +91,10 @@
       </div>
     </div>
     <!--END: Router Wrapper-->
+
+    <!--START: Social Handles-->
+    <CoachPromotions :promotion="coach.promotion"></CoachPromotions>
+    <!--END: Social Handles-->
   </div>
 </template>
 
@@ -162,22 +162,24 @@ export default {
   background-color: rgba(39, 39, 39, 0.95);
   position: relative;
   box-shadow: 0 0 1.5rem 1.5rem rgba(0, 0, 0, 0.5);
-  overflow: hidden;
-  z-index: 1;
   transform: scale(1);
   transform-origin: bottom center;
   transition: all 0.15s;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
 
   &.shrink {
     overflow: hidden;
-    height: 100vh;
     border-radius: 3rem;
-    box-shadow: 0 0 1rem 4rem rgba(0, 0, 0, 0.5);
-    transform: scale(0.98);
+    transform: scale(0.99);
   }
 
-  &.promotion-container {
-    padding-bottom: 2.5rem;
+  &.promotion-container > div:last-child {
+    padding-bottom: 5.5rem;
   }
 
   &::before {
@@ -259,15 +261,17 @@ export default {
 
 .modal-route {
   width: calc(100% - 1rem);
-  height: calc(95vh - 1rem);
+  height: calc(100vh - 3rem);
   background-color: lighten($blackColor, 5%);
   box-shadow: 0 0 1rem 4rem rgba(0, 0, 0, 0.5);
   border-radius: 3rem;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
   padding: 0.5rem;
   position: fixed;
-  bottom: 0;
+  top: calc(100vh + 3rem);
   left: 0;
-  z-index: -1;
+  z-index: 1;
   transform-origin: bottom center;
 
   &.show {
@@ -290,8 +294,8 @@ export default {
   .close-router {
     position: absolute;
     z-index: 10;
-    top: -.5rem;
-    right: .5rem;
+    top: -0.5rem;
+    right: 0.5rem;
 
     &/deep/ svg {
       background-color: $purpleColor;
@@ -305,12 +309,10 @@ export default {
 
   @keyframes showRouteModal {
     0% {
-      z-index: 1;
-      transform: scale(0.75);
+      top: calc(100vh + 3rem);
     }
     100% {
-      z-index: 1;
-      transform: scale(1);
+      top: calc(3rem);
     }
   }
 }
