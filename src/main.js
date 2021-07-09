@@ -29,8 +29,10 @@ import {
   uniWhatsapp,
   uniTwitter,
   uniYoutube,
+  uniTimes,
+  uniPlay,
 } from 'vue-unicons/dist/icons';
-Unicon.add([uniTrashAlt, uniAngleRight, uniLock, uniFacebookF, uniInstagram, uniWhatsapp, uniTwitter, uniYoutube]);
+Unicon.add([uniTrashAlt, uniAngleRight, uniLock, uniFacebookF, uniInstagram, uniWhatsapp, uniTwitter, uniYoutube, uniTimes, uniPlay]);
 Vue.use(Unicon);
 
 Vue.config.productionTip = false
