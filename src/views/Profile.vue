@@ -261,7 +261,7 @@ export default {
 
 .modal-route {
   width: calc(100% - 1rem);
-  height: calc(100vh - 3rem);
+  height: calc(100vh - 3.5rem);
   background-color: lighten($blackColor, 5%);
   box-shadow: 0 0 1rem 4rem rgba(0, 0, 0, 0.5);
   border-radius: 3rem;
@@ -312,7 +312,7 @@ export default {
       top: calc(100vh + 3rem);
     }
     100% {
-      top: calc(3rem);
+      top: calc(2.5rem);
     }
   }
 }

@@ -13,7 +13,7 @@
         class="transformations-block"
         v-for="testimonial in transformations"
         :key="testimonial.id"
-        :class="{ selected:testimonial.selected }"
+        :class="{ selected: testimonial.selected }"
         @click="$set(testimonial, 'selected', !testimonial.selected)"
       >
         <div class="transformation-block">
@@ -32,13 +32,18 @@
             />
             <div class="transformation-image-info" v-if="!testimonial.imageURL">
               <unicon name="lock" />
-              Coach {{ coachName | firstName }} requested to keep this image hidden
+              Coach {{ coachName | firstName }} requested to keep this image
+              hidden
             </div>
           </div>
           <div class="transformation-info">
             <span class="transformation-name">{{ testimonial.name }}</span>
-            <span class="transformation-profile">{{ testimonial.description }}</span>
-            <p v-if="testimonial.testimonial != ''">{{ testimonial.testimonial }}</p>
+            <span class="transformation-profile">{{
+              testimonial.description
+            }}</span>
+            <p v-if="testimonial.testimonial != ''">
+              {{ testimonial.testimonial }}
+            </p>
             <span class="read-more" v-if="testimonial.testimonial != ''">
               <em>Read More</em>
             </span>
@@ -72,7 +77,12 @@ export default {
   position: relative;
   background: $blackColor;
   padding: 3rem 2rem;
-  width: calc(100% + 0rem);
+  width: calc(100% - 4rem);
+}
+
+.transformations-slider {
+  margin-left: -2rem;
+  width: calc(100% + 4rem);
 }
 
 .transformation-block {
@@ -82,6 +92,7 @@ export default {
   overflow: hidden;
   width: calc(100% - 1.5rem) !important;
   border-radius: 1.5rem;
+  margin-left: 2rem;
 }
 
 .transformation-block img {
@@ -114,7 +125,7 @@ export default {
   font-weight: $mediumFontWeight;
   font-size: $smallestFontSize;
   padding: 0.5rem 0 0;
-  letter-spacing: .15rem;
+  letter-spacing: 0.15rem;
   text-transform: uppercase;
   z-index: 1;
 }

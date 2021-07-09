@@ -7,7 +7,7 @@
       :dots="false"
       :infinite="false"
       :loop="false"
-      :slidesToShow="qualifications.length == 1 ? 1.15 : 1.25"
+      :slidesToShow="qualifications.length == 1 ? 1.05 : 1.15"
       class="coach-qualifications-slider"
     >
       <div
@@ -53,13 +53,13 @@ export default {
   position: relative;
   background: $blackColor;
   padding: 1rem 1.5rem 3rem;
-  margin: 0 0 0 -1rem;
-  width: calc(100% + 2rem);
+  margin: 0;
+  width: calc(100% + -3rem);
 }
 
 .coach-qualifications-wrapper > .label-small {
   text-align: left;
-  margin-left: 1.5rem;
+  margin-left: 0.5rem;
   margin-bottom: 1.5rem;
 }
 
@@ -153,6 +153,11 @@ svg.coach-qualification-badge-text {
   margin-bottom: 0.3rem;
 }
 
+.coach-qualifications-slider {
+  margin-left: -1.5rem;
+  width: calc(100% + 3rem);
+}
+
 .coach-qualifications-slider /deep/ .slick-track {
   display: flex !important;
   flex-direction: row;
@@ -163,7 +168,7 @@ svg.coach-qualification-badge-text {
   position: relative;
   height: inherit !important;
   overflow: hidden;
-  margin: 0 0 0 1rem;
+  margin: 0 0 0 2rem;
   background-repeat: no-repeat;
   padding: 2.25rem 2rem;
   box-shadow: inset 0 0 75px rgba(70, 70, 70, 0.75);
