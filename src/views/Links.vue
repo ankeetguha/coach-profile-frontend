@@ -130,7 +130,7 @@ export default {
   padding: 1rem;
   border-radius: 1rem;
   color: darken($purpleColor, 50%);
-  border: 1px solid lighten($purpleColor, 10%);
+  border: 1px solid darken($purpleColor, 10%);
   font-size: $normalFontSize;
   margin: 1rem 1rem;
   text-decoration: none;

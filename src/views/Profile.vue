@@ -242,10 +242,9 @@ export default {
 
   .profile-menu-item {
     display: inline-block;
-    margin: 0 1rem;
     color: $whiteColor;
     opacity: $lightOpacity;
-    padding: 1rem 0;
+    padding: .45rem 1.5rem;
     cursor: pointer;
     text-align: center;
     border-bottom: 2px solid transparent;
