@@ -97,6 +97,18 @@ export default {
                         coverImageURL: "https://i.ibb.co/N7BN0Qm/cover-iamge.jpg",
                         coverVideoURL: "https://a.uguu.se/OVsynkac.mp4",
                     },
+                    promotionalLinks: [{
+                        title: "Dante's Club",
+                        url:"#"
+                    },
+                    {
+                        title: "My YouTube Page",
+                        url:"#"
+                    },
+                    {
+                        title: "MyProtein Code - CHARAN",
+                        url:"#"
+                    }],
                     transformations: [{
                             name: "Marty C",
                             description: "Age: 20s, Independent Consultant",

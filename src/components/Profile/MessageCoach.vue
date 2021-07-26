@@ -8,7 +8,7 @@
         <span v-if="gender == 'Female'">her</span>
         <span v-else>him</span> a message and get them answered
       </p>
-      <a href="button" class="btn btn-primary">WhatsApp Coach {{ getFirstName(name) }}</a>
+      <a href="#" class="btn btn-primary">WhatsApp Coach {{ getFirstName(name) }}</a>
     </div>
   </div>
 </template>

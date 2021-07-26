@@ -119,7 +119,7 @@ export default {
           "Skipper helps you find the best personal trainers and coaches to help you meet your fitness goals from home. We've got coaches for S&C, Yoga, Weight Training, Nutrition and more.",
       },
       showRouteModal: false,
-      profileMenu: ["Plans", "About", "Testimonials", "Partners"],
+      profileMenu: ["Plans", "About", "Links"],
     };
   },
   watch: {
@@ -176,6 +176,7 @@ export default {
     overflow: hidden;
     border-radius: 3rem;
     transform: scale(0.99);
+    filter: blur(5px);
   }
 
   &.promotion-container > div:last-child {
@@ -261,8 +262,8 @@ export default {
 
 .modal-route {
   width: calc(100% - 1rem);
-  height: calc(100vh - 3.5rem);
-  background-color: lighten($blackColor, 5%);
+  height: calc(100vh - 1rem);
+  background-color: rgba(40, 40, 40, 0.95);
   box-shadow: 0 0 1rem 4rem rgba(0, 0, 0, 0.5);
   border-radius: 3rem;
   border-bottom-left-radius: 1rem;
@@ -294,13 +295,13 @@ export default {
   .close-router {
     position: absolute;
     z-index: 10;
-    top: -0.5rem;
-    right: 0.5rem;
+    top: 0.25rem;
+    right: 0.25rem;
 
     &/deep/ svg {
       background-color: $purpleColor;
       fill: $blackColor;
-      width: $largestFontSize;
+      width: 2rem;
       height: auto;
       padding: 0.25rem;
       border-radius: 0.25rem;
@@ -312,7 +313,7 @@ export default {
       top: calc(100vh + 3rem);
     }
     100% {
-      top: calc(2.5rem);
+      top: 0;
     }
   }
 }
