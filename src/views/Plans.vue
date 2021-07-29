@@ -1,45 +1,46 @@
 <template>
-    <!--START: Profile Wrapper-->
-    <div class="profile-content-wrapper">
-      <!--START: Plans List-->
-      <CoachPlans :plans="coach.plans"></CoachPlans>
-      <!--END: Plans List-->
+  <!--START: Profile Wrapper-->
+  <div v-if="coach.fullName != undefined" class="profile-content-wrapper">
+    <!--START: Plans List-->
+    <CoachPlans :plans="coach.plans"></CoachPlans>
+    <!--END: Plans List-->
 
-      <!--START: Scroll End-->
-      <MessageCoach
-        :name="coach.fullName"
-        :gender="coach.gender"
-        :phoneNumber="coach.phone"
-      ></MessageCoach>
-      <!--END: Scroll End-->
+    <!--START: Scroll End-->
+    <MessageCoach
+      :name="coach.fullName"
+      :gender="coach.gender"
+      :phoneNumber="coach.phone"
+    ></MessageCoach>
+    <!--END: Scroll End-->
 
-      <!--START: Specialities-->
-      <CoachSpecialities :specialities="coach.specialities"></CoachSpecialities>
-      <!--END: Specialities-->
+    <!--START: Specialities-->
+    <CoachSpecialities :specialities="coach.specialities"></CoachSpecialities>
+    <!--END: Specialities-->
 
-      <!--START: Transformations-->
-      <CoachTransformations
-        :testimonials="coach.testimonials"
-        :coachName="coach.fullName"
-      ></CoachTransformations>
-      <!--END: Transformations-->
-    </div>
-    <!--END: Profile Wrapper-->
+    <!--START: Transformations-->
+    <CoachTransformations
+      :testimonials="coach.testimonials"
+      :coachName="coach.fullName"
+    ></CoachTransformations>
+    <!--END: Transformations-->
+  </div>
+  <!--END: Profile Wrapper-->
 </template>
 
 <script>
+//Import libraries
+import _ from "lodash";
+
 //Imoprt components
 import CoachPlans from "@/components/Profile/CoachPlans";
 import MessageCoach from "@/components/Profile/MessageCoach";
 import CoachSpecialities from "@/components/Profile/CoachSpecialities";
 import CoachTransformations from "@/components/Profile/CoachTransformations";
 
-
 export default {
   name: "Plans",
   data() {
     return {
-      coach: {},
       meta: {
         title: "Skipper Coach",
         description:
@@ -48,19 +49,23 @@ export default {
     };
   },
   props: {
+    coach: Object,
     show: Boolean,
   },
   components: {
     CoachPlans,
     MessageCoach,
     CoachSpecialities,
-    CoachTransformations
+    CoachTransformations,
   },
   async created() {
     //Get coach and change meta details
     const slug = this.$route.params.slug;
-    this.coach = await this.getCoach({ slug: slug });
-    this.meta.title = `Coach ${this.coach.name} - ${this.coach.heroData.description}`;
+    if (_.isEmpty(this.coach)) {
+      this.coach = await this.getCoach({ slug: slug });
+    }
+
+    this.meta.title = `Coach ${this.coach.name} - ${this.coach.introTitle}`;
   },
   methods: {},
 };

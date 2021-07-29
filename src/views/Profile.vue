@@ -15,7 +15,7 @@
       :class="{ show: showRouteModal }"
     >
       <div class="modal-content">
-        <router-view></router-view>
+        <router-view :coach="coach"></router-view>
       </div>
     </div>
     <!--END: Router Wrapper-->
@@ -60,7 +60,7 @@ export default {
     //Get coach and change meta details
     const slug = this.$route.params.slug;
     this.coach = await this.getCoach({ slug: slug });
-    this.meta.title = `Coach ${this.coach.fullName} - ${this.coach.description}`;
+    this.meta.title = `Coach ${this.coach.fullName} - ${this.coach.introTitle}`;
   },
   methods: {},
 };
@@ -70,35 +70,10 @@ export default {
 .modal-route {
   position: relative;
   padding: 2rem 0 3rem;
-  // width: calc(100% - 1rem);
-  // height: calc(100vh - 1rem);
-  // background-color: rgba(40, 40, 40, 0.95);
-  // box-shadow: 0 0 1rem 4rem rgba(0, 0, 0, 0.5);
-  // border-radius: 3rem;
-  // border-bottom-left-radius: 1rem;
-  // border-bottom-right-radius: 1rem;
-  // padding: 0.5rem;
-  // position: fixed;
-  // top: calc(100vh + 3rem);
-  // left: 0;
   z-index: 1;
-  // transform-origin: bottom center;
-
-  &.show {
-    // animation-name: showRouteModal;
-    animation-duration: 0.3s;
-    animation-delay: 0.01s;
-    animation-fill-mode: forwards;
-  }
 
   .modal-content {
     border-radius: 2.5rem;
-    // width: calc(100% - 1rem);
-    // height: calc(100% - 1rem);
-    // position: absolute;
-    // overflow-y: scroll;
-    // top: 0.5rem;
-    // left: 0.5rem;
   }
 
   .close-router {

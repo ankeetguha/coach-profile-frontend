@@ -49,6 +49,9 @@
 </template>
 
 <script>
+//Import libraries
+import _ from "lodash";
+
 //Imoprt components
 import CoachGallery from "@/components/Profile/CoachGallery";
 import CoachQualifications from "@/components/Profile/CoachQualifications";
@@ -57,7 +60,6 @@ export default {
   name: "About",
   data() {
     return {
-      coach: {},
       meta: {
         title: "Skipper Coach",
         description:
@@ -66,6 +68,7 @@ export default {
     };
   },
   props: {
+    coach: Object,
     show: Boolean,
   },
   components: {
@@ -75,8 +78,11 @@ export default {
   async created() {
     //Get coach and change meta details
     const slug = this.$route.params.slug;
-    this.coach = await this.getCoach({ slug: slug });
-    this.meta.title = `Coach ${this.coach.name} - ${this.coach.heroData.description}`;
+    if (_.isEmpty(this.coach)) {
+      this.coach = await this.getCoach({ slug: slug });
+    }
+
+    this.meta.title = `About Coach ${this.coach.fullName} - ${this.coach.introTitle}`;
   },
   methods: {},
 };

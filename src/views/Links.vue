@@ -19,11 +19,13 @@
 </template>
 
 <script>
+//Import libraries
+import _ from "lodash";
+
 export default {
   name: "Links",
   data() {
     return {
-      coach: {},
       meta: {
         title: "Skipper Coach",
         description:
@@ -32,14 +34,18 @@ export default {
     };
   },
   props: {
+    coach: Object,
     show: Boolean,
   },
   components: {},
   async created() {
     //Get coach and change meta details
     const slug = this.$route.params.slug;
-    this.coach = await this.getCoach({ slug: slug });
-    this.meta.title = `Coach ${this.coach.fullName} - ${this.coach.description}`;
+    if (_.isEmpty(this.coach)) {
+      this.coach = await this.getCoach({ slug: slug });
+    }
+    
+    this.meta.title = `Links - Coach ${this.coach.fullName} - ${this.coach.introTitle}`;
   },
   methods: {},
 };
