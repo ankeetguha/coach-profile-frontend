@@ -11,7 +11,7 @@
     >
       <div
         class="transformations-block"
-        v-for="testimonial in transformations"
+        v-for="testimonial in testimonials"
         :key="testimonial.id"
         :class="{ selected: testimonial.selected }"
         @click="$set(testimonial, 'selected', !testimonial.selected)"
@@ -19,9 +19,9 @@
         <div class="transformation-block">
           <div class="transformation-image-wrapper">
             <img
-              :src="testimonial.imageURL"
+              :src="testimonial.testimonialImageURL"
               :alt="testimonial.name + ' Testimonial'"
-              v-if="testimonial.imageURL"
+              v-if="testimonial.testimonialImageURL"
               class="transformation-image"
             />
             <img
@@ -30,7 +30,7 @@
               v-else
               class="transformation-image"
             />
-            <div class="transformation-image-info" v-if="!testimonial.imageURL">
+            <div class="transformation-image-info" v-if="!testimonial.testimonialImageURL">
               <unicon name="lock" />
               Coach {{ coachName | firstName }} requested to keep this image
               hidden
@@ -39,7 +39,7 @@
           <div class="transformation-info">
             <span class="transformation-name">{{ testimonial.name }}</span>
             <span class="transformation-profile">{{
-              testimonial.description
+              testimonial.designation
             }}</span>
             <p v-if="testimonial.testimonial != ''">
               {{ testimonial.testimonial }}
@@ -62,7 +62,7 @@ import VueSlickCarousel from "vue-slick-carousel";
 export default {
   name: "CoachTransformations",
   props: {
-    transformations: Array,
+    testimonials: Array,
     coachName: String,
   },
   components: {

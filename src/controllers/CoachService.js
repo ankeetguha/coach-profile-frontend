@@ -7,16 +7,18 @@ const apiURL = VariablesMixins.skipperAPIURL;
 
 class CoachService {
     //Service to register a new user
-    static GetCoach() {
+    static GetCoach(fields) {
         return new Promise((resolve, reject) => {
             resolve(
                 (async () => {
                     try {
-                        return await axios.get(`${apiURL}/coach/`, {
+                        return await axios.post(`${apiURL}/coach/get`, {
+                                fields
+                            }, {
                                 withCredentials: true
                             })
                             .then((response) => {
-                                return response.data.coach;
+                                return response.data;
                             }, (error) => {
                                 console.log(error);
                                 return false;

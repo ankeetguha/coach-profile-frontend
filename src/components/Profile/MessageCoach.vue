@@ -8,7 +8,7 @@
         <span v-if="gender == 'Female'">her</span>
         <span v-else>him</span> a message and get them answered
       </p>
-      <a href="#" class="btn btn-primary">WhatsApp Coach {{ getFirstName(name) }}</a>
+      <a :href="`https://wa.me/${phoneNumber}`" class="btn btn-primary">WhatsApp Coach {{ getFirstName(name) }}</a>
     </div>
   </div>
 </template>
@@ -19,6 +19,7 @@ export default {
   props: {
     name: String,
     gender: String,
+    phoneNumber: String
   },
 };
 </script>

@@ -1,18 +1,18 @@
 <template>
   <!--START: Qualifications-->
-  <div class="coach-qualifications-wrapper" v-if="qualifications.length">
+  <div class="coach-qualifications-wrapper" v-if="certifications.length">
     <label class="label-small"><em>🏆</em> Qualifications</label>
     <VueSlickCarousel
       :arrows="false"
       :dots="false"
       :infinite="false"
       :loop="false"
-      :slidesToShow="qualifications.length == 1 ? 1.05 : 1.15"
+      :slidesToShow="certifications.length == 1 ? 1.1 : 1.15"
       class="coach-qualifications-slider"
     >
       <div
-        v-for="qualification in qualifications"
-        :key="qualification.id"
+        v-for="certification in certifications"
+        :key="certification.id"
         class="coach-qualification"
       >
         <div class="coach-qualification-badge">
@@ -23,8 +23,8 @@
           <svg :data-src="require('@/assets/images/icons/badge-flash.svg')" />
         </div>
         <div class="coach-qualification-description">
-          <label class="label-small">{{ qualification.type }}</label>
-          <h3>{{ qualification.title }}</h3>
+          <label class="label-small">{{ certification.category }}</label>
+          <h3>{{ certification.title }}</h3>
         </div>
       </div>
     </VueSlickCarousel>
@@ -40,7 +40,7 @@ import VueSlickCarousel from "vue-slick-carousel";
 export default {
   name: "CoachQualifications",
   props: {
-    qualifications: Array,
+    certifications: Array,
   },
   components: {
     VueSlickCarousel,
@@ -51,10 +51,13 @@ export default {
 <style scoped lang="scss">
 .coach-qualifications-wrapper {
   position: relative;
+  overflow: hidden;
+  border-top-left-radius: 3rem;
+  border-top-right-radius: 3rem;
   background: $blackColor;
-  padding: 1rem 1.5rem 3rem;
+  padding: 3rem 1rem 3rem;
   margin: 0;
-  width: calc(100% + -3rem);
+  width: calc(100% - 2rem);
 }
 
 .coach-qualifications-wrapper > .label-small {
@@ -168,9 +171,9 @@ svg.coach-qualification-badge-text {
   position: relative;
   height: inherit !important;
   overflow: hidden;
-  margin: 0 0 0 2rem;
+  margin: 0 -.5rem 0 2rem;
   background-repeat: no-repeat;
-  padding: 2.25rem 2rem;
+  padding: 1.75rem 2rem;
   box-shadow: inset 0 0 75px rgba(70, 70, 70, 0.75);
   border: 1px solid #404040;
   background-color: #1f1f1f;

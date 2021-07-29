@@ -3,28 +3,36 @@ import VueRouter from 'vue-router';
 
 //Import the various views
 import Profile from '@/views/Profile';
+import Plans from '@/views/Plans';
 import About from '@/views/About';
 import Links from '@/views/Links';
 
 Vue.use(VueRouter);
 
 const routes = [{
-        path: '/',
-        name: 'Profile',
+        path: '/:slug',
+        name: 'Plans',
         component: Profile,
         meta: {
             hideHeader: true
         },
 
         children: [{
-            path: '/about',
+            path: '/:slug',
+            component: Plans,
+            props: true,
+            meta: {
+                showRouteModal: true
+            }
+        },{
+            path: '/:slug/about',
             component: About,
             props: true,
             meta: {
                 showRouteModal: true
             }
         }, {
-            path: '/links',
+            path: '/:slug/links',
             component: Links,
             props: true,
             meta: {

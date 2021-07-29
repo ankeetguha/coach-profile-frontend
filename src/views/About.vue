@@ -1,25 +1,20 @@
 <template>
-  <div class="module-container">
+  <div v-if="coach.fullName != undefined" class="module-container">
     <!--START: Vue Headful-->
     <vue-headful :title="meta.title" :description="meta.description" />
     <!--END: Vue Headful-->
 
     <!--START: Hero-->
-    <div class="video-wrapper">
+    <div v-if="coach.coverVideoURL != undefined" class="video-wrapper">
       <div class="video-button">
         <unicon name="play" />
         <span>Watch Video</span>
       </div>
       <video muted autoplay loop>
-        <source :src="coach.about.coverVideoURL" type="video/mp4" />
+        <source :src="coach.coverVideoURL" type="video/mp4" />
       </video>
     </div>
     <!--END: Hero-->
-
-    <img :src="coach.profileImageURL" class="profile-image" :alt="coach.name" />
-    <h2 class="coach-name">
-      <span>{{ coach.name }}</span>
-    </h2>
 
     <!--START: Statistics-->
     <div class="coach-stats">
@@ -27,8 +22,8 @@
         <span>{{ coach.yearsOfExperience }}+</span>
         <label>Years Of Experience</label>
       </div>
-      <div class="coach-stat" v-if="coach.noOfClientsTrained">
-        <span>{{ coach.noOfClientsTrained }}+</span>
+      <div class="coach-stat" v-if="coach.clientsTrained">
+        <span>{{ coach.clientsTrained }}+</span>
         <label>Clients Trained</label>
       </div>
     </div>
@@ -37,21 +32,26 @@
     <div class="about-description-wrapper">
       <label class="label-small">About Coach</label>
       <p class="about-description">
-        {{ coach.about.description }}
+        {{ coach.description }}
       </p>
     </div>
 
     <!--START: Gallery Images-->
-    <CoachGallery
-      :galleryImages="coach.galleryImages"
-    ></CoachGallery>
+    <CoachGallery :galleryImages="coach.gallery"></CoachGallery>
     <!--END: Gallery Images-->
+
+    <!--START: Qualifications-->
+      <CoachQualifications
+        :certifications="coach.certifications"
+      ></CoachQualifications>
+      <!--END: Qualifications-->
   </div>
 </template>
 
 <script>
 //Imoprt components
 import CoachGallery from "@/components/Profile/CoachGallery";
+import CoachQualifications from "@/components/Profile/CoachQualifications";
 
 export default {
   name: "About",
@@ -70,10 +70,12 @@ export default {
   },
   components: {
     CoachGallery,
+    CoachQualifications,
   },
   async created() {
     //Get coach and change meta details
-    this.coach = this.getCoach();
+    const slug = this.$route.params.slug;
+    this.coach = await this.getCoach({ slug: slug });
     this.meta.title = `Coach ${this.coach.name} - ${this.coach.heroData.description}`;
   },
   methods: {},
@@ -173,7 +175,7 @@ export default {
   display: block;
   width: 5rem;
   padding: 0.5rem;
-  margin: auto;
+  margin: 2rem auto 0;
   border-radius: 50%;
 }
 

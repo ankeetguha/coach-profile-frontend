@@ -5,11 +5,11 @@
       <div class="speciality-item" v-for="speciality in specialities" :key="speciality.id">
         <div class="speciality-img-wrapper">
           <svg
-            :data-src="require('@/assets/images/icons/' + speciality.iconURL)"
+            :data-src="require('@/assets/images/icons/cardio.svg')"
             class="speciality-img"
           />
         </div>
-        <span>{{ speciality.title }}</span>
+        <span>{{ speciality }}</span>
       </div>
     </div>
   </div>

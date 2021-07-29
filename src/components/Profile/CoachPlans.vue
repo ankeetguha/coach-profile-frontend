@@ -1,25 +1,41 @@
 <template>
   <div class="plans-list-wrapper">
-    <label class="plans-list-title">Explore {{plans.length}} plans</label>
+    <label class="plans-list-title">Explore {{ plans.length }} plans</label>
     <div class="plan-block" v-for="plan in plans" :key="plan.id">
       <img :src="plan.coverImageURL" class="plan-cover" :alt="plan.title" />
       <div class="plan-info-wrapper">
         <label
           class="plan-tag plan-tag-popular"
-          v-if="plan.tags != undefined && plan.tags == 'popular'"
-        >🔥 Most Popular</label>
+          v-if="plan.isMostPopular != undefined && plan.isMostPopular == true"
+          >🔥 Most Popular</label
+        >
         <div class="rel-wrapper">
-          <h3 class="plan-title">{{plan.title}}</h3>
-          <span class="plan-date" v-if="plan.frequency == 'monthly'">Monthly batches</span>
-          <span
-            class="plan-date"
-            v-else-if="plan.frequency == 'scheduled'"
-          >Starting from {{convertToMonthDate(plan.startDate)}}</span>
+          <h3 class="plan-title">{{ plan.title }}</h3>
+          <span class="plan-date" v-if="plan.hasDates == true"
+            >Starting from {{ convertToMonthDate(plan.startDate) }}</span
+          >
+          <span class="plan-date" v-else>Monthly batches</span>
           <div class="plan-actions-wrapper">
-            <span class="plan-price">
+            <span
+              class="plan-price"
+              v-if="
+                plan.isDiscountedPlan == undefined ||
+                plan.isDiscountedPlan == false
+              "
+            >
               ₹
-              <em>{{convertToIndianNumber(plan.price)}}</em>
+              <em>{{ convertToIndianNumber(plan.originalPrice) }}</em>
             </span>
+            <div v-else>
+              <span class="plan-price">
+                ₹
+                <em>{{ convertToIndianNumber(plan.planPrice) }}</em>
+              </span>
+              <span class="plan-price slashed-price">
+                ₹
+                <em>{{ convertToIndianNumber(plan.discountedPrice) }}</em>
+              </span>
+            </div>
             <span class="plan-action">
               <label>See Plan</label>
               <unicon name="angle-right" />
@@ -49,7 +65,7 @@ export default {
   font-size: $smallestFontSize;
   text-transform: uppercase;
   letter-spacing: 0.15rem;
-  margin: 2rem 1.5rem 1rem;
+  padding: 0rem 1.5rem 1rem;
 }
 
 .plan-block {
@@ -122,6 +138,17 @@ export default {
       em {
         font-weight: $mediumFontWeight;
         font-size: $mediumFontSize;
+      }
+
+      &.slashed-price {
+        opacity: $lightOpacity;
+        text-decoration: line-through;
+        font-size: $smallestFontSize;
+        margin-top: .25rem;
+
+        em {
+          font-size: $smallFontSize;
+        }
       }
     }
 

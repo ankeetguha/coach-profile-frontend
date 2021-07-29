@@ -1,14 +1,32 @@
 <template>
   <div class="social-list">
-    <a
-      :href="handle.link"
-      target="_blank"
-      class="social-item"
-      v-for="handle in socialHandles"
+    <div
       :key="handle.id"
+      v-for="handle in socialHandles"
+      class="social-item-wrapper"
     >
-      <unicon :name="socialIcons[handle.platform]" />
-    </a>
+      <a
+        v-if="handle.handle != null && handle.handle != ''"
+        :href="handle.handle"
+        target="_blank"
+        class="social-item"
+      >
+        <unicon :name="socialIcons[handle.platform]" />
+      </a>
+    </div>
+
+    <div
+      v-if="phoneNumber"
+      class="social-item-wrapper"
+    >
+      <a
+        :href="`https://wa.me/${phoneNumber}`"
+        target="_blank"
+        class="social-item"
+      >
+        <unicon name="whatsapp" />
+      </a>
+    </div>
   </div>
 </template>
 
@@ -28,6 +46,10 @@ export default {
   },
   props: {
     socialHandles: Array,
+    phoneNumber: {
+      type: String,
+      required: false
+    }
   },
 };
 </script>
@@ -38,7 +60,12 @@ export default {
   position: relative;
   background-color: $blackColor;
   text-align: center;
-  padding: .5rem 2rem 1rem;
+  padding: 0.5rem 2rem 1rem;
+}
+
+.social-item-wrapper {
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .social-item {
@@ -47,8 +74,8 @@ export default {
   text-decoration: none;
   border: none;
   border-radius: 50%;
-  padding: .55rem .55rem;
-  margin: 0 .35rem;
+  padding: 0.55rem 0.55rem;
+  margin: 0 0.35rem;
   background-color: lighten($blackColor, 8%);
 
   .unicon /deep/ svg {

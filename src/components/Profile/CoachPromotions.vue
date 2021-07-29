@@ -1,8 +1,8 @@
 <template>
-  <div class="promotion-wrapper">
+  <div class="promotion-wrapper" v-if="offerTicker != undefined && offerTicker.showOffer == true">
     <div class="ticker">
-      <a class="ticker-item" :href="promotion.link">
-        <span>{{promotion.text}}</span>
+      <a class="ticker-item" :href="offerTicker.url">
+        <span>{{offerTicker.title}}</span>
       </a>
     </div>
   </div>
@@ -12,7 +12,7 @@
 export default {
   name: "CoachPromotions",
   props: {
-    promotion: Object,
+    offerTicker: Object,
   },
 };
 </script>
@@ -59,6 +59,7 @@ $duration: 10s;
     darken($purpleColor, 20%)
   );
   padding-left: 100%;
+  z-index: 1;
   box-sizing: content-box;
 
   .ticker {

@@ -4,16 +4,13 @@
     <vue-headful :title="meta.title" :description="meta.description" />
     <!--END: Vue Headful-->
 
-    <img :src="coach.profileImageURL" class="profile-image" :alt="coach.name" />
-    <h2 class="coach-name">
-      <span>{{ coach.name }}</span>
-    </h2>
     <div class="promotional-links-wrapper">
       <label class="label-small">My Links</label>
       <a
         class="promotional-link"
+        target="_blank"
         v-for="link in coach.promotionalLinks"
-        :key="link.id"
+        :key="link._id"
         :href="link.url"
         >{{ link.title }}</a
       >
@@ -40,8 +37,9 @@ export default {
   components: {},
   async created() {
     //Get coach and change meta details
-    this.coach = this.getCoach();
-    this.meta.title = `Coach ${this.coach.name} - ${this.coach.heroData.description}`;
+    const slug = this.$route.params.slug;
+    this.coach = await this.getCoach({ slug: slug });
+    this.meta.title = `Coach ${this.coach.fullName} - ${this.coach.description}`;
   },
   methods: {},
 };
@@ -118,10 +116,6 @@ export default {
     margin-bottom: -1.5rem;
     z-index: -1;
   }
-}
-
-.promotional-links-wrapper {
-  margin-top: 2rem;
 }
 
 .promotional-link {
