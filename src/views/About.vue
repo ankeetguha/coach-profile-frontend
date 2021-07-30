@@ -37,14 +37,17 @@
     </div>
 
     <!--START: Gallery Images-->
-    <CoachGallery :galleryImages="coach.gallery"></CoachGallery>
+    <CoachGallery
+      v-if="coach.gallery != undefined && coach.gallery.length > 0"
+      :galleryImages="coach.gallery"
+    ></CoachGallery>
     <!--END: Gallery Images-->
 
     <!--START: Qualifications-->
-      <CoachQualifications
-        :certifications="coach.certifications"
-      ></CoachQualifications>
-      <!--END: Qualifications-->
+    <CoachQualifications
+      :certifications="coach.certifications"
+    ></CoachQualifications>
+    <!--END: Qualifications-->
   </div>
 </template>
 
