@@ -1,6 +1,10 @@
 <template>
   <!--START: Profile Wrapper-->
   <div v-if="coach.fullName != undefined" class="profile-content-wrapper">
+    <!--START: Vue Headful-->
+    <vue-headful :title="meta.title" :description="meta.description" />
+    <!--END: Vue Headful-->
+    
     <!--START: Plans List-->
     <CoachPlans :plans="coach.plans"></CoachPlans>
     <!--END: Plans List-->
@@ -65,7 +69,7 @@ export default {
       this.coach = await this.getCoach({ slug: slug });
     }
 
-    this.meta.title = `Coach ${this.coach.name} - ${this.coach.introTitle}`;
+    this.meta.title = `Coach ${this.coach.fullName} - ${this.coach.coverTitle}`;
   },
   methods: {},
 };

@@ -32,7 +32,14 @@
       <router-link :to="`/${coach.slug}/about`" class="profile-menu-item">
         About
       </router-link>
-      <router-link :to="`/${coach.slug}/links`" class="profile-menu-item">
+      <router-link
+        v-if="
+          coach.promotionalLinks != undefined &&
+          coach.promotionalLinks.length > 0
+        "
+        :to="`/${coach.slug}/links`"
+        class="profile-menu-item"
+      >
         Links
       </router-link>
     </div>
@@ -81,6 +88,7 @@ export default {
     border: 2px solid $purpleColor;
     display: block;
     width: 5rem;
+    height: 5rem;
     padding: 0.5rem;
     margin: 0 auto 0.75rem;
     border-radius: 50%;
@@ -118,6 +126,7 @@ export default {
   .hero-description {
     font-size: $normalFontSize;
     color: $lightWhiteColor;
+    margin: 0 1.5rem;
   }
 }
 

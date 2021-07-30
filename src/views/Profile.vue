@@ -60,7 +60,7 @@ export default {
     //Get coach and change meta details
     const slug = this.$route.params.slug;
     this.coach = await this.getCoach({ slug: slug });
-    this.meta.title = `Coach ${this.coach.fullName} - ${this.coach.introTitle}`;
+    // this.meta.title = `Coach ${this.coach.fullName} - ${this.coach.coverTitle}`;
   },
   methods: {},
 };

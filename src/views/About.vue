@@ -82,7 +82,7 @@ export default {
       this.coach = await this.getCoach({ slug: slug });
     }
 
-    this.meta.title = `About Coach ${this.coach.fullName} - ${this.coach.introTitle}`;
+    this.meta.title = `About - Coach ${this.coach.fullName} - ${this.coach.coverTitle}`;
   },
   methods: {},
 };

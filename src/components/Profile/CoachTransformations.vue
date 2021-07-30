@@ -150,6 +150,9 @@ export default {
   display: block;
   font-size: 1rem;
   margin-bottom: 0.3rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .transformation-profile {
@@ -157,6 +160,9 @@ export default {
   opacity: $mediumOpacity;
   display: block;
   font-size: $smallFontSize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .transformation-image-wrapper {
@@ -175,7 +181,7 @@ export default {
 
     /deep/ .unicon {
       display: block;
-      margin-bottom: .5rem;
+      margin-bottom: 0.5rem;
 
       svg {
         width: 2rem;

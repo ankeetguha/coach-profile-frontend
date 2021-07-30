@@ -45,7 +45,7 @@ export default {
       this.coach = await this.getCoach({ slug: slug });
     }
     
-    this.meta.title = `Links - Coach ${this.coach.fullName} - ${this.coach.introTitle}`;
+    this.meta.title = `Links - Coach ${this.coach.fullName} - ${this.coach.coverTitle}`;
   },
   methods: {},
 };
