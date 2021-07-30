@@ -30,7 +30,10 @@
               v-else
               class="transformation-image"
             />
-            <div class="transformation-image-info" v-if="!testimonial.testimonialImageURL">
+            <div
+              class="transformation-image-info"
+              v-if="!testimonial.testimonialImageURL"
+            >
               <unicon name="lock" />
               Coach {{ coachName | firstName }} requested to keep this image
               hidden
@@ -154,5 +157,32 @@ export default {
   opacity: $mediumOpacity;
   display: block;
   font-size: $smallFontSize;
+}
+
+.transformation-image-wrapper {
+  position: relative;
+
+  .transformation-image-info {
+    position: absolute;
+    text-align: center;
+    transform: translateY(-50%);
+    color: $whiteColor;
+    opacity: $mediumOpacity;
+    margin: 0 2rem;
+    top: 50%;
+    left: 0;
+    right: 0;
+
+    /deep/ .unicon {
+      display: block;
+      margin-bottom: .5rem;
+
+      svg {
+        width: 2rem;
+        height: auto;
+        fill: $whiteColor;
+      }
+    }
+  }
 }
 </style>

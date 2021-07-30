@@ -3,6 +3,7 @@
   <div class="header-wrapper">
     <div class="hero-wrapper">
       <img
+        v-if="coach.profilePictureURL != undefined"
         :src="coach.profilePictureURL"
         class="profile-image"
         :alt="coach.fullName"
@@ -10,8 +11,8 @@
       <h1 class="hero-title">
         <span>{{ coach.fullName }}</span>
       </h1>
-      <p class="hero-description">
-        Body Transformation Specialist & Athlete 💪
+      <p v-if="coach.coverTitle != undefined" class="hero-description">
+        {{ coach.coverTitle }}
       </p>
     </div>
     <!--END: Hero Wrapper-->
