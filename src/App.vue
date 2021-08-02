@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--START: App Router View-->
-    <keep-alive>
+    <keep-alive exclude="Plan">
       <router-view :key="$route.params.id" />
     </keep-alive>
     <!--END: App Router View-->

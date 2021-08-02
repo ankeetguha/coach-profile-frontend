@@ -1,6 +1,6 @@
 <template>
   <!--START: Profile Wrapper-->
-  <div class="plan-wrapper">
+  <div v-if="coach.fullName != undefined" class="plan-wrapper">
     <!--START: Vue Headful-->
     <vue-headful :title="meta.title" :description="meta.description" />
     <!--END: Vue Headful-->
@@ -139,6 +139,7 @@ export default {
   name: "Plan",
   data() {
     return {
+      coach: {},
       showModal: false,
       meta: {
         title: "Skipper Coach",
@@ -148,25 +149,26 @@ export default {
       plan: null,
     };
   },
-  props: {
-    coach: Object,
-    show: Boolean,
-  },
   components: {
     BookingModal,
   },
   async created() {
-    //Get coach and change meta details
-    const slug = this.$route.params.slug;
-    if (_.isEmpty(this.coach)) {
-      this.coach = await this.getCoach({ slug: slug });
-    }
-
-    const planID = this.$route.params.plan;
-    this.plan = this.coach.plans.find((plan) => plan._id === planID);
-    this.meta.title = `Coach ${this.coach.fullName} - ${this.coach.coverTitle}`;
+    this.getPlan();
   },
   methods: {
+    async getPlan() {
+      //Get coach and change meta details
+      const slug = this.$route.params.slug;
+      if (_.isEmpty(this.coach)) {
+        this.coach = await this.getCoach({ slug: slug });
+      }
+
+      const planID = this.$route.params.plan;
+      console.log(planID);
+      this.plan = this.coach.plans.find((plan) => plan._id === planID);
+      this.meta.title = `Coach ${this.coach.fullName} - ${this.coach.coverTitle}`;
+    },
+
     showBookingModal() {
       this.showModal = true;
     },
