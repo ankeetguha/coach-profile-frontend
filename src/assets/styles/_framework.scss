@@ -10,7 +10,7 @@
     border: none;
     line-height: 1;
     border-radius: .5rem;
-    padding: .85rem 1rem;
+    padding: .75rem 1rem;
     background: transparent;
     cursor: pointer;
 
@@ -489,7 +489,8 @@ input.error {
 .field-title {
     display: block;
     font-size: $smallFontSize;
-    color: $greyColor;
+    color: $whiteColor;
+    opacity: $lightOpacity;
     margin-left: .15rem;
     margin-bottom: 0.75rem;
 }

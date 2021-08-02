@@ -8,6 +8,7 @@ body {
     font-size: $normalFontSize;
     font-weight: $normalFontWeight;
     -webkit-overflow-scrolling: touch;
+    -webkit-tap-highlight-color: transparent;
     min-height: 100vh;
 
     &::before {
@@ -20,6 +21,7 @@ body {
         height: 100vh;
         box-shadow: inset 0 0 2000px rgba(183, 183, 183, 0.5);
         opacity: 0.45;
+        z-index: -1;
     }
 }
 
@@ -82,7 +84,7 @@ a {
     z-index: -1;
     opacity: 0;
     transition: all $transitionSpeed;
-    background-color: darken($purpleColor, 55%);
+    background-color: rgba(29, 29, 29, .99);
     cursor: pointer;
     position: fixed;
     top: 0;

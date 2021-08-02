@@ -6,7 +6,7 @@
     <!--END: Vue Headful-->
     
     <!--START: Plans List-->
-    <CoachPlans :plans="coach.plans"></CoachPlans>
+    <CoachPlans :plans="coach.plans" :coachSlug="coach.slug"></CoachPlans>
     <!--END: Plans List-->
 
     <!--START: Scroll End-->

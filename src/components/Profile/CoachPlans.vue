@@ -1,7 +1,13 @@
 <template>
   <div class="plans-list-wrapper">
     <label class="plans-list-title">Explore {{ plans.length }} plans</label>
-    <div class="plan-block" v-for="plan in plans" :key="plan.id">
+    <router-link
+      tag="div"
+      class="plan-block"
+      v-for="plan in plans"
+      :key="plan.id"
+      :to="`/${coachSlug}/plans/${plan._id}`"
+    >
       <img :src="plan.coverImageURL" class="plan-cover" :alt="plan.title" />
       <div class="plan-info-wrapper">
         <label
@@ -43,7 +49,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </router-link>
   </div>
 </template>
 
@@ -51,6 +57,7 @@
 export default {
   name: "CoachPlans",
   props: {
+    coachSlug: String,
     plans: Array,
   },
 };
@@ -144,7 +151,7 @@ export default {
         opacity: $lightOpacity;
         text-decoration: line-through;
         font-size: $smallestFontSize;
-        margin-top: .25rem;
+        margin-top: 0.25rem;
 
         em {
           font-size: $smallFontSize;

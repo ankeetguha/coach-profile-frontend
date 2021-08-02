@@ -3,7 +3,8 @@ import VueRouter from 'vue-router';
 
 //Import the various views
 import Profile from '@/views/Profile';
-import Plans from '@/views/Plans';
+import Plans from '@/views/Plans/Plans';
+import Plan from '@/views/Plans/Plan';
 import About from '@/views/About';
 import Links from '@/views/Links';
 
@@ -42,9 +43,9 @@ const routes = [{
     },
 
     {
-        path: '/plans',
-        name: 'Profile',
-        component: Profile,
+        path: '/:slug/plans/:plan',
+        name: 'Plan',
+        component: Plan,
         meta: {
             hideHeader: true
         }
