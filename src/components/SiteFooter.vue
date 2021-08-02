@@ -18,7 +18,7 @@
               class="heart"
               alt="Skipper Love"
             />
-            India
+            in India
           </h3>
         </div>
         &copy; 2021 AGZ Wellness Private Limited. All Rights Reserved.

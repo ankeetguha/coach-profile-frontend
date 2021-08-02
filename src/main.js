@@ -18,6 +18,10 @@ Vue.mixin(GlobalFunctions);
 import vueHeadful from 'vue-headful';
 Vue.component('vue-headful', vueHeadful);
 
+//Adding Vue Meta for custom headers
+import VueMeta from 'vue-meta';
+Vue.use(VueMeta);
+
 //Importing Font Awesome icons
 import Unicon from 'vue-unicons/dist/vue-unicons-vue2.umd';
 import {

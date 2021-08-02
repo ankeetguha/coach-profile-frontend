@@ -19,6 +19,7 @@
     "v-click-outside": "^3.1.2",
     "vue": "^2.6.11",
     "vue-headful": "^2.1.0",
+    "vue-meta": "^2.4.0",
     "vue-router": "^3.5.2",
     "vue-slick-carousel": "^1.0.6",
     "vue-unicons": "^3.2.1",

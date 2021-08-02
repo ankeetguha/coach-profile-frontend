@@ -2,10 +2,14 @@
   <div class="specialities-wrapper">
     <label class="label-small">Specialities</label>
     <div class="specialities-list">
-      <div class="speciality-item" v-for="speciality in specialities" :key="speciality.id">
+      <div
+        class="speciality-item"
+        v-for="speciality in specialities"
+        :key="speciality.id"
+      >
         <div class="speciality-img-wrapper">
           <svg
-            :data-src="require('@/assets/images/icons/cardio.svg')"
+            :data-src="getImageExtension(speciality)"
             class="speciality-img"
           />
         </div>
@@ -24,6 +28,15 @@ export default {
   props: {
     specialities: Array,
   },
+  methods: {
+    getImageExtension(fileName) {
+      return (
+        "/assets/images/icons/" +
+        fileName.replace(/\s+/g, "-").toLowerCase() +
+        ".svg"
+      );
+    },
+  },
 };
 </script>
 
@@ -38,7 +51,7 @@ export default {
   text-align: center;
 
   .specialities-list {
-      margin: 0;
+    margin: 0;
   }
 
   .speciality-item {
