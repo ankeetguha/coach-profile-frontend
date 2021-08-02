@@ -35,8 +35,8 @@
               v-if="!testimonial.testimonialImageURL"
             >
               <unicon name="lock" />
-              Coach {{ coachName | firstName }} requested to keep this image
-              hidden
+              Coach has requested to keep this image
+              private
             </div>
           </div>
           <div class="transformation-info">
@@ -80,6 +80,8 @@ export default {
   position: relative;
   background: $blackColor;
   padding: 3rem 2rem;
+  border-bottom-left-radius: 2rem;
+  border-bottom-right-radius: 2rem;
   width: calc(100% - 4rem);
 }
 

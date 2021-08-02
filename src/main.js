@@ -34,8 +34,9 @@ import {
   uniCheck,
   uniDumbbell,
   uniAngleLeft,
+  uniHeart,
 } from 'vue-unicons/dist/icons';
-Unicon.add([uniTrashAlt, uniAngleRight, uniAngleLeft, uniLock, uniFacebookF, uniInstagram, uniWhatsapp, uniTwitter, uniYoutube, uniTimes, uniPlay, uniCheck, uniDumbbell]);
+Unicon.add([uniTrashAlt, uniAngleRight, uniAngleLeft, uniLock, uniFacebookF, uniInstagram, uniWhatsapp, uniTwitter, uniYoutube, uniTimes, uniPlay, uniCheck, uniDumbbell, uniHeart]);
 Vue.use(Unicon);
 
 Vue.config.productionTip = false

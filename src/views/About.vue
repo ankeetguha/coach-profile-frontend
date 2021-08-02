@@ -45,6 +45,11 @@
 
     <!--START: Qualifications-->
     <CoachQualifications
+      :class="
+        coach.gallery != undefined && coach.gallery.length > 0
+          ? 'extended-wrapper'
+          : ''
+      "
       :certifications="coach.certifications"
     ></CoachQualifications>
     <!--END: Qualifications-->

@@ -37,9 +37,11 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .coach-gallery {
+  position: relative;
   margin: 2rem 1.5rem 4rem;
   display: flex;
   flex-wrap: wrap;
+  z-index: 1;
 }
 
 .coach-slider {

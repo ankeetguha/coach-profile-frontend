@@ -54,10 +54,17 @@ export default {
   overflow: hidden;
   border-top-left-radius: 3rem;
   border-top-right-radius: 3rem;
+  border-bottom-left-radius: 2rem;
+  border-bottom-right-radius: 2rem;
   background: $blackColor;
   padding: 3rem 1rem 3rem;
   margin: 0;
   width: calc(100% - 2rem);
+
+  &.extended-wrapper {
+    padding-top: 13rem;
+    margin-top: -13rem;
+  }
 }
 
 .coach-qualifications-wrapper > .label-small {
@@ -171,7 +178,7 @@ svg.coach-qualification-badge-text {
   position: relative;
   height: inherit !important;
   overflow: hidden;
-  margin: 0 -.5rem 0 2rem;
+  margin: 0 -0.5rem 0 2rem;
   background-repeat: no-repeat;
   padding: 1.75rem 2rem;
   box-shadow: inset 0 0 75px rgba(70, 70, 70, 0.75);

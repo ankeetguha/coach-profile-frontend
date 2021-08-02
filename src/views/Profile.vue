@@ -5,7 +5,7 @@
     <!--END: Vue Headful-->
 
     <!--START: Coach Header-->
-    <CoachHeader :coach="coach"></CoachHeader>
+    <SiteHeader :coach="coach"></SiteHeader>
     <!--END: Coach Header-->
 
     <!--START: Router Wrapper-->
@@ -23,13 +23,24 @@
     <!--START: Social Handles-->
     <CoachPromotions :offerTicker="coach.offerTicker"></CoachPromotions>
     <!--END: Social Handles-->
+
+    <!--START: Coach Header-->
+    <SiteFooter
+      :class="
+        coach.offerTicker != undefined && coach.offerTicker.showOffer
+          ? 'extended-footer'
+          : ''
+      "
+    ></SiteFooter>
+    <!--END: Coach Header-->
   </div>
 </template>
 
 <script>
 //Import components
 import CoachPromotions from "@/components/Profile/CoachPromotions";
-import CoachHeader from "@/components/Header";
+import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 
 export default {
   name: "Profile",
@@ -53,7 +64,8 @@ export default {
     },
   },
   components: {
-    CoachHeader,
+    SiteHeader,
+    SiteFooter,
     CoachPromotions,
   },
   async created() {
@@ -69,7 +81,7 @@ export default {
 <style scoped lang="scss">
 .modal-route {
   position: relative;
-  padding: 2rem 0 3rem;
+  padding: 2rem 0 0;
   z-index: 1;
 
   .modal-content {
