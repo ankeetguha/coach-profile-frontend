@@ -164,7 +164,6 @@ export default {
       }
 
       const planID = this.$route.params.plan;
-      console.log(planID);
       this.plan = this.coach.plans.find((plan) => plan._id === planID);
       this.meta.title = `Coach ${this.coach.fullName} - ${this.coach.coverTitle}`;
     },

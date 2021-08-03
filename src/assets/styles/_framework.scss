@@ -187,7 +187,7 @@ textarea {
     display: block;
     font-size: $normalFontSize;
     outline: none;
-    color: darken($purpleColor, 25%);
+    color: lighten($blackColor, 5%);
     background-color: #f7f6ff;
     width: calc(100% - 2.5rem);
     padding: .75rem 1.15rem;

@@ -1,55 +1,85 @@
 <template>
   <div class="plan-book-modal" :class="{ show: showModal }">
-    <!--START: Booking Form-->
-    <span class="coach-name">Coach {{ coach.fullName }}</span>
-    <div class="booking-modal-wrapper">
-      <div class="intro-wrapper">
-        <h3 class="plan-title">{{ plan.title }}</h3>
-        <span
-          v-if="plan.hasDates != undefined && plan.hasDates == true"
-          class="plan-dates"
-          >From {{ plan.startDate }}
-          <span v-if="plan.endDate != undefined"
-            >till - {{ plan.endDate }}</span
-          ></span
-        >
-        <span v-else class="plan-dates"> Monthly Batches </span>
+    <div v-if="!successMessage.show">
+      <!--START: Booking Form-->
+      <span class="coach-name">Coach {{ coach.fullName }}</span>
+      <div class="booking-modal-wrapper">
+        <div class="intro-wrapper">
+          <h3 class="plan-title">{{ plan.title }}</h3>
+          <span
+            v-if="plan.hasDates != undefined && plan.hasDates == true"
+            class="plan-dates"
+            >From {{ plan.startDate }}
+            <span v-if="plan.endDate != undefined"
+              >till - {{ plan.endDate }}</span
+            ></span
+          >
+          <span v-else class="plan-dates"> Monthly Batches </span>
+        </div>
+
+        <div class="price-wrapper">
+          <div
+            v-if="
+              plan.isDiscountedPlan != undefined &&
+              plan.isDiscountedPlan == true
+            "
+          >
+            <span class="plan-price">
+              ₹<em>{{ convertToIndianNumber(plan.discountedPrice) }}</em>
+            </span>
+            <span class="plan-price slashed-price">
+              ₹<em>{{ convertToIndianNumber(plan.planPrice) }}</em>
+            </span>
+          </div>
+          <div v-else>
+            <span class="plan-price">
+              ₹<em>{{ convertToIndianNumber(plan.planPrice) }}</em>
+            </span>
+          </div>
+        </div>
       </div>
 
-      <div class="price-wrapper">
-        <div
-          v-if="
-            plan.isDiscountedPlan != undefined && plan.isDiscountedPlan == true
-          "
-        >
-          <span class="plan-price">
-            ₹<em>{{ convertToIndianNumber(plan.discountedPrice) }}</em>
-          </span>
-          <span class="plan-price slashed-price">
-            ₹<em>{{ convertToIndianNumber(plan.planPrice) }}</em>
-          </span>
-        </div>
-        <div v-else>
-          <span class="plan-price">
-            ₹<em>{{ convertToIndianNumber(plan.planPrice) }}</em>
-          </span>
-        </div>
-      </div>
+      <form
+        v-on:submit.prevent="bookPlan()"
+        class="coach-form"
+        @change="formChanged"
+      >
+        <FormBuilder :fields="fields" @fieldChanged="formChanged"></FormBuilder>
+        <button class="btn btn-primary" type="submit">
+          Book Plan <unicon name="angle-right"></unicon>
+        </button>
+      </form>
+      <!--END: Booking Form-->
     </div>
 
-    <form class="coach-form" @change="formChanged">
-      <FormBuilder :fields="fields" @fieldChanged="formChanged"></FormBuilder>
-      <button class="btn btn-primary">
-        Book Plan <unicon name="angle-right"></unicon>
-      </button>
-    </form>
-    <!--END: Booking Form-->
+    <!--START: Status Message-->
+    <SuccessMessage :successForm="successMessage"></SuccessMessage>
+    <!--END: Status Message-->
+
+    <!--START: Line Loader -->
+    <LineLoader :showLoader="showLoader"></LineLoader>
+    <!--END: Line Loader -->
+
+    <!--START: Status Message-->
+    <StatusMessage
+      :show="status.show"
+      :isSuccess="status.isSuccess"
+      :successMessage="status.successMessage"
+      :errorMessage="status.errorMessage"
+    ></StatusMessage>
+    <!--END: Status Message-->
   </div>
 </template>
 
 <script>
+//Importing CoachService
+import CoachService from "@/controllers/CoachService";
+
 //Import components
 import FormBuilder from "@/components/form/FormBuilder";
+import StatusMessage from "@/components/modals/StatusMessage";
+import SuccessMessage from "@/components/modals/SuccessMessage";
+import LineLoader from "@/components/loaders/LineLoader";
 
 export default {
   name: "CoachBooking",
@@ -69,8 +99,12 @@ export default {
   data() {
     return {
       showModal: false,
+      showStatus: false,
+      showLoader: false,
+      isSuccess: false,
+      disableButton: false,
       fields: {
-        fullName: {
+        name: {
           type: "text",
           title: "Your Name*",
           placeholder: "Enter your name",
@@ -86,23 +120,79 @@ export default {
         },
         phone: {
           type: "tel",
-          title: "Phone Number",
+          title: "Phone Number*",
           placeholder: "Your 10 digit number",
           errorMessage: "Enter only a 10 digit number",
-          required: false,
+          required: true,
           hasError: false,
         },
+      },
+      status: {
+        show: false,
+        isSuccess: true,
+        successMessage: "🙌 We've got your booking!",
+        errorMessage: "😕 Something's not right. Try again",
+      },
+      successMessage: {
+        show: false,
+        title: "We've got your booking",
+        message: "We'll reach out to you soon enough",
       },
     };
   },
 
   components: {
     FormBuilder,
+    LineLoader,
+    StatusMessage,
+    SuccessMessage,
   },
 
   methods: {
     formChanged() {
       console.log("");
+    },
+
+    async bookPlan() {
+      var timeoutHandler = null;
+
+      clearTimeout(timeoutHandler);
+
+      this.status.show = false;
+      this.successMessage.show = false;
+      this.isSuccess = false;
+      this.showLoader = true;
+
+      //Check if the form has valid input
+      var formFields = {
+        ...this.fields,
+      };
+
+      var formValidation = this.validateForm(formFields);
+
+      if (formValidation.hasErrors) {
+        this.status.isSuccess = false;
+      } else {
+        formFields = {
+          client: this.fields,
+          plan: this.plan,
+          coachSlug: this.coach.slug,
+        };
+        if (await CoachService.SendMessage(formFields)) {
+          this.successMessage.show = true;
+          this.resetFields(this.fields);
+        } else {
+          this.isSuccess = false;
+          this.status.show = true;
+        }
+      }
+
+      this.status.show = true;
+      this.disableButton = true;
+      this.showLoader = false;
+
+      //Hide the notification
+      timeoutHandler = setTimeout(() => (this.status.show = false), 3000);
     },
   },
 };
@@ -173,7 +263,7 @@ form {
 }
 
 .intro-wrapper {
-    flex: 1;
+  flex: 1;
 }
 
 .plan-price {

@@ -25,7 +25,7 @@ const routes = [{
             meta: {
                 showRouteModal: true
             }
-        },{
+        }, {
             path: '/:slug/about',
             component: About,
             props: true,
@@ -50,10 +50,17 @@ const routes = [{
             hideHeader: true
         }
     },
-
+    {
+        path: "/",
+        beforeEnter() {
+            location.href = 'https://coach.skipperfit.com/sign-up'
+        }
+    },
     {
         path: "*",
-        redirect: '/404',
+        beforeEnter() {
+            location.href = 'https://coach.skipperfit.com/sign-up'
+        }
     }
 ];
 

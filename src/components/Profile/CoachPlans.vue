@@ -110,7 +110,7 @@ export default {
   }
   .plan-info-wrapper {
     position: relative;
-    padding: 1rem 1rem 0;
+    padding: 1rem .5rem 0;
 
     .plan-title {
       color: $whiteColor;
