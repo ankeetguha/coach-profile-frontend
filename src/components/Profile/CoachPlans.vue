@@ -30,7 +30,7 @@
               "
             >
               ₹
-              <em>{{ convertToIndianNumber(plan.originalPrice) }}</em>
+              <em>{{ convertToIndianNumber(plan.planPrice) }}</em>
             </span>
             <div v-else>
               <span class="plan-price">
