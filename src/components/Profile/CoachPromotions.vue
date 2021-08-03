@@ -76,7 +76,7 @@ $duration: 10s;
     .ticker-item {
       display: inline-block;
       padding: .65rem 2rem;
-      font-size: $smallFontSize;
+      font-size: $normalFontSize;
       border: none;
       color: lighten($purpleColor, 30%);
     }
