@@ -31,7 +31,7 @@ export default {
   methods: {
     getImageExtension(fileName) {
       return (
-        "/assets/images/icons/" +
+        "/assets/images/" +
         fileName.replace(/\s+/g, "-").toLowerCase() +
         ".svg"
       );

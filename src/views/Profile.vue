@@ -52,35 +52,6 @@ export default {
         description:
           "Skipper helps you find the best personal trainers and coaches to help you meet your fitness goals from home. We've got coaches for S&C, Yoga, Weight Training, Nutrition and more.",
       },
-      metaInfo() {
-        return {
-          title: `Coach ${this.coach.fullName}`,
-          meta: [
-            {
-              name: "description",
-              content: this.coach.coverTitle,
-            },
-            {
-              property: "og:title",
-              content: "Coach " + this.coach.fullName,
-            },
-            { property: "og:site_name", content: "Skipper" },
-            {
-              property: "og:description",
-              content: this.coach.coverTitle,
-            },
-            { property: "og:type", content: "profile" },
-            {
-              property: "og:url",
-              content: "https://skipperfit.com/" + this.coach.slug,
-            },
-            {
-              property: "og:image",
-              content: this.coach.plans[0].coverImageURL,
-            },
-          ],
-        };
-      },
       showRouteModal: false,
     };
   },
