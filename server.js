@@ -7,6 +7,8 @@ const app = express()
 //here we are configuring dist to serve app files
 app.use('/', serveStatic(path.join(__dirname, '/dist')))
 
+app.use(require('prerender-node').set('prerenderToken', '3HqwTfWFhRA9r1suau8U'));
+
 // this * route is to serve project on different page routes except root `/`
 app.get(/.*/, function (req, res) {
 	res.sendFile(path.join(__dirname, '/dist/index.html'))
