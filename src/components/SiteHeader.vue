@@ -21,6 +21,7 @@
     <CoachSocialHandles
       :socialHandles="coach.socialHandles"
       :phoneNumber="coach.phone"
+      :showNumber="coach.showNumber"
     ></CoachSocialHandles>
     <!--END: Social Handles-->
 

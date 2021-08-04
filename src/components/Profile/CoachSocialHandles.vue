@@ -16,7 +16,7 @@
     </div>
 
     <div
-      v-if="phoneNumber"
+      v-if="phoneNumber && (showNumber == undefined || showNumber == true)"
       class="social-item-wrapper"
     >
       <a
@@ -49,7 +49,8 @@ export default {
     phoneNumber: {
       type: String,
       required: false
-    }
+    },
+    showNumber: Boolean
   },
 };
 </script>

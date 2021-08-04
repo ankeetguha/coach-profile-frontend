@@ -4,13 +4,14 @@
     <!--START: Vue Headful-->
     <vue-headful :title="meta.title" :description="meta.description" />
     <!--END: Vue Headful-->
-    
+
     <!--START: Plans List-->
     <CoachPlans :plans="coach.plans" :coachSlug="coach.slug"></CoachPlans>
     <!--END: Plans List-->
 
     <!--START: Scroll End-->
     <MessageCoach
+      v-if="coach.showNumber == undefined || coach.showNumber == true"
       :name="coach.fullName"
       :gender="coach.gender"
       :phoneNumber="coach.phone"
