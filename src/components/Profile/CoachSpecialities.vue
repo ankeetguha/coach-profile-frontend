@@ -1,6 +1,6 @@
 <template>
   <div class="specialities-wrapper">
-    <label class="label-small">Specialities</label>
+    <label class="label-small">Can Help You With</label>
     <div class="specialities-list">
       <div
         class="speciality-item"
