@@ -58,10 +58,10 @@ span,
 }
 
 span {
-    font-size: 10px;
-    margin-bottom: -1rem;
-    text-transform: uppercase;
-    letter-spacing: .15rem;
+  font-size: 10px;
+  margin-bottom: -1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15rem;
 }
 
 .india-love {
@@ -115,6 +115,14 @@ span {
 
   100% {
     transform: scale(1);
+  }
+}
+
+@media screen and (min-width: $mobileWidth) {
+  footer {
+    &.extended-footer {
+      padding-bottom: 3rem;
+    }
   }
 }
 </style>

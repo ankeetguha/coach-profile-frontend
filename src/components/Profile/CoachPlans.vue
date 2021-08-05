@@ -16,11 +16,14 @@
           >🔥 Most Popular</label
         >
         <div class="rel-wrapper">
-          <h3 class="plan-title">{{ plan.title }}</h3>
-          <span class="plan-date" v-if="plan.hasDates == true"
-            >Starting from {{ convertToMonthDate(plan.startDate) }}</span
-          >
-          <span class="plan-date" v-else>Monthly batches</span>
+          <h3 class="plan-title">
+            {{ plan.title }}
+            <span class="plan-action">
+              <label>See Plan</label>
+              <unicon name="angle-right" />
+            </span>
+          </h3>
+
           <div class="plan-actions-wrapper">
             <span
               class="plan-price"
@@ -42,10 +45,20 @@
                 <em>{{ convertToIndianNumber(plan.discountedPrice) }}</em>
               </span>
             </div>
-            <span class="plan-action">
-              <label>See Plan</label>
-              <unicon name="angle-right" />
-            </span>
+
+            <span class="plan-date" v-if="plan.hasDates == true"
+              >Starting from {{ convertToMonthDate(plan.startDate) }}</span
+            >
+            <span
+              class="plan-date"
+              v-else-if="
+                plan.isMonthlyPlan != null &&
+                plan.planDuration != null &&
+                plan.isMonthlyPlan == false
+              "
+              >{{ plan.planDuration }}</span
+            >
+            <span class="plan-date" v-else>Per Month</span>
           </div>
         </div>
       </div>
@@ -78,9 +91,9 @@ export default {
 .plan-block {
   position: relative;
   background-color: #444;
-  margin: 0 1.5rem 2rem;
-  padding: 0.5rem;
-  border-radius: 2rem;
+  margin: 0 1rem 2rem;
+  padding: 0.35rem;
+  border-radius: 1.75rem;
   box-shadow: 0 0 1.7rem 1.9rem rgba(0, 0, 0, 0.25);
   border-bottom-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
@@ -92,15 +105,18 @@ export default {
   .plan-cover {
     display: block;
     border-radius: 1.5rem;
+    border-bottom-left-radius: 1.25rem;
+    border-bottom-right-radius: 1.25rem;
     width: 100%;
   }
 
   .plan-tag {
     display: table;
-    margin: -1.75rem 0 1rem;
+    margin: -1.75rem 0 0.5rem;
     color: $whiteColor;
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.65rem;
+    font-size: $smallerFontSize;
+    padding: 0.45rem 0.65rem 0.45rem 0.5rem;
+    border-radius: 0.5rem;
 
     &.plan-tag-popular {
       background: #cb2d3e;
@@ -110,12 +126,12 @@ export default {
   }
   .plan-info-wrapper {
     position: relative;
-    padding: 1rem .5rem 0;
+    padding: 1rem 0.5rem 0;
 
     .plan-title {
       color: $whiteColor;
       font-family: $titleFont;
-      font-size: $largeFontSize;
+      font-size: $mediumFontSize;
       line-height: $largeFontSize;
       width: calc(100% - 6rem);
       text-transform: uppercase;
@@ -125,9 +141,11 @@ export default {
 
     .plan-date {
       display: block;
+      font-size: $smallerFontSize;
       color: $lightWhiteColor;
       opacity: $lightOpacity;
       margin-bottom: 1rem;
+      margin-top: 0.25rem;
     }
   }
 
@@ -140,11 +158,11 @@ export default {
     .plan-price {
       display: block;
       color: $lightWhiteColor;
-      font-size: $normalFontSize;
+      font-size: $smallFontSize;
 
       em {
         font-weight: $mediumFontWeight;
-        font-size: $mediumFontSize;
+        font-size: 1rem;
       }
 
       &.slashed-price {
@@ -152,31 +170,60 @@ export default {
         text-decoration: line-through;
         font-size: $smallestFontSize;
         margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
 
         em {
-          font-size: $smallFontSize;
+          font-size: $smallerFontSize;
         }
       }
     }
+  }
+}
 
-    .plan-action {
-      display: block;
-      margin-top: 0.15rem;
-      margin-right: -0.5rem;
-      color: #717171;
+.plan-action {
+  display: block;
+  margin-bottom: 0.25rem;
+  margin-right: -0.5rem;
+  color: #717171;
 
-      label,
-      .unicon {
-        display: inline-block;
-        vertical-align: middle;
-      }
+  label {
+    font-weight: $normalFontWeight;
+    font-size: $smallFontSize;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .unicon {
+    display: inline-block;
+    vertical-align: middle;
+  }
 
-      .unicon /deep/ svg {
-        fill: #717171;
-        transform: translateY(2px);
-        width: $mediumFontSize;
-      }
+  .unicon /deep/ svg {
+    fill: #717171;
+    transform: translateY(2px);
+    width: $mediumFontSize;
+  }
+}
+
+@media screen and (min-width: $mobileWidth) {
+  .plans-list-title {
+    font-size: $normalFontSize;
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+
+  .plans-list-wrapper {
+    margin: 0 20%;
+    text-align: center;
+
+    .plan-info-wrapper {
+      text-align: left;
     }
+  }
+
+  .plan-block {
+    display: inline-block;
+    vertical-align: top;
+    width: calc(50% - 2.7rem);
   }
 }
 </style>

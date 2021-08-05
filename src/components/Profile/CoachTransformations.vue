@@ -35,8 +35,7 @@
               v-if="!testimonial.testimonialImageURL"
             >
               <unicon name="lock" />
-              Coach has requested to keep this image
-              private
+              Coach has requested to keep this image private
             </div>
           </div>
           <div class="transformation-info">
@@ -44,10 +43,10 @@
             <span class="transformation-profile">{{
               testimonial.designation
             }}</span>
-            <p v-if="testimonial.testimonial != ''">
+            <p v-if="testimonial.testimonial != null">
               {{ testimonial.testimonial }}
             </p>
-            <span class="read-more" v-if="testimonial.testimonial != ''">
+            <span class="read-more" v-if="testimonial.testimonial != null">
               <em>Read More</em>
             </span>
           </div>
@@ -150,7 +149,6 @@ export default {
 .transformation-name {
   color: $whiteColor;
   display: block;
-  font-size: 1rem;
   margin-bottom: 0.3rem;
   white-space: nowrap;
   overflow: hidden;
@@ -159,9 +157,9 @@ export default {
 
 .transformation-profile {
   color: $lightWhiteColor;
-  opacity: $mediumOpacity;
+  opacity: $lightOpacity;
   display: block;
-  font-size: $smallFontSize;
+  font-size: $smallerFontSize;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -190,6 +188,33 @@ export default {
         height: auto;
         fill: $whiteColor;
       }
+    }
+  }
+}
+
+@media screen and (min-width: $mobileWidth) {
+  .label-small {
+    font-family: $titleFont;
+    font-size: $largerFontSize;
+    font-weight: $mediumFontWeight;
+    color: lighten($whiteColor, 10%);
+    letter-spacing: 0;
+    text-transform: none;
+    margin: 0 0 1.5rem;
+  }
+
+  .transformations-wrapper {
+    width: auto;
+    padding: 3rem 20% 4rem;
+  }
+
+  /deep/ {
+     .slick-track {
+       width: 100% !important;
+     }
+
+    .slick-slide {
+      width: 33% !important;
     }
   }
 }

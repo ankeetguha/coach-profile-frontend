@@ -188,8 +188,9 @@ a {
 
 .label-small {
     display: block;
+    font-size: $smallerFontSize;
     color: darken($lightWhiteColor, 30%);
-    letter-spacing: .15rem;
+    letter-spacing: .1rem;
     margin-bottom: 1.5rem;
     text-transform: uppercase;
 

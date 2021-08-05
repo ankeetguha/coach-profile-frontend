@@ -113,4 +113,10 @@ export default {
     }
   }
 }
+
+@media screen and (min-width: $mobileWidth) {
+  .modal-route {
+    padding: 3rem 0 0;
+  }
+}
 </style>

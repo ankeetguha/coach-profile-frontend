@@ -1,8 +1,11 @@
 <template>
-  <div class="promotion-wrapper" v-if="offerTicker != undefined && offerTicker.showOffer == true">
+  <div
+    class="promotion-wrapper"
+    v-if="offerTicker != undefined && offerTicker.showOffer == true"
+  >
     <div class="ticker">
       <a class="ticker-item" :href="offerTicker.url">
-        <span>{{offerTicker.title}}</span>
+        <span>{{ offerTicker.title }}</span>
       </a>
     </div>
   </div>
@@ -75,10 +78,25 @@ $duration: 10s;
 
     .ticker-item {
       display: inline-block;
-      padding: .65rem 2rem;
-      font-size: $normalFontSize;
+      padding: 0.7rem 2rem 0.85rem;
+      font-size: 1rem;
       border: none;
       color: lighten($purpleColor, 30%);
+    }
+  }
+}
+
+@media screen and (min-width: $mobileWidth) {
+  .promotion-wrapper {
+    bottom: auto;
+    top: 0;
+    z-index: 10;
+    padding: 0;
+    text-align: center;
+
+    .ticker {
+      padding: 0;
+      animation: none;
     }
   }
 }

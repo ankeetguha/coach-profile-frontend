@@ -10,7 +10,7 @@ export default {
         async getCoach(fields) {
             if (_.isEmpty(this.$store.state.coach)) {
                 const coach = await CoachService.GetCoach(fields);
-                
+
                 this.$store.commit("updateCoach", coach);
                 return coach;
             } else {
@@ -122,5 +122,13 @@ export default {
         convertToMonthDate(date) {
             return moment(date).format('Do MMMM');
         },
+
+        //Check if the device is mobile
+        isMobile() {
+            if (window.outerWidth > 800)
+                return false
+            else
+                return true
+        }
     },
 };

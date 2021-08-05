@@ -6,9 +6,12 @@
       <p>
         Send
         <span v-if="gender == 'Female'">her</span>
-        <span v-else>him</span> a message and get them answered
+        <span v-else-if="gender == 'Male'">him</span> a message and get them
+        answered
       </p>
-      <a :href="`https://wa.me/${phoneNumber}`" class="btn btn-primary">WhatsApp Coach {{ getFirstName(name) }}</a>
+      <a :href="`https://wa.me/${phoneNumber}`" class="btn btn-primary"
+        ><unicon name="whatsapp"></unicon>WhatsApp Coach</a
+      >
     </div>
   </div>
 </template>
@@ -19,7 +22,7 @@ export default {
   props: {
     name: String,
     gender: String,
-    phoneNumber: String
+    phoneNumber: String,
   },
 };
 </script>
@@ -45,9 +48,9 @@ export default {
 .scroll-end-wrapper::after {
   display: block;
   position: absolute;
-  top: 2rem;
+  top: 1.5rem;
   left: 0;
-  background-color: #585858;
+  background-color: darken(#585858, 8%);
   content: "";
   height: 1px;
   width: 35%;
@@ -64,7 +67,7 @@ export default {
   vertical-align: middle;
   transition: all $transitionSpeed;
   padding: 0 1rem;
-  font-size: 3.5rem;
+  font-size: 2.5rem;
 }
 
 .scroll-end-wrapper h3 {
@@ -90,6 +93,32 @@ export default {
 .scroll-end-wrapper.show {
   .scroll-end-emoji {
     opacity: 1;
+  }
+}
+
+@media screen and (min-width: $mobileWidth) {
+  .scroll-end-wrapper {
+    text-align: center;
+    margin: 2rem auto 3rem;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+
+  .coach-message-wrapper,
+  .scroll-end-emoji {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .scroll-end-emoji {
+    font-size: 4.5rem;
+  }
+
+  .coach-message-wrapper {
+    text-align: left;
   }
 }
 </style>

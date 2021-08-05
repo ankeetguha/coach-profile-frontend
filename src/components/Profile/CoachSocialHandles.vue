@@ -61,7 +61,7 @@ export default {
   position: relative;
   background-color: $blackColor;
   text-align: center;
-  padding: 0.5rem 2rem 1rem;
+  padding: 1rem 2rem 1rem;
 }
 
 .social-item-wrapper {
@@ -75,12 +75,13 @@ export default {
   text-decoration: none;
   border: none;
   border-radius: 50%;
-  padding: 0.55rem 0.55rem;
+  padding: 8px 9px;
   margin: 0 0.35rem;
   background-color: lighten($blackColor, 8%);
 
   .unicon /deep/ svg {
-    width: $largestFontSize;
+    width: $largeFontSize;
+    height: auto;
     fill: lighten($blackColor, 45%);
   }
 }

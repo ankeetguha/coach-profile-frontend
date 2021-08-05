@@ -5,7 +5,10 @@
     <VueSlickCarousel
       :arrows="false"
       :dots="false"
-      :centerMode="true"
+      :centerMode="isMobile()"
+      :infinite="isMobile()"
+      :initialSlide="0"
+      :slidesToShow="isMobile() ? 1.5 : 3"
       class="coach-slider"
     >
       <div v-for="coachImage in galleryImages" :key="coachImage._id">
@@ -42,6 +45,10 @@ export default {
   display: flex;
   flex-wrap: wrap;
   z-index: 1;
+
+  * {
+    outline: none !important;
+  }
 }
 
 .coach-slider {
@@ -68,6 +75,38 @@ export default {
 }
 .coach-slider .slick-current + .slick-slide .coach-highlight-image {
   transform-origin: center left;
+}
+
+@media screen and (min-width: $mobileWidth) {
+  .coach-gallery {
+    margin: 3rem 0 0;
+    padding: 0 0;
+    width: auto;
+    display: block;
+  }
+
+  .coach-slider {
+    width: auto;
+    margin: 3rem 0 0;
+  }
+
+  .coach-highlight-image {
+    display: inline-block;
+    // width: calc(33.33% - 1.5rem);
+    margin: 0 0.75rem 1.5rem;
+    transform: scale(1);
+  }
+
+  /deep/ {
+    .slick-slide img {
+      transform: scale(0.9) !important;
+      transform-origin: center center;
+    }
+
+    .slick-slide:nth-child(2n) img {
+      transform: scale(1) !important;
+    }
+  }
 }
 </style>
 

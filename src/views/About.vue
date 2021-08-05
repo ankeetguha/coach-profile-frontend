@@ -248,4 +248,30 @@ export default {
     z-index: -1;
   }
 }
+
+@media screen and (min-width: $mobileWidth) {
+  .coach-stats {
+    margin: 0 20%;
+    display: block;
+
+    .coach-stat {
+      display: inline-block;
+      vertical-align: bottom;
+
+      span {
+        font-size: $extraLargeFontSize;
+      }
+    }
+  }
+
+  .about-description-wrapper {
+    margin: 3rem auto;
+    max-width: 30rem;
+
+    .about-description {
+      font-size: $mediumFontSize;
+      line-height: 1.4;
+    }
+  }
+}
 </style>

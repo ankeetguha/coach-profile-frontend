@@ -1,6 +1,6 @@
 <template>
   <div class="specialities-wrapper">
-    <label class="label-small">Can Help You With</label>
+    <label class="label-small">Specialities & Focus Areas</label>
     <div class="specialities-list">
       <div
         class="speciality-item"
@@ -31,9 +31,7 @@ export default {
   methods: {
     getImageExtension(fileName) {
       return (
-        "/assets/images/" +
-        fileName.replace(/\s+/g, "-").toLowerCase() +
-        ".svg"
+        "/assets/images/" + fileName.replace(/\s+/g, "-").toLowerCase() + ".svg"
       );
     },
   },
@@ -97,6 +95,74 @@ export default {
       color: $lightWhiteColor;
       font-size: $smallFontSize;
       opacity: $lightOpacity;
+    }
+  }
+}
+
+@media screen and (min-width: $mobileWidth) {
+  .label-small {
+    font-family: $titleFont;
+    font-size: $largerFontSize;
+    font-weight: $mediumFontWeight;
+    color: lighten($whiteColor, 10%);
+    letter-spacing: 0;
+    text-transform: none;
+    margin: 0 0 2rem;
+  }
+
+  .specialities-wrapper {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    padding-bottom: 2rem;
+    background-color: transparent;
+
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      background-color: $blackColor;
+      border-top-left-radius: 2rem;
+      border-top-right-radius: 2rem;
+      top: calc(50% + 1.5rem);
+      left: 0;
+      height: 50%;
+      width: 100%;
+      z-index: -1;
+    }
+
+    .speciality-item {
+      width: 10rem;
+      border-radius: 0.75rem;
+      padding: 0.5rem 0 1rem;
+      border: 1px solid lighten($blackColor, 13%);
+      background-color: lighten($blackColor, 10%);
+      box-shadow: 0 0 0.7rem -0.1rem #181818;
+      margin: 0 1rem;
+
+      .speciality-img-wrapper {
+        display: block;
+        background-color: transparent;
+        padding: 0;
+        margin: auto;
+
+        .speciality-img {
+          width: 3.5rem;
+          margin: auto;
+        }
+
+        &::before {
+          display: none;
+        }
+      }
+
+      span {
+        display: block;
+        margin-top: 0.5rem;
+        padding-top: 1rem;
+        border-top: 1px solid lighten($blackColor, 5%);
+        font-size: $normalFontSize;
+        font-weight: $mediumFontWeight;
+      }
     }
   }
 }

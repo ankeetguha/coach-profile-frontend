@@ -6,15 +6,6 @@
       <div class="booking-modal-wrapper">
         <div class="intro-wrapper">
           <h3 class="plan-title">{{ plan.title }}</h3>
-          <span
-            v-if="plan.hasDates != undefined && plan.hasDates == true"
-            class="plan-dates"
-            >From {{ plan.startDate }}
-            <span v-if="plan.endDate != undefined"
-              >till - {{ plan.endDate }}</span
-            ></span
-          >
-          <span v-else class="plan-dates"> Monthly Batches </span>
         </div>
 
         <div class="price-wrapper">
@@ -36,6 +27,19 @@
               ₹<em>{{ convertToIndianNumber(plan.planPrice) }}</em>
             </span>
           </div>
+          <span class="plan-date" v-if="plan.hasDates == true"
+            >Starting from {{ convertToMonthDate(plan.startDate) }}</span
+          >
+          <span
+            class="plan-date"
+            v-else-if="
+              plan.isMonthlyPlan != null &&
+              plan.planDuration != null &&
+              plan.isMonthlyPlan == false
+            "
+            >{{ plan.planDuration }}</span
+          >
+          <span class="plan-date" v-else>Per Month</span>
         </div>
       </div>
 
@@ -238,7 +242,7 @@ export default {
   border-bottom: 1px solid lighten($blackColor, 10%);
   display: flex;
   flex-direction: row;
-  align-items: stretch;
+  align-items: center;
   padding-bottom: 1.5rem;
   margin-bottom: 1rem;
 }
@@ -250,11 +254,17 @@ form {
 .plan-title {
   color: $whiteColor;
   font-size: $mediumFontSize;
+  text-transform: capitalize;
+  line-height: 1.1;
+  margin-top: 0.75rem;
 }
 
-.plan-dates {
-  color: $whiteColor;
+.plan-date {
+  display: block;
+  font-size: $smallerFontSize;
+  color: $lightWhiteColor;
   opacity: $lightOpacity;
+  margin-top: 0.25rem;
 }
 
 .price-wrapper {
@@ -293,6 +303,7 @@ form {
   display: table;
   background-color: $purpleColor;
   font-size: $smallerFontSize;
+  font-weight: $mediumFontWeight;
   padding: 0.55rem 0.75rem;
   border-radius: 0.75rem;
   margin-top: -2.5rem;

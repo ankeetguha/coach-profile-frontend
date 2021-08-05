@@ -1,6 +1,10 @@
 <template>
   <!--START: Qualifications-->
-  <div class="coach-qualifications-wrapper" v-if="certifications.length">
+  <div
+    class="coach-qualifications-wrapper"
+    :class="certifications.length > 1 ? 'multiple' : ''"
+    v-if="certifications.length"
+  >
     <label class="label-small"><em>🏆</em> Qualifications</label>
     <VueSlickCarousel
       :arrows="false"
@@ -9,6 +13,7 @@
       :loop="false"
       :slidesToShow="certifications.length == 1 ? 1.1 : 1.15"
       class="coach-qualifications-slider"
+      v-if="this.isMobile()"
     >
       <div
         v-for="certification in certifications"
@@ -28,6 +33,26 @@
         </div>
       </div>
     </VueSlickCarousel>
+
+    <div class="qualifications-wrapper" v-else>
+      <div
+        v-for="certification in certifications"
+        :key="certification.id"
+        class="coach-qualification"
+      >
+        <div class="coach-qualification-badge">
+          <svg
+            :data-src="require('@/assets/images/icons/badge-flash-circle.svg')"
+            class="coach-qualification-badge-text"
+          />
+          <svg :data-src="require('@/assets/images/icons/badge-flash.svg')" />
+        </div>
+        <div class="coach-qualification-description">
+          <label class="label-small">{{ certification.category }}</label>
+          <h3>{{ certification.title }}</h3>
+        </div>
+      </div>
+    </div>
   </div>
   <!--END: Qualifications-->
 </template>
@@ -151,7 +176,7 @@ svg.coach-qualification-badge-text {
 .coach-qualification h3 {
   color: $whiteColor;
   font-size: $titleFont;
-  font-size: $largeFontSize;
+  font-size: 1.15rem;
   text-transform: capitalize;
 }
 
@@ -186,5 +211,86 @@ svg.coach-qualification-badge-text {
   background-color: #1f1f1f;
   background-size: cover;
   border-radius: 1rem;
+}
+
+@media screen and (min-width: $mobileWidth) {
+  .coach-qualifications-wrapper {
+    padding: 6rem 25% 4rem;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+
+    & > .label-small {
+      display: block;
+      font-family: $titleFont;
+      font-size: $largerFontSize;
+      font-weight: $mediumFontWeight;
+      color: lighten($whiteColor, 10%);
+      letter-spacing: 0;
+      text-transform: none;
+      margin: 0 5rem 1rem 0;
+      border-bottom: 1px solid lighten($blackColor, 10%);
+    }
+
+    &.multiple {
+      display: block;
+      text-align: left;
+      padding: 6rem 15% 4rem;
+
+      & > .label-small {
+        text-align: left;
+        display: inline-block;
+        padding-bottom: 1rem;
+        padding-right: .5rem;;
+      }
+    }
+
+    &.extended-wrapper {
+      padding-top: 13rem;
+      margin-top: -10rem;
+    }
+  }
+
+  .qualifications-wrapper {
+    flex: 1;
+
+    .coach-qualification {
+      position: relative;
+      height: inherit !important;
+      overflow: hidden;
+      margin: 0 -0.5rem 0 0;
+      background-repeat: no-repeat;
+      padding: 1.75rem 2rem;
+      box-shadow: inset 0 0 75px rgba(70, 70, 70, 0.75);
+      border: 1px solid #404040;
+      background-color: #1f1f1f;
+      background-size: cover;
+      border-radius: 1rem;
+
+      &::before {
+        right: 1rem;
+        height: 50%;
+        width: 3px;
+      }
+    }
+
+    .coach-qualification-description {
+      margin-left: 4.5rem;
+    }
+
+    .coach-qualification-badge {
+      width: 4rem;
+      left: 1.25rem;
+    }
+  }
+
+  .multiple {
+    .coach-qualification {
+      display: inline-block;
+      width: calc(50% - 5.5rem);
+      margin: 0 .5rem 1rem;
+    }
+  }
 }
 </style>

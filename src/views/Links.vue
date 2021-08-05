@@ -132,7 +132,17 @@ export default {
   color: darken($purpleColor, 50%);
   border: 1px solid darken($purpleColor, 10%);
   font-size: $normalFontSize;
+  font-weight: $mediumFontWeight;
   margin: 1rem 1rem;
   text-decoration: none;
+}
+
+@media screen and (min-width: $mobileWidth) {
+  .promotional-links-wrapper {
+    margin: 0 auto;
+    width: 50%;
+    max-width: 30rem;
+
+  }
 }
 </style>

@@ -20,15 +20,6 @@
             <h3 class="plan-title">
               {{ plan.title }}
             </h3>
-            <span
-              v-if="plan.hasDates != undefined && plan.hasDates == true"
-              class="plan-dates"
-              >From {{ plan.startDate }}
-              <span v-if="plan.endDate != undefined"
-                >till - {{ plan.endDate }}</span
-              ></span
-            >
-            <span v-else class="plan-dates"> Monthly Batches </span>
           </div>
           <div class="price-wrapper">
             <div
@@ -49,6 +40,19 @@
                 ₹<em>{{ convertToIndianNumber(plan.planPrice) }}</em>
               </span>
             </div>
+            <span class="plan-date" v-if="plan.hasDates == true"
+              >Starting from {{ convertToMonthDate(plan.startDate) }}</span
+            >
+            <span
+              class="plan-date"
+              v-else-if="
+                plan.isMonthlyPlan != null &&
+                plan.planDuration != null &&
+                plan.isMonthlyPlan == false
+              "
+              >{{ plan.planDuration }}</span
+            >
+            <span class="plan-date" v-else>Per Month</span>
           </div>
         </div>
       </div>
@@ -57,15 +61,21 @@
         <label class="label-small">About This Plan</label>
         <p class="plan-description">{{ plan.description }}</p>
 
-        <div class="highlights-wrapper">
-          <label class="label-small">{{ plan.highlights.title }}</label>
-          <div
-            class="highlight-item"
-            v-for="highlight in plan.highlights.list"
-            :key="highlight._id"
-          >
-            <unicon name="check"></unicon>
-            <span>{{ highlight.title }}</span>
+        <div
+          v-if="
+            plan.highlights.list != undefined && plan.highlights.list.length > 0
+          "
+        >
+          <div class="highlights-wrapper">
+            <label class="label-small">{{ plan.highlights.title }}</label>
+            <div
+              class="highlight-item"
+              v-for="highlight in plan.highlights.list"
+              :key="highlight._id"
+            >
+              <unicon name="check"></unicon>
+              <span>{{ highlight.title }}</span>
+            </div>
           </div>
         </div>
 
@@ -105,11 +115,19 @@
             </span>
           </div>
         </div>
+        <span class="plan-date" v-if="plan.hasDates == true"
+          >Starting from {{ convertToMonthDate(plan.startDate) }}</span
+        >
         <span
-          v-if="plan.hasDates != undefined && plan.hasDates == true"
-          class="plan-dates"
-        ></span>
-        <span v-else class="plan-dates"> Monthly Batches </span>
+          class="plan-date"
+          v-else-if="
+            plan.isMonthlyPlan != null &&
+            plan.planDuration != null &&
+            plan.isMonthlyPlan == false
+          "
+          >{{ plan.planDuration }}</span
+        >
+        <span class="plan-date" v-else>Per Month</span>
       </div>
       <button class="btn btn-primary" @click="showBookingModal">
         Book Now
@@ -238,8 +256,8 @@ export default {
 }
 
 .cover-image {
-  width: calc(100% - 2rem);
-  margin: 1rem;
+  width: calc(100% - 1rem);
+  margin: 1rem .5rem .5rem;
   border-radius: 1rem;
 }
 
@@ -261,12 +279,14 @@ export default {
 
 .intro-wrapper {
   flex: 1;
+  margin-right: 2rem;
 
   .coach-name {
     position: relative;
     display: table;
     background-color: $purpleColor;
     font-size: $smallerFontSize;
+    font-weight: $mediumFontWeight;
     padding: 0.55rem 0.75rem;
     border-radius: 0.75rem;
     margin-top: -2rem;
@@ -275,9 +295,10 @@ export default {
 
   .plan-title {
     font-size: $mediumFontSize;
+    text-transform: capitalize;
     color: $whiteColor;
+    line-height: 1.1;
     margin-left: 0.15rem;
-    margin-bottom: 0.15rem;
   }
 
   .plan-dates {
@@ -291,6 +312,14 @@ export default {
   text-align: right;
 }
 
+.plan-date {
+  display: block;
+  font-size: $smallestFontSize;
+  color: $lightWhiteColor;
+  opacity: $lightOpacity;
+  margin-top: 0.25rem;
+}
+
 .plan-price {
   font-size: $smallFontSize;
   font-weight: $mediumFontWeight;
@@ -298,7 +327,7 @@ export default {
   color: $whiteColor;
 
   em {
-    font-size: $mediumFontSize;
+    font-size: $normalFontSize;
     margin-left: 0.15rem;
   }
 
@@ -308,7 +337,7 @@ export default {
     margin-top: 0.15rem;
 
     em {
-      font-size: $normalFontSize;
+      font-size: $smallerFontSize;
     }
   }
 }

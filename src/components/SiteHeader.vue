@@ -1,29 +1,37 @@
 <template>
   <!--START: Hero Wrapper-->
-  <div class="header-wrapper">
+  <div
+    class="header-wrapper"
+    :class="
+      coach.offerTicker != undefined && coach.offerTicker.showOffer ? 'extend-header' : ''
+    "
+  >
     <div class="hero-wrapper">
-      <img
-        v-if="coach.profilePictureURL != undefined"
-        :src="coach.profilePictureURL"
-        class="profile-image"
-        :alt="coach.fullName"
-      />
-      <h1 class="hero-title">
-        <span>{{ coach.fullName }}</span>
-      </h1>
-      <p v-if="coach.coverTitle != undefined" class="hero-description">
-        {{ coach.coverTitle }}
-      </p>
+      <div class="profile-image-wrapper">
+        <img
+          v-if="coach.profilePictureURL != undefined"
+          :src="coach.profilePictureURL"
+          class="profile-image"
+          :alt="coach.fullName"
+        />
+      </div>
+      <div class="coach-details-wrapper">
+        <h1 class="hero-title">
+          <span>{{ coach.fullName }}</span>
+        </h1>
+        <p v-if="coach.coverTitle != undefined" class="hero-description">
+          {{ coach.coverTitle }}
+        </p>
+        <!--START: Social Handles-->
+        <CoachSocialHandles
+          :socialHandles="coach.socialHandles"
+          :phoneNumber="coach.phone"
+          :showNumber="coach.showNumber"
+        ></CoachSocialHandles>
+        <!--END: Social Handles-->
+      </div>
     </div>
     <!--END: Hero Wrapper-->
-
-    <!--START: Social Handles-->
-    <CoachSocialHandles
-      :socialHandles="coach.socialHandles"
-      :phoneNumber="coach.phone"
-      :showNumber="coach.showNumber"
-    ></CoachSocialHandles>
-    <!--END: Social Handles-->
 
     <!--START: Profile Menu-->
     <div class="profile-menu-list">
@@ -79,56 +87,82 @@ export default {
 .hero-wrapper {
   position: relative;
   background: $blackColor;
-  padding: 1.5rem 0 1rem;
+  padding: 2.5rem 0 0;
   text-align: center;
 
-  .profile-image {
-    background-color: lighten($blackColor, 5%);
+  .profile-image-wrapper {
     position: relative;
-    z-index: 1;
+    width: 4rem;
+    height: 4rem;
     border: 2px solid $purpleColor;
-    display: block;
-    width: 5rem;
-    height: 5rem;
     padding: 0.5rem;
-    margin: 0 auto 0.75rem;
     border-radius: 50%;
-  }
-
-  .hero-title {
-    font-family: $titleFont;
-    font-weight: $boldFontWeight;
-    color: $whiteColor;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-
-    span {
-      line-height: 1;
-      font-size: $extraLargeFontSize;
-      position: relative;
-      display: block;
-      margin-top: -1.25rem;
-    }
+    margin: 0 auto 0.75rem;
+    z-index: 1;
+    overflow: hidden;
 
     &::before {
+      content: "";
       display: block;
-      content: "COACH";
-      font-size: $largestFontSize;
-      color: $blackColor;
-      font-family: $titleFont;
-      letter-spacing: 0.15rem;
-      font-weight: 800;
-      -webkit-text-stroke: 0.75px $whiteColor;
-      opacity: $lightOpacity;
-      margin-bottom: -1.25rem;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: calc(100% - 10px);
+      height: calc(100% - 10px);
+      border-radius: 50%;
+      border: 5px solid lighten($blackColor, 5%);
+      z-index: 2;
     }
   }
 
-  .hero-description {
-    font-size: $normalFontSize;
-    color: $lightWhiteColor;
-    margin: 0 1.5rem;
+  .profile-image {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
+}
+
+.coach-details-wrapper {
+  text-align: center;
+  margin: 0 0 0.5rem;
+}
+
+.hero-title {
+  font-family: $titleFont;
+  font-weight: $boldFontWeight;
+  color: $whiteColor;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+
+  span {
+    line-height: 1;
+    font-size: $largestFontSize;
+    position: relative;
+    display: block;
+    margin-top: -0.95rem;
+  }
+
+  &::before {
+    display: block;
+    content: "COACH";
+    font-size: $largeFontSize;
+    color: $blackColor;
+    font-family: $titleFont;
+    letter-spacing: 0.15rem;
+    font-weight: 800;
+    -webkit-text-stroke: 0.75px $whiteColor;
+    opacity: $lightOpacity;
+  }
+}
+
+.hero-description {
+  font-size: $smallFontSize;
+  color: $lightWhiteColor;
+  margin: 0 1.5rem;
 }
 
 .profile-menu-list {
@@ -142,17 +176,56 @@ export default {
     display: inline-block;
     color: $whiteColor;
     opacity: $lightOpacity;
-    padding: 0.45rem 1.5rem;
+    font-size: $smallFontSize;
+    padding: 0.25rem 1.15rem;
     cursor: pointer;
     text-align: center;
     border-bottom: 2px solid transparent;
 
     &.router-link-exact-active {
       opacity: 1;
-      padding: 0.45rem 1.5rem;
+      padding: 0.35rem 1.15rem;
       color: darken($darkPurpleColor, 35%);
       background-color: $purpleColor;
       border-radius: 3rem;
+    }
+  }
+}
+
+@media screen and (min-width: $mobileWidth) {
+  .extend-header {
+    padding-top: 3rem;
+  }
+  .header-wrapper {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .profile-image-wrapper,
+  .coach-details-wrapper {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .hero-wrapper {
+    display: block;
+    .profile-image-wrapper {
+      width: 5.5rem;
+      height: 5.5rem;
+    }
+
+    .coach-details-wrapper {
+      text-align: left;
+      margin-left: 2rem;
+    }
+
+    .social-list {
+      text-align: left;
+      padding: 1rem 0;
+    }
+
+    .hero-description {
+      margin: 0;
     }
   }
 }
