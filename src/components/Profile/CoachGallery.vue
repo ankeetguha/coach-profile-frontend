@@ -5,10 +5,9 @@
     <VueSlickCarousel
       :arrows="false"
       :dots="false"
-      :centerMode="isMobile()"
-      :infinite="isMobile()"
-      :initialSlide="0"
-      :slidesToShow="isMobile() ? 1.5 : 3"
+      :centerMode="this.isMobile()"
+      :infinite="this.isMobile()"
+      :slidesToShow="this.isMobile() ? 1 : 3"
       class="coach-slider"
     >
       <div v-for="coachImage in galleryImages" :key="coachImage._id">
@@ -42,8 +41,7 @@ export default {
 .coach-gallery {
   position: relative;
   margin: 2rem 1.5rem 4rem;
-  display: flex;
-  flex-wrap: wrap;
+  
   z-index: 1;
 
   * {

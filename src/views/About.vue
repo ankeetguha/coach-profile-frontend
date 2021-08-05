@@ -193,14 +193,9 @@ export default {
   border-radius: 50%;
 }
 
-.coach-stats {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-}
-
 .coach-stat {
-  flex: 1;
+  display: inline-block;
+  vertical-align: bottom;
   text-align: center;
   margin: 0 2rem 0.5rem;
 

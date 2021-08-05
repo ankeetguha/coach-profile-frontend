@@ -28,11 +28,11 @@
                 plan.isDiscountedPlan == true
               "
             >
-              <span class="plan-price">
-                ₹<em>{{ convertToIndianNumber(plan.discountedPrice) }}</em>
-              </span>
               <span class="plan-price slashed-price">
                 ₹<em>{{ convertToIndianNumber(plan.planPrice) }}</em>
+              </span>
+              <span class="plan-price">
+                ₹<em>{{ convertToIndianNumber(plan.discountedPrice) }}</em>
               </span>
             </div>
             <div v-else>
@@ -93,7 +93,7 @@
     </div>
 
     <!--START: CTA Plan-->
-    <div class="cta-sticky-wrapper">
+    <div v-if="this.isMobile()" class="cta-sticky-wrapper">
       <div class="cta-sticky-info">
         <div class="price-wrapper">
           <div
@@ -136,7 +136,11 @@
     <!--END: CTA Plan-->
 
     <!--START: Booking Modal-->
-    <BookingModal :plan="plan" :coach="coach" :show="showModal"></BookingModal>
+    <BookingModal
+      :plan="plan"
+      :coach="coach"
+      :show="isMobile() ? showModal : true"
+    ></BookingModal>
     <div
       class="bg-overlay"
       :class="{ show: showModal }"
@@ -257,7 +261,7 @@ export default {
 
 .cover-image {
   width: calc(100% - 1rem);
-  margin: 1rem .5rem .5rem;
+  margin: 1rem 0.5rem 0.5rem;
   border-radius: 1rem;
 }
 
@@ -448,6 +452,39 @@ export default {
     color: $whiteColor;
     opacity: $lightOpacity;
     margin-top: 0.35rem;
+  }
+}
+
+@media screen and (min-width: $mobileWidth) {
+  .plan-intro-wrapper {
+    padding-left: 15%;
+    padding-right: 45%;
+  }
+
+  .details-wrapper {
+    margin-left: 16%;
+    width: 39%;
+
+    .plan-description {
+      font-size: $normalFontSize;
+      line-height: 1.6;
+    }
+  }
+
+  .highlights-wrapper {
+    margin: 3rem 0;
+  }
+
+  .intro-wrapper {
+    .plan-title {
+      font-size: $largeFontSize;
+    }
+  }
+
+  .plan-price {
+    em {
+      font-size: $mediumFontSize;
+    }
   }
 }
 </style>

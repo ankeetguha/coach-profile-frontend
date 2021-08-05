@@ -1,11 +1,12 @@
 <template>
   <div class="plan-book-modal" :class="{ show: showModal }">
-    <div v-if="!successMessage.show">
+    <div v-if="!successMessage.show" class="plan-book-container">
       <!--START: Booking Form-->
       <span class="coach-name">Coach {{ coach.fullName }}</span>
       <div class="booking-modal-wrapper">
         <div class="intro-wrapper">
-          <h3 class="plan-title">{{ plan.title }}</h3>
+          <h3 class="plan-title" v-if="isMobile()">{{ plan.title }}</h3>
+          <h3 class="plan-title" v-else>Book This Plan</h3>
         </div>
 
         <div class="price-wrapper">
@@ -314,6 +315,54 @@ form {
   display: block;
   width: 100%;
   margin-top: 2rem;
+}
+
+@media screen and (min-width: $mobileWidth) {
+  .plan-book-modal {
+    transform: none;
+    bottom: auto;
+    left: auto;
+    right: 10%;
+    top: 5rem;
+    padding: 0;
+    border-radius: 1.5rem;
+    border: 1px solid lighten($blackColor, 5%);
+    box-shadow: 0 0 1.5rem -0.1rem #181818;
+    width: calc(30%);
+
+    &::before {
+      display: none;
+    }
+  }
+
+  .price-wrapper,
+  .coach-name {
+    display: none;
+  }
+
+  .booking-modal-wrapper {
+    margin-bottom: 0;
+    padding-bottom: .5rem;
+  }
+
+  .plan-book-container {
+    position: relative;
+    padding: .5rem 1.25rem 2rem;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 100%;
+      box-shadow: inset 0 0 2000px rgba(183, 183, 183, 0.5);
+      opacity: 0.35;
+      border-radius: 1.5rem;
+      z-index: -1;
+    }
+  }
 }
 </style>
 
