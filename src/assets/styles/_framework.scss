@@ -13,7 +13,6 @@
     padding: .75rem 1rem;
     background: transparent;
     cursor: pointer;
-
     &:hover {
         background-color: lighten($purpleColor, 40%);
         color: darken($purpleColor, 10%);
@@ -32,39 +31,31 @@
 .btn-border {
     @include transition;
     border: 1px solid $greyBorderColor;
-
     &.btn-border-color,
     &:hover {
         background-color: lighten($purpleColor, 38%);
         color: $purpleColor;
         border: 1px solid $purpleColor;
-
         .unicon svg {
             fill: lighten($purpleColor, 0%);
         }
     }
-
     &.btn-border-color:hover.btn,
     &.btn-border-alt:hover {
         background-color: lighten($purpleColor, 0%);
         color: lighten($purpleColor, 45%);
         border: 1px solid $purpleColor;
-
         .unicon svg {
             fill: lighten($purpleColor, 45%);
         }
     }
 }
 
-
-
 .btn-invert:hover {
     background-color: lighten($darkBlueColor, 8%);
-
     span {
         color: lighten($darkBlueColor, 75%);
     }
-
     [data-icon] {
         color: lighten($darkBlueColor, 75%);
     }
@@ -102,15 +93,12 @@
 
 .btn-icon {
     padding: .35rem .5rem;
-
     .unicon {
         margin-right: 0 !important;
     }
-
     .unicon svg {
         width: 1.15rem;
     }
-
     &:hover .unicon svg {
         fill: $purpleColor;
     }
@@ -119,12 +107,10 @@
 .btn-small {
     font-size: $smallestFontSize;
     padding: .45rem .45rem;
-
     .unicon {
         margin-right: .25rem !important;
         line-height: $smallestFontSize !important;
     }
-
     .unicon svg {
         width: $smallerFontSize !important;
     }
@@ -136,7 +122,6 @@
     color: #0a4a1d;
     background-color: $darkGreenColor;
     border: 1px solid #5df1b1;
-
     .unicon svg {
         fill: darken($greenColor, 50%);
     }
@@ -152,7 +137,6 @@
     color: lighten($redColor, 45%);
     background-color: $redColor;
     border: 1px solid lighten($redColor, 10%);
-
     &:hover {
         color: lighten($redColor, 45%);
         background-color: darken($redColor, 15%);
@@ -164,7 +148,6 @@
     background-color: lighten($purpleColor, 38%);
     color: $purpleColor;
     border: 1px solid $purpleColor;
-
     .unicon svg {
         fill: lighten($purpleColor, 0%);
     }
@@ -174,13 +157,14 @@
     color: #81819e !important;
     background-color: #fafafb !important;
     border: 1px solid #d8d9e5 !important;
-
     svg {
         fill: #81819e !important;
     }
 }
 
+
 /* START: Input Styling */
+
 input,
 textarea {
     transition: all $transitionSpeed;
@@ -194,7 +178,7 @@ textarea {
     border: 1px solid #e7e6ef;
     border-radius: 0.75rem;
     -webkit-appearance: none;
-
+    font-family: $bodyFont;
     &::placeholder {
         color: #9390a7;
     }
@@ -212,7 +196,6 @@ input.form-error {
 
 .field-radio-item {
     position: relative;
-
     label {
         cursor: pointer;
         color: $greyColor;
@@ -235,14 +218,12 @@ input.form-error {
     width: 16rem !important;
     position: absolute !important;
     bottom: 0;
-
     header span,
     .month__year_btn,
     .day__month_btn {
         font-size: $smallerFontSize;
         color: $darkBlueColor;
     }
-
     .cell.year,
     .cell.month,
     .cell.day {
@@ -253,22 +234,18 @@ input.form-error {
         height: 30px !important;
         margin: 2px 0;
         border-radius: .3rem;
-
         &:hover {
             border-color: $purpleColor !important;
         }
     }
-
     .cell.day-header {
         color: $purpleColor !important;
         font-weight: $mediumFontWeight;
     }
-
     .cell.today {
         background-color: $greenColor;
         color: darken($greenColor, 50%) !important;
     }
-
     .cell.selected {
         background-color: $purpleColor !important;
         color: lighten($purpleColor, 45%) !important;
@@ -293,14 +270,12 @@ input.form-error {
     display: flex;
     flex-direction: row;
     position: relative;
-
     .field-toggle-button {
         position: relative;
         align-self: center;
         width: 2.5rem;
         height: 1.5rem;
     }
-
     label {
         color: $greyColor;
         font-size: $smallerFontSize;
@@ -309,7 +284,6 @@ input.form-error {
         width: calc(100% - 3rem);
         margin-left: .75rem;
     }
-
     input {
         position: relative;
         cursor: pointer;
@@ -320,7 +294,6 @@ input.form-error {
         width: 100%;
         height: 100%;
     }
-
     .field-toggle-button span {
         position: absolute;
         cursor: pointer;
@@ -333,7 +306,6 @@ input.form-error {
         -webkit-transition: .4s;
         transition: .4s;
     }
-
     .field-toggle-button span::before {
         @include transition;
         position: absolute;
@@ -346,11 +318,9 @@ input.form-error {
         border-radius: 50%;
         background-color: white;
     }
-
     input:checked+span {
         background-color: lighten($purpleColor, 0%);
     }
-
     input:checked+span::before {
         transform: translate(calc(2.5rem - 1.45rem), -50%);
     }
@@ -358,7 +328,6 @@ input.form-error {
 
 .field-radio-highlight-wrapper {
     display: flex;
-
     .field-radio-item label {
         @include transition;
         font-size: $normalFontSize;
@@ -369,28 +338,23 @@ input.form-error {
         margin-left: 0;
         margin-right: .5rem;
     }
-
     .field-radio-item input[type="radio"] {
         @include vertical-center-align;
         left: .75rem;
     }
-
     .field-radio-item:hover label {
         color: darken($purpleColor, 5%);
         background-color: lighten($purpleColor, 40%);
         border: 1px solid lighten($purpleColor, 30%);
     }
-
     .field-radio-item:hover input[type="radio"]::before {
         background: lighten($purpleColor, 15%);
     }
-
     .field-radio-item input[type="radio"]:checked+label {
         color: darken($purpleColor, 15%);
         background-color: lighten($purpleColor, 40%);
         border: 1px solid lighten($purpleColor, 0%);
     }
-
     .field-radio-item input[type="radio"]:checked {
         background: #15a240;
     }
@@ -402,7 +366,6 @@ input.form-error {
     border-radius: .5rem;
     padding: .25rem;
     width: fit-content;
-
     .field-radio-item label {
         @include transition;
         font-size: $smallerFontSize;
@@ -410,20 +373,16 @@ input.form-error {
         border-radius: .5rem;
         margin-left: 0;
     }
-
     .field-radio-item input[type="radio"] {
         @include vertical-center-align;
         left: .75rem;
     }
-
     .field-radio-item:hover label {
         color: darken($purpleColor, 5%);
     }
-
     .field-radio-item:hover input[type="radio"]::before {
         background: lighten($purpleColor, 15%);
     }
-
     .field-radio-item input[type="radio"]:checked+label {
         font-weight: $mediumFontWeight;
         color: darken($purpleColor, 0%);
@@ -444,7 +403,6 @@ input[type="radio"] {
     overflow: hidden;
     border: 1px solid #a4a4a4;
     background: lighten($greyColor, 50%);
-
     &::before {
         content: "";
         display: block;
@@ -459,12 +417,10 @@ input[type="radio"] {
         text-align: center;
         transition: all 250ms ease;
     }
-
     &:checked {
         border-color: lighten(#15a240, 25%);
         background: #10fc56;
     }
-
     &:checked::before {
         background: #15a240;
         border-color: #10fc56;
@@ -475,7 +431,6 @@ input[type="radio"] {
     input[type="radio"] {
         display: none;
     }
-
     .field-radio-item label {
         padding: .5rem .75rem;
     }
@@ -578,7 +533,6 @@ input:checked~.checkmark:after {
     border-width: 0 2px 2px 0;
 }
 
-
 .field-radio-wrapper {
     margin-bottom: 1.75rem;
 }
@@ -587,25 +541,20 @@ input:checked~.checkmark:after {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-
     .field-main-item {
         flex: 1;
         align-self: center;
         margin-right: .75rem;
     }
-
     &>.field-main-item {
         flex-basis: calc(50% - .75rem);
     }
-
     .field-main-item:nth-child(2n) {
         margin-right: 0;
     }
-
     .field-main-item:nth-child(n + 3) {
         margin-top: 1rem;
     }
-
     .field-radio-wrapper {
         margin-bottom: 0;
     }
@@ -617,7 +566,6 @@ input:checked~.checkmark:after {
 
 .dropdown-wrapper {
     position: relative;
-
     .dropdown-block {
         display: none;
         background-color: $whiteColor;
@@ -631,7 +579,6 @@ input:checked~.checkmark:after {
         padding: .75rem;
         border-radius: .5rem;
     }
-
     .dropdown-block.show {
         display: block;
     }
@@ -639,7 +586,6 @@ input:checked~.checkmark:after {
 
 .field-money-item {
     position: relative;
-
     .money-label {
         font-size: $normalFontSize;
         color: $purpleColor;
@@ -654,16 +600,18 @@ input:checked~.checkmark:after {
         height: calc(100% - 2px);
         width: 2rem;
     }
-
     input {
         padding: .75rem 1.15rem .75rem 2.5rem;
         width: calc(100% - 3.85rem)
     }
 }
 
+
 /* END: Input Styling */
 
+
 /* START: Menus */
+
 .site-menu-dropdown-wrapper {
     position: relative;
 }
@@ -729,11 +677,11 @@ input:checked~.checkmark:after {
     background-color: lighten($purpleColor, 40%);
 }
 
+
 /* END: Menus */
 
 .tooltip-wrapper {
     position: relative;
-
     .tooltip {
         @include transition;
         z-index: -1;
@@ -747,7 +695,6 @@ input:checked~.checkmark:after {
         bottom: calc(100% + 1rem);
         padding: .75rem;
         border-radius: .5rem;
-
         &.show {
             z-index: -1;
             opacity: 1;
@@ -756,36 +703,32 @@ input:checked~.checkmark:after {
     }
 }
 
-/*Vue 2 Editor*/
-.text-editor {
 
+/*Vue 2 Editor*/
+
+.text-editor {
     .ql-snow .ql-toolbar button svg,
     .ql-snow.ql-toolbar button svg {
         width: 1rem !important;
         height: auto !important;
     }
-
     .ql-snow.ql-toolbar {
         display: inline-block;
         padding: 0.5rem !important;
         border-radius: 0.5rem;
         border-color: $greyBorderColor;
     }
-
     .ql-formats:last-child {
         margin-right: 0 !important;
     }
-
     .ql-container.ql-snow {
         margin-top: 1rem;
         border: none;
         border-bottom: 1px solid $greyBorderColor;
     }
-
     .ql-snow.ql-toolbar .ql-formats {
         margin-bottom: 0 !important;
     }
-
     .ql-editor.ql-blank::before {
         color: $greyColor;
         font-size: $largeFontSize;
@@ -793,22 +736,18 @@ input:checked~.checkmark:after {
         opacity: $lightOpacity;
         font-style: normal;
     }
-
     .ql-editor ol li:not(.ql-direction-rtl),
     .ql-editor ul li:not(.ql-direction-rtl) {
         color: $blackColor;
     }
-
     .ql-editor p,
     .ql-editor ol,
     .ql-editor ul {
         margin: 0 0 1rem;
     }
-
     .ql-snow .ql-stroke {
         stroke: $greyColor !important;
     }
-
     .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke,
     .ql-snow .ql-toolbar .ql-picker-item.ql-selected .ql-stroke-miter,
     .ql-snow .ql-toolbar .ql-picker-item:hover .ql-stroke,
@@ -839,7 +778,6 @@ input:checked~.checkmark:after {
     .ql-snow.ql-toolbar button:hover .ql-stroke-miter {
         stroke: $purpleColor !important;
     }
-
     .ql-snow .ql-toolbar .ql-picker-item.ql-selected,
     .ql-snow .ql-toolbar .ql-picker-item:hover,
     .ql-snow .ql-toolbar .ql-picker-label.ql-active,
@@ -857,14 +795,25 @@ input:checked~.checkmark:after {
         background-color: #e6e2f9;
         border-radius: 0.15rem;
     }
-
     strong {
         font-weight: $boldFontWeight;
     }
-
     em {
         font-style: italic;
     }
 }
 
+
 /*Vue2 Editor*/
+
+.light-theme {
+    .field-title {
+        color: $blackColor;
+        opacity: $lightOpacity;
+    }
+    input,
+    textarea {
+        background-color: #f4f4f5;
+        border: 1px solid #e2e2e2;
+    }
+}

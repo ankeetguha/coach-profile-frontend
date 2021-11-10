@@ -6,7 +6,9 @@
       class="plan-block"
       v-for="plan in plans"
       :key="plan.id"
-      :to="`/${coachSlug}/plans/${plan._id}`"
+      :to="`/${!$store.state.isSubDomain ? coachSlug + '/' : ''}plans/${
+        plan._id
+      }`"
     >
       <img :src="plan.coverImageURL" class="plan-cover" :alt="plan.title" />
       <div class="plan-info-wrapper">
@@ -15,7 +17,7 @@
           v-if="plan.isMostPopular != undefined && plan.isMostPopular == true"
           >🔥 Most Popular</label
         >
-        <div class="rel-wrapper">
+        <div class="plan-details-block">
           <h3 class="plan-title">
             {{ plan.title }}
             <span class="plan-action">
@@ -36,18 +38,20 @@
               <em>{{ convertToIndianNumber(plan.planPrice) }}</em>
             </span>
             <div v-else>
-              <span class="plan-price">
+              <span class="plan-price slashed-price">
                 ₹
                 <em>{{ convertToIndianNumber(plan.planPrice) }}</em>
               </span>
-              <span class="plan-price slashed-price">
+              <span class="plan-price">
                 ₹
                 <em>{{ convertToIndianNumber(plan.discountedPrice) }}</em>
               </span>
             </div>
 
-            <span class="plan-date" v-if="plan.hasDates == true"
-              >Starting from {{ convertToMonthDate(plan.startDate) }}</span
+            <span
+              class="plan-date"
+              v-if="plan.hasDates == true && plan.startDate != undefined"
+              >Starts {{ convertToMonthDate(plan.startDate) }}</span
             >
             <span
               class="plan-date"
@@ -58,7 +62,10 @@
               "
               >{{ plan.planDuration }}</span
             >
-            <span class="plan-date" v-else>Per Month</span>
+            <span class="plan-date" v-else-if="plan.hasDates == false"
+              >Per Month</span
+            >
+            <span class="plan-date" v-else></span>
           </div>
         </div>
       </div>
@@ -119,9 +126,8 @@ export default {
     border-radius: 0.5rem;
 
     &.plan-tag-popular {
-      background: #cb2d3e;
       background: linear-gradient(to right, #8567d4, #573bbd);
-      // background: linear-gradient(to right, #f33719, #cb2d3e);
+      // background: linear-gradient(to right, #cb2d3e, #ff7349);
     }
   }
   .plan-info-wrapper {
@@ -134,6 +140,8 @@ export default {
       font-size: $mediumFontSize;
       line-height: $largeFontSize;
       width: calc(100% - 6rem);
+      display: inline-block;
+      vertical-align: top;
       text-transform: uppercase;
       letter-spacing: 0.05rem;
       font-weight: 700;
@@ -151,9 +159,9 @@ export default {
 
   .plan-actions-wrapper {
     text-align: right;
-    position: absolute;
-    right: 0;
-    top: 0;
+    display: inline-block;
+    vertical-align: top;
+    width: 6rem;
 
     .plan-price {
       display: block;
@@ -201,6 +209,85 @@ export default {
     fill: #717171;
     transform: translateY(2px);
     width: $mediumFontSize;
+  }
+}
+
+//Light Theme styles
+.light-theme {
+  .plans-list-title {
+    display: table;
+    position: relative;
+    text-align: center;
+    color: $lightBlackColor;
+    background-color: $lightWhiteColor;
+    opacity: 1;
+    padding: 0 1.5rem;
+    margin: 0 auto 2rem;
+
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      height: 1px;
+      width: 80vw;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      left: 50%;
+      background-color: #c7c7c7;
+      z-index: -1;
+    }
+  }
+
+  .plan-block {
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+
+    .plan-date,
+    .plan-price {
+      color: $blackColor;
+    }
+
+    .plan-cover {
+      border-radius: 0.75rem;
+    }
+
+    .plan-info-wrapper {
+      margin: -2rem 1rem 0;
+      background: $lightWhiteColor;
+      padding: 1rem 1.25rem;
+      border-radius: 1rem;
+      border: 1px solid #ececec;
+      box-shadow: 0 1rem 1.5rem -0.5rem rgb(222, 222, 222);
+    }
+
+    .plan-title {
+      color: $lightBlackColor;
+      font-family: $bodyFont;
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 500;
+      margin-bottom: 0;
+    }
+
+    .plan-actions-wrapper {
+      padding-bottom: 0rem;
+      margin-bottom: 0.85rem;
+      border-bottom: 1px solid var(--brand-color);
+    }
+
+    .plan-action {
+      display: table;
+      background-color: var(--brand-color);
+      color: var(--brand-color-light-45);
+      border-radius: 0.5rem;
+      padding: 0 0.5rem;
+      margin-top: 0.75rem;
+
+      .unicon /deep/ svg {
+        fill: var(--brand-color-light-45);
+      }
+    }
   }
 }
 

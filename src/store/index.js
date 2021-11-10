@@ -5,12 +5,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        coach: {
-        },
+        coach: {},
+        isSubDomain: false
     },
     mutations: {
         updateCoach(state, coach) {
             state.coach = coach;
+        },
+        updateIsSubDomain(state, val) {
+            state.isSubDomain = val;
         },
     },
 });

@@ -58,8 +58,8 @@ $duration: 10s;
   overflow: hidden;
   background: linear-gradient(
     to right,
-    darken($purpleColor, 10%),
-    darken($purpleColor, 20%)
+    var(--brand-color),
+    var(--brand-color-dark-10)
   );
   padding-left: 100%;
   z-index: 1;
@@ -81,8 +81,15 @@ $duration: 10s;
       padding: 0.7rem 2rem 0.85rem;
       font-size: 1rem;
       border: none;
-      color: lighten($purpleColor, 30%);
+      color: var(--brand-color-dark-50)
     }
+  }
+}
+
+//Light Theme Styles
+.light-theme {
+  .promotion-wrapper .ticker .ticker-item {
+    color: var(--brand-color-light-45)
   }
 }
 

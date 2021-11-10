@@ -1,78 +1,167 @@
 <template>
   <div class="plan-book-modal" :class="{ show: showModal }">
-    <div v-if="!successMessage.show" class="plan-book-container">
+    <div class="rel-wrapper">
+      <span class="coach-name">{{ coach.fullName }}</span>
+
       <!--START: Booking Form-->
-      <span class="coach-name">Coach {{ coach.fullName }}</span>
-      <div class="booking-modal-wrapper">
-        <div class="intro-wrapper">
-          <h3 class="plan-title" v-if="isMobile()">{{ plan.title }}</h3>
-          <h3 class="plan-title" v-else>Book This Plan</h3>
+      <div v-if="!successMessage.show" class="plan-book-container">
+        <div class="booking-modal-wrapper">
+          <div class="intro-wrapper">
+            <h3 class="plan-title" v-if="isMobile()">{{ plan.title }}</h3>
+            <h3 class="plan-title" v-else>Book This Plan</h3>
+
+            <span
+              class="plan-date"
+              v-if="plan.hasDates == true && plan.startDate != undefined"
+              >Starts {{ convertToMonthDate(plan.startDate) }}</span
+            >
+            <span
+              class="plan-date"
+              v-else-if="
+                plan.isMonthlyPlan != null &&
+                plan.planDuration != null &&
+                plan.isMonthlyPlan == false
+              "
+              >{{ plan.planDuration }}</span
+            >
+            <span class="plan-date" v-else-if="plan.hasDates == false"
+              >Monthly Plan</span
+            >
+            <span class="plan-date" v-else></span>
+          </div>
+
+          <div v-if="!coach.paymentsActive" class="price-wrapper">
+            <div
+              v-if="
+                plan.isDiscountedPlan != undefined &&
+                plan.isDiscountedPlan == true
+              "
+            >
+              <span class="plan-price">
+                ₹<em>{{ convertToIndianNumber(plan.discountedPrice) }}</em>
+              </span>
+              <span class="plan-price slashed-price">
+                ₹<em>{{ convertToIndianNumber(plan.planPrice) }}</em>
+              </span>
+            </div>
+            <div v-else>
+              <span class="plan-price">
+                ₹<em>{{ convertToIndianNumber(plan.planPrice) }}</em>
+              </span>
+            </div>
+            <span class="plan-date" v-if="plan.hasDates == true"
+              >Starts {{ convertToMonthDate(plan.startDate) }}</span
+            >
+            <span
+              class="plan-date"
+              v-else-if="
+                plan.isMonthlyPlan != null &&
+                plan.planDuration != null &&
+                plan.isMonthlyPlan == false
+              "
+              >{{ plan.planDuration }}</span
+            >
+            <span class="plan-date" v-else>Per Month</span>
+          </div>
         </div>
 
-        <div class="price-wrapper">
-          <div
-            v-if="
-              plan.isDiscountedPlan != undefined &&
-              plan.isDiscountedPlan == true
-            "
-          >
-            <span class="plan-price">
-              ₹<em>{{ convertToIndianNumber(plan.discountedPrice) }}</em>
-            </span>
-            <span class="plan-price slashed-price">
-              ₹<em>{{ convertToIndianNumber(plan.planPrice) }}</em>
-            </span>
+        <form v-on:submit.prevent="bookPlan()" class="coach-form">
+          <FormBuilder :fields="fields"></FormBuilder>
+
+          <div v-if="coach.paymentsActive" class="payment-summary">
+            <div class="price-wrapper">
+              <label>Plan Price</label>
+              <div
+                v-if="
+                  plan.isDiscountedPlan != undefined &&
+                  plan.isDiscountedPlan == true
+                "
+              >
+                <span class="plan-price slashed-price">
+                  ₹<em>{{ convertToIndianNumber(plan.planPrice) }}</em>
+                </span>
+                <span class="plan-price">
+                  ₹<em>{{ convertToIndianNumber(plan.discountedPrice) }}</em>
+                </span>
+              </div>
+              <div v-else>
+                <span class="plan-price">
+                  ₹<em>{{ convertToIndianNumber(plan.planPrice) }}</em>
+                </span>
+              </div>
+            </div>
+            <div class="price-wrapper">
+              <label>Internet Handling Fees</label>
+              <span class="plan-price">
+                + ₹<em>{{
+                  plan.isDiscountedPlan != undefined && plan.isDiscountedPlan
+                    ? convertToIndianNumber(
+                        Math.ceil(
+                          plan.discountedPrice / (0.9764 * 0.9764) -
+                            parseInt(plan.discountedPrice)
+                        )
+                      )
+                    : convertToIndianNumber(
+                        Math.ceil(
+                          plan.planPrice / (0.9764 * 0.9764) -
+                            parseInt(plan.planPrice)
+                        )
+                      )
+                }}</em>
+              </span>
+            </div>
+            <div class="price-wrapper total-price-wrapper">
+              <label>Total</label>
+              <span class="plan-price">
+                ₹<em>{{
+                  plan.isDiscountedPlan != undefined && plan.isDiscountedPlan
+                    ? convertToIndianNumber(
+                        Math.ceil(plan.discountedPrice / (0.9764 * 0.9764))
+                      )
+                    : convertToIndianNumber(
+                        Math.ceil(plan.planPrice / (0.9764 * 0.9764))
+                      )
+                }}</em>
+              </span>
+            </div>
           </div>
-          <div v-else>
-            <span class="plan-price">
-              ₹<em>{{ convertToIndianNumber(plan.planPrice) }}</em>
-            </span>
-          </div>
-          <span class="plan-date" v-if="plan.hasDates == true"
-            >Starting from {{ convertToMonthDate(plan.startDate) }}</span
-          >
-          <span
-            class="plan-date"
-            v-else-if="
-              plan.isMonthlyPlan != null &&
-              plan.planDuration != null &&
-              plan.isMonthlyPlan == false
-            "
-            >{{ plan.planDuration }}</span
-          >
-          <span class="plan-date" v-else>Per Month</span>
-        </div>
+        </form>
+        <!--END: Booking Form-->
       </div>
 
-      <form
-        v-on:submit.prevent="bookPlan()"
-        class="coach-form"
-        @change="formChanged"
+      <!--START: Button Container-->
+      <div
+        v-if="!successMessage.show"
+        class="btn-container"
+        @click="bookPlan()"
       >
-        <FormBuilder :fields="fields" @fieldChanged="formChanged"></FormBuilder>
         <button class="btn btn-primary" type="submit">
-          Book Plan <unicon name="angle-right"></unicon>
+          {{ ctaButtonText }} <unicon name="angle-right"></unicon>
         </button>
-      </form>
-      <!--END: Booking Form-->
+        <div v-if="coach.paymentsActive" class="payment-ssl-info">
+          <unicon name="lock"></unicon
+          ><span>Payments are secure and encrypted</span>
+        </div>
+      </div>
+      <!--END: Button Container-->
+
+      <!--START: Status Message-->
+      <SuccessMessage :successForm="successMessage"></SuccessMessage>
+      <!--END: Status Message-->
+
+      <!--START: Line Loader -->
+      <LineLoader :showLoader="showLoader"></LineLoader>
+      <!--END: Line Loader -->
+
+      <!--START: Status Message-->
+      <StatusMessage
+        :show="status.show"
+        :isSuccess="status.isSuccess"
+        :successMessage="status.successMessage"
+        :errorMessage="status.errorMessage"
+      ></StatusMessage>
+      <!--END: Status Message-->
     </div>
-
-    <!--START: Status Message-->
-    <SuccessMessage :successForm="successMessage"></SuccessMessage>
-    <!--END: Status Message-->
-
-    <!--START: Line Loader -->
-    <LineLoader :showLoader="showLoader"></LineLoader>
-    <!--END: Line Loader -->
-
-    <!--START: Status Message-->
-    <StatusMessage
-      :show="status.show"
-      :isSuccess="status.isSuccess"
-      :successMessage="status.successMessage"
-      :errorMessage="status.errorMessage"
-    ></StatusMessage>
-    <!--END: Status Message-->
   </div>
 </template>
 
@@ -108,6 +197,7 @@ export default {
       showLoader: false,
       isSuccess: false,
       disableButton: false,
+      ctaButtonText: this.coach.paymentsActive ? "Make Payment" : "Book Plan",
       fields: {
         name: {
           type: "text",
@@ -135,13 +225,13 @@ export default {
       status: {
         show: false,
         isSuccess: true,
-        successMessage: "🙌 We've got your booking!",
+        successMessage: "🙌 I've got your booking!",
         errorMessage: "😕 Something's not right. Try again",
       },
       successMessage: {
         show: false,
-        title: "We've got your booking",
-        message: "We'll reach out to you soon enough",
+        title: "I've got your booking",
+        message: "Will reach out to you soon enough",
       },
     };
   },
@@ -153,11 +243,11 @@ export default {
     SuccessMessage,
   },
 
-  methods: {
-    formChanged() {
-      console.log("");
-    },
+  mounted() {
+    this.initPaymentGateway();
+  },
 
+  methods: {
     async bookPlan() {
       var timeoutHandler = null;
 
@@ -177,27 +267,108 @@ export default {
 
       if (formValidation.hasErrors) {
         this.status.isSuccess = false;
+        this.status.show = true;
+        this.disableButton = true;
+        this.showLoader = false;
+
+        //Hide the notification
+        timeoutHandler = setTimeout(() => (this.status.show = false), 3000);
       } else {
         formFields = {
           client: this.fields,
           plan: this.plan,
           coachSlug: this.coach.slug,
         };
-        if (await CoachService.SendMessage(formFields)) {
+        const bookingResult = await CoachService.BookPlan(formFields);
+        if (!this.coach.paymentsActive) {
           this.successMessage.show = true;
           this.resetFields(this.fields);
-        } else {
-          this.isSuccess = false;
+
           this.status.show = true;
+          this.disableButton = true;
+          this.showLoader = false;
+
+          //Hide the notification
+          timeoutHandler = setTimeout(() => (this.status.show = false), 3000);
+        } else {
+          this.launchPayment(bookingResult);
         }
       }
+    },
 
+    initPaymentGateway() {
+      if (this.coach.paymentsActive) {
+        window.app = this;
+
+        let rzpScript = document.createElement("script");
+        rzpScript.setAttribute(
+          "src",
+          "https://checkout.razorpay.com/v1/checkout.js"
+        );
+        document.head.appendChild(rzpScript);
+      }
+    },
+
+    launchPayment(bookingResult) {
+      var razorpayOptions = {
+        key: process.env.VUE_RZP_KEY,
+        name: this.coach.fullName,
+        description: this.plan.title,
+        order_id: bookingResult.rzpOrderID,
+        prefill: {
+          name: this.fields.name.value,
+          email: this.fields.email.value,
+          contact: this.fields.phone.value,
+        },
+        handler: function (response) {
+          window.app.registerPayment(response, bookingResult.orderID);
+        },
+        notes: {
+          "Coach Name": this.coach.fullName,
+          "Plan Name": this.plan.title,
+        },
+        theme: {
+          color: "#1e1e1e",
+        },
+      };
+
+      var rzp = new window.Razorpay(razorpayOptions);
+      rzp.open();
+
+      //Handle failed payments
+      rzp.on("payment.failed", function (response) {
+        window.app.failedPayment(response, bookingResult.orderID);
+      });
+    },
+
+    //Verify and register a payment
+    async registerPayment(response, orderID) {
+      const paymentStatus = await CoachService.VerifyPayment({
+        paymentResponse: response,
+        orderID: orderID,
+      });
+
+      if (!paymentStatus.hasError) {
+        this.successMessage.show = true;
+        this.resetFields(this.fields);
+      } else {
+        this.successMessage.show = false;
+      }
       this.status.show = true;
       this.disableButton = true;
       this.showLoader = false;
+    },
 
-      //Hide the notification
-      timeoutHandler = setTimeout(() => (this.status.show = false), 3000);
+    //Handle a failed payment
+    async failedPayment(response, orderID) {
+      await CoachService.FailedPayment({
+        paymentError: response,
+        orderID: orderID,
+      });
+
+      this.successMessage.show = false;
+      this.disableButton = true;
+      this.showLoader = false;
     },
   },
 };
@@ -213,6 +384,7 @@ export default {
   left: 0;
   padding: 2rem 1.25rem 1rem;
   width: calc(100% - 2.5rem);
+  max-height: calc(100vh - 10rem);
   border-top-left-radius: 3rem;
   border-top-right-radius: 3rem;
   box-shadow: 0 -1rem 0.7rem -0.15rem rgba(41, 41, 41, 0.35);
@@ -237,6 +409,12 @@ export default {
   &.show {
     transform: translateY(0);
   }
+}
+
+.plan-book-container {
+  overflow-y: scroll;
+  height: calc(100vh - 15rem);
+  padding-bottom: 5rem;
 }
 
 .booking-modal-wrapper {
@@ -302,7 +480,7 @@ form {
 .coach-name {
   position: relative;
   display: table;
-  background-color: $purpleColor;
+  background-color: var(--brand-color);
   font-size: $smallerFontSize;
   font-weight: $mediumFontWeight;
   padding: 0.55rem 0.75rem;
@@ -311,13 +489,82 @@ form {
   margin-bottom: 0.05rem;
 }
 
+.btn-container {
+  background-color: lighten($blackColor, 3%);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
 .btn-primary {
   display: block;
   width: 100%;
-  margin-top: 2rem;
+  margin-top: 0.5rem;
+}
+
+//Light Theme styles
+.light-theme {
+  .plan-book-modal {
+    background-color: $whiteColor;
+    border: 1px solid #d8d8d8;
+    box-shadow: 0 1rem 1.5rem -0.1rem #cecece;
+  }
+
+  .plan-title {
+    color: $blackColor;
+    font-weight: 500;
+  }
+
+  .plan-price,
+  .plan-date {
+    color: $blackColor;
+  }
+
+  .slashed-price {
+    opacity: $lightOpacity;
+  }
+
+  .booking-modal-wrapper {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e6e6e6;
+  }
+
+  .coach-name {
+    color: $whiteColor;
+  }
+
+  .payment-ssl-info {
+    color: $blackColor;
+  }
+
+  .btn-container {
+    background-color: $whiteColor;
+  }
+
+  .payment-summary {
+    background-color: $whiteColor;
+    border: 1px solid darken($whiteColor, 10%);
+    .price-wrapper label {
+      color: $blackColor;
+      opacity: $lightOpacity;
+    }
+
+    .total-price-wrapper {
+      border-top-color: #ececec;
+    }
+  }
 }
 
 @media screen and (min-width: $mobileWidth) {
+  .status-message {
+    text-align: center;
+  }
+
+  .success-form {
+    padding: 1rem 1rem 0;
+  }
+
   .plan-book-modal {
     transform: none;
     bottom: auto;
@@ -342,12 +589,17 @@ form {
 
   .booking-modal-wrapper {
     margin-bottom: 0;
-    padding-bottom: .5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .btn-container {
+    position: relative;
   }
 
   .plan-book-container {
     position: relative;
-    padding: .5rem 1.25rem 2rem;
+    height: auto;
+    padding: 0.5rem 1.25rem 1.25rem;
 
     &::before {
       content: "";
@@ -362,6 +614,83 @@ form {
       border-radius: 1.5rem;
       z-index: -1;
     }
+  }
+
+  .btn-container {
+    background-color: transparent !important;
+  }
+}
+
+.payment-summary {
+  background-color: lighten($blackColor, 10%);
+  border: 1px solid lighten($blackColor, 15%);
+  border-radius: 0.75rem;
+  margin-bottom: 0.25rem;
+  padding: 1rem;
+  margin-top: 1rem;
+
+  .price-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    margin-bottom: 0.5rem;
+
+    label {
+      flex: 1;
+      color: $whiteColor;
+      opacity: $lightOpacity;
+      font-size: $smallFontSize;
+      text-align: left;
+    }
+    .plan-price em {
+      font-size: $smallFontSize;
+    }
+    .slashed-price,
+    .slashed-price em {
+      margin-bottom: 2px;
+      margin-top: -0.15rem;
+      font-size: $smallestFontSize;
+    }
+  }
+
+  .total-price-wrapper {
+    border-top: 1px solid lighten($blackColor, 15%);
+    margin: 1rem 0.5rem 0 0;
+    padding: 1rem 0 0;
+    label {
+      font-size: $mediumFontSize;
+      opacity: 1;
+    }
+
+    .plan-price em {
+      font-size: $mediumFontSize;
+    }
+  }
+}
+
+.payment-summary + .btn-primary {
+  margin-top: 0;
+}
+
+.payment-ssl-info {
+  display: block;
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: $smallestFontSize;
+  color: $whiteColor;
+  opacity: $lightOpacity;
+
+  span {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  /deep/ .unicon svg {
+    height: auto;
+    width: 0.75rem;
+    fill: $whiteColor;
+    vertical-align: middle;
+    margin-right: 0.25rem;
   }
 }
 </style>

@@ -10,9 +10,84 @@ class CoachService {
     static GetCoach(fields) {
         return new Promise((resolve, reject) => {
             resolve(
-                (async () => {
+                (async() => {
                     try {
                         return await axios.post(`${apiURL}/coach/get`, {
+                                fields
+                            }, {
+                                withCredentials: true
+                            })
+                            .then(response => {
+                                return response.data;
+                            }, (error) => {
+                                console.log(error);
+                                return false;
+                            });
+                    } catch (e) {
+                        console.log('err', e);
+                        reject(e);
+                    }
+                })()
+            );
+        })
+    }
+
+    static BookPlan(fields) {
+        return new Promise((resolve, reject) => {
+            resolve(
+                (async() => {
+                    try {
+                        return await axios.post(`${apiURL}/coach/book-plan`, {
+                                fields
+                            }, {
+                                withCredentials: true
+                            })
+                            .then((response) => {
+                                return response.data;
+                            }, (error) => {
+                                console.log(error);
+                                return false;
+                            });
+                    } catch (e) {
+                        console.log('err', e);
+                        reject(e);
+                    }
+                })()
+            );
+        })
+    }
+
+    static VerifyPayment(fields) {
+        return new Promise((resolve, reject) => {
+            resolve(
+                (async() => {
+                    try {
+                        return await axios.post(`${apiURL}/coach/verify-payment`, {
+                                fields
+                            }, {
+                                withCredentials: true
+                            })
+                            .then((response) => {
+                                return response.data;
+                            }, (error) => {
+                                console.log(error);
+                                return false;
+                            });
+                    } catch (e) {
+                        console.log('err', e);
+                        reject(e);
+                    }
+                })()
+            );
+        })
+    }
+
+    static FailedPayment(fields) {
+        return new Promise((resolve, reject) => {
+            resolve(
+                (async() => {
+                    try {
+                        return await axios.post(`${apiURL}/coach/failed-payment`, {
                                 fields
                             }, {
                                 withCredentials: true
@@ -35,9 +110,9 @@ class CoachService {
     static SendMessage(fields) {
         return new Promise((resolve, reject) => {
             resolve(
-                (async () => {
+                (async() => {
                     try {
-                        return await axios.post(`${apiURL}/coach/book-plan`, {
+                        return await axios.post(`${apiURL}/coach/send-message`, {
                                 fields
                             }, {
                                 withCredentials: true

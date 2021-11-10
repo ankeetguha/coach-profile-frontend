@@ -7,11 +7,11 @@
     >
       <a
         v-if="handle.handle != null && handle.handle != ''"
-        :href="handle.handle"
+        :href="`${handle.handle}`"
         target="_blank"
         class="social-item"
       >
-        <unicon :name="socialIcons[handle.platform]" />
+        <svg :data-src="getImageExtension(handle.platform)" />
       </a>
     </div>
 
@@ -20,11 +20,11 @@
       class="social-item-wrapper"
     >
       <a
-        :href="`https://wa.me/${phoneNumber}`"
+        :href="`https://wa.me/+91${phoneNumber}`"
         target="_blank"
         class="social-item"
       >
-        <unicon name="whatsapp" />
+        <svg data-src="/assets/images/social-icons/whatsapp.svg" />
       </a>
     </div>
   </div>
@@ -36,11 +36,17 @@ export default {
   data() {
     return {
       socialIcons: {
-        facebook: "facebook-f",
-        instagram: "instagram",
-        youtube: "youtube",
-        twitter: "twitter",
-        whatsapp: "whatsapp",
+        facebook: ["facebook", ""],
+        instagram: ["instagram", ""],
+        youtube: ["youtube", ""],
+        twitter: ["twitter", ""],
+        medium: ["medium", ""],
+        whatsapp: ["whatsapp", "https://wa.me/"],
+        snapchat: ["snapchat", ""],
+        josh: ["josh", ""],
+        moj: ["moj", ""],
+        takatak: ["takatak", ""],
+        spotify: ["spotify", ""],
       },
     };
   },
@@ -48,9 +54,14 @@ export default {
     socialHandles: Array,
     phoneNumber: {
       type: String,
-      required: false
+      required: false,
     },
-    showNumber: Boolean
+    showNumber: Boolean,
+  },
+  methods: {
+    getImageExtension(fileName) {
+      return "/assets/images/social-icons/" + fileName + ".svg";
+    },
   },
 };
 </script>
@@ -75,14 +86,33 @@ export default {
   text-decoration: none;
   border: none;
   border-radius: 50%;
-  padding: 8px 9px;
+  padding: 7px 8px;
   margin: 0 0.35rem;
   background-color: lighten($blackColor, 8%);
 
   .unicon /deep/ svg {
     width: $largeFontSize;
-    height: auto;
+    height: $largeFontSize;
     fill: lighten($blackColor, 45%);
+  }
+  svg {
+    width: $largerFontSize;
+    height: $largerFontSize;
+
+    /deep/ g {
+      fill: lighten($blackColor, 45%);
+    }
+  }
+}
+
+//Light Theme styles
+.light-theme {
+  .social-item {
+    background-color: darken($whiteColor, 10%);
+
+    .unicon /deep/ svg {
+      fill: darken($whiteColor, 40%);
+    }
   }
 }
 </style>

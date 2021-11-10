@@ -76,17 +76,17 @@ export default {
         border-radius: 50%;
         height: calc(100% + 8px);
         width: calc(100% + 8px);
-        border: 2px solid $purpleColor;
+        border: 2px solid var(--brand-color);
       }
 
       .speciality-img {
         display: block;
         width: 1.85rem;
         height: auto;
-        fill: $purpleColor;
+        fill: var(--brand-color);
 
         /deep/ g {
-          fill: $purpleColor;
+          fill: var(--brand-color);
         }
       }
     }
@@ -95,6 +95,28 @@ export default {
       color: $lightWhiteColor;
       font-size: $smallFontSize;
       opacity: $lightOpacity;
+    }
+  }
+}
+
+//Light Theme styles
+.light-theme {
+  .specialities-wrapper {
+    background-color: $lightWhiteColor;
+    box-shadow: 0 -1rem 0.7rem -0.15rem rgba(162, 162, 162, .2);
+    border-top-left-radius: 3rem;
+    border-top-right-radius: 3rem;
+
+    .speciality-img-wrapper {
+      background-color: #e8e8e8;
+
+      &::before {
+        border: 1px solid #cfcfcf;
+      }
+    }
+
+    span {
+      color: $blackColor;
     }
   }
 }
@@ -162,6 +184,25 @@ export default {
         border-top: 1px solid lighten($blackColor, 5%);
         font-size: $normalFontSize;
         font-weight: $mediumFontWeight;
+      }
+    }
+  }
+
+  .light-theme {
+    .label-small {
+      font-family: $bodyFont;
+      font-size: $largeFontSize;
+      font-weight: $normalFontWeight;
+    }
+
+    .speciality-item {
+      background-color: $whiteColor;
+      border: 1px solid #f1f1f1;
+      box-shadow: 0 0 0.7rem -0.1rem #c3c3c3;
+
+      span {
+        border-top: 1px solid #e6e6e6;
+        color: $greyColor;
       }
     }
   }

@@ -43,7 +43,12 @@
             <span class="transformation-profile">{{
               testimonial.designation
             }}</span>
-            <p v-if="testimonial.testimonial != null">
+            <p
+              v-if="
+                testimonial.testimonial != null &&
+                testimonial.testimonial != ' '
+              "
+            >
               {{ testimonial.testimonial }}
             </p>
             <span class="read-more" v-if="testimonial.testimonial != null">
@@ -94,9 +99,9 @@ export default {
   display: block !important;
   border: 1px solid #444;
   overflow: hidden;
-  width: calc(100% - 1.5rem) !important;
+  width: calc(100% - 1rem) !important;
   border-radius: 1.5rem;
-  margin-left: 2rem;
+  margin-left: 1.5rem;
 }
 
 .transformation-block img {
@@ -123,7 +128,7 @@ export default {
 }
 
 .transformation-info .read-more {
-  color: $purpleColor;
+  color: var(--brand-color);
   position: relative;
   display: block;
   font-weight: $mediumFontWeight;
@@ -144,6 +149,17 @@ export default {
   height: 7rem;
   z-index: -1;
   background: linear-gradient(180deg, hsla(0, 0%, 100%, 0) 0, #353535);
+  background: -webkit-linear-gradient(top, rgba(53, 53, 53, 0) 0, #353535 90%);
+}
+
+.transformations-block.selected {
+  .read-more {
+    display: none;
+  }
+
+  .transformation-info p {
+    height: auto;
+  }
 }
 
 .transformation-name {
@@ -152,6 +168,7 @@ export default {
   margin-bottom: 0.3rem;
   white-space: nowrap;
   overflow: hidden;
+  padding-bottom: 3px;
   text-overflow: ellipsis;
 }
 
@@ -161,6 +178,7 @@ export default {
   display: block;
   font-size: $smallerFontSize;
   white-space: nowrap;
+  padding-bottom: 3px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -192,6 +210,69 @@ export default {
   }
 }
 
+//Light Theme styles
+.light-theme {
+  .label-small,
+  .transformations-slider {
+    position: relative;
+    z-index: 2;
+  }
+
+  .transformations-wrapper {
+    position: relative;
+    background-color: $lightWhiteColor;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    padding-bottom: 0;
+
+    &::before {
+      z-index: 1;
+      content: "";
+      display: block;
+      position: absolute;
+      background: $lightWhiteColor;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: calc(100% - 5rem);
+      box-shadow: 0 1rem 1rem -0.1rem rgba(88, 88, 88, 0.1);
+      border-bottom-left-radius: 2rem;
+      border-bottom-right-radius: 2rem;
+    }
+
+    &::after {
+      z-index: 0;
+      content: "";
+      display: block;
+      position: absolute;
+      background: #efefef;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .transformation-block {
+    background-color: $whiteColor;
+    border-color: lighten($greyBorderColor, 5%);
+  }
+
+  .transformation-info .read-more::before {
+    background: linear-gradient(180deg, hsla(0, 0%, 100%, 0) 0, #fff);
+  }
+
+  .transformation-profile,
+  .transformation-name,
+  .transformation-info p {
+    color: $blackColor;
+  }
+
+  .transformation-info p {
+    border-color: $greyBorderColor;
+  }
+}
+
 @media screen and (min-width: $mobileWidth) {
   .label-small {
     font-family: $titleFont;
@@ -209,12 +290,20 @@ export default {
   }
 
   /deep/ {
-     .slick-track {
-       width: 100% !important;
-     }
+    .slick-track {
+      width: 100% !important;
+    }
 
     .slick-slide {
       width: 33% !important;
+    }
+  }
+
+  .light-theme {
+    .label-small {
+      font-family: $bodyFont;
+      font-size: $largeFontSize;
+      font-weight: $normalFontWeight;
     }
   }
 }

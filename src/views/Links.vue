@@ -1,9 +1,5 @@
 <template>
   <div class="module-container">
-    <!--START: Vue Headful-->
-    <vue-headful :title="meta.title" :description="meta.description" />
-    <!--END: Vue Headful-->
-
     <div class="promotional-links-wrapper">
       <label class="label-small">My Links</label>
       <a
@@ -24,12 +20,50 @@ import _ from "lodash";
 
 export default {
   name: "Links",
+  metaInfo() {
+    return {
+      title: this.meta.title,
+      meta: [
+        {
+          name: "description",
+          content: this.meta.ogDescription,
+          vmid: "description",
+        },
+        {
+          property: "og:title",
+          content: this.meta.ogTitle,
+          vmid: "og:title",
+        },
+        {
+          property: "og:image",
+          content: this.meta.ogImage,
+          vmid: "og:image",
+        },
+        {
+          property: "og:description",
+          content: this.meta.ogDescription,
+          vmid: "og:description",
+        },
+        {
+          property: "og:url",
+          content: window.location.href,
+          vmid: "og:url",
+        },
+        {
+          property: "og:type",
+          content: "website",
+          vmid: "og:type",
+        },
+      ],
+    };
+  },
   data() {
     return {
       meta: {
-        title: "Skipper Coach",
-        description:
-          "Skipper helps you find the best personal trainers and coaches to help you meet your fitness goals from home. We've got coaches for S&C, Yoga, Weight Training, Nutrition and more.",
+        title: null,
+        ogTitle: null,
+        ogDescription: null,
+        ogImage: null,
       },
     };
   },
@@ -40,12 +74,14 @@ export default {
   components: {},
   async created() {
     //Get coach and change meta details
-    const slug = this.$route.params.slug;
     if (_.isEmpty(this.coach)) {
-      this.coach = await this.getCoach({ slug: slug });
+      this.coach = await this.getCoach();
     }
-    
-    this.meta.title = `Links - Coach ${this.coach.fullName} - ${this.coach.coverTitle}`;
+
+    this.meta.title = `${this.coach.fullName} - ${this.coach.coverTitle}`;
+    this.meta.ogTitle = `${this.coach.fullName} - ${this.coach.coverTitle}`;
+    this.meta.ogDescription = this.coach.description;
+    this.meta.ogImage = this.coach.plans[0].coverImageURL;
   },
   methods: {},
 };
@@ -60,7 +96,7 @@ export default {
   background-color: lighten($blackColor, 5%);
   position: relative;
   z-index: 1;
-  border: 2px solid $purpleColor;
+  border: 2px solid var(--brand-color);
   display: block;
   width: 5rem;
   padding: 0.5rem;
@@ -82,7 +118,7 @@ export default {
   span {
     display: block;
     font-family: $titleFont;
-    color: $purpleColor;
+    color: var(--brand-color);
     font-size: $largestFontSize;
     margin-bottom: 0.5rem;
   }
@@ -126,15 +162,42 @@ export default {
 
 .promotional-link {
   display: block;
-  background-color: $purpleColor;
+  background-color: var(--brand-color);
   padding: 1rem;
   border-radius: 1rem;
-  color: darken($purpleColor, 50%);
-  border: 1px solid darken($purpleColor, 10%);
+  color: var(--brand-color-dark-50);
+  border: 1px solid var(--brand-color-dark-10);
   font-size: $normalFontSize;
   font-weight: $mediumFontWeight;
   margin: 1rem 1rem;
   text-decoration: none;
+}
+
+//Light Theme styles
+.light-theme {
+  .promotional-links-wrapper {
+    position: relative;
+    padding-bottom: 2.5rem;
+
+    &::before {
+      content: "";
+      display: none;
+      position: absolute;
+      background: #EFEFEF;
+      box-shadow: 0 -1rem 0.7rem -0.15rem rgba(212, 212, 212, .5);
+      bottom: -1rem;
+      left: 0;
+      width: 100%;
+      height: 3rem;
+      border-top-left-radius: 2rem;
+      border-top-right-radius: 2rem;
+    }
+  }
+  .promotional-link {
+    background-color: $whiteColor;
+    border: 1px solid darken($whiteColor, 10%);
+    color: var(--brand-color);
+  }
 }
 
 @media screen and (min-width: $mobileWidth) {
@@ -142,7 +205,6 @@ export default {
     margin: 0 auto;
     width: 50%;
     max-width: 30rem;
-
   }
 }
 </style>

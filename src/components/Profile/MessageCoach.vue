@@ -9,7 +9,7 @@
         <span v-else-if="gender == 'Male'">him</span> a message and get them
         answered
       </p>
-      <a :href="`https://wa.me/${phoneNumber}`" class="btn btn-primary"
+      <a :href="`https://wa.me/+91${phoneNumber}`" class="btn btn-primary"
         ><unicon name="whatsapp"></unicon>WhatsApp Coach</a
       >
     </div>
@@ -96,10 +96,27 @@ export default {
   }
 }
 
+//Light Theme styles
+.light-theme {
+  .scroll-end-wrapper {
+    h3,p {
+      color: $blackColor;
+    }
+  }
+  .scroll-end-wrapper::before,
+  .scroll-end-wrapper::after {
+    background-color: #cecece;
+    top: 1.75rem;
+  }
+  .scroll-end-emoji {
+    font-size: 3.5rem;
+  }
+}
+
 @media screen and (min-width: $mobileWidth) {
   .scroll-end-wrapper {
     text-align: center;
-    margin: 2rem auto 3rem;
+    margin: 2rem auto 4rem;
 
     &::before,
     &::after {

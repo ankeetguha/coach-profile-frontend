@@ -1,28 +1,11 @@
 //START: Global Styles
 body {
-    background-color: rgba(39, 39, 39, 0.95);
-    box-shadow: 0 0 1.5rem 1.5rem rgba(0, 0, 0, .5);
-    background-color: #272727;
     overflow-x: hidden;
     font-family: $bodyFont;
     font-size: $normalFontSize;
     font-weight: $normalFontWeight;
     -webkit-overflow-scrolling: touch;
     -webkit-tap-highlight-color: transparent;
-    min-height: 100vh;
-
-    &::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 100vh;
-        box-shadow: inset 0 0 2000px rgba(183, 183, 183, 0.5);
-        opacity: 0.45;
-        z-index: -1;
-    }
 }
 
 body.no-scroll {
@@ -237,4 +220,13 @@ a {
     float: left;
     height: 100%;
     min-height: 1px;
+}
+
+//Light Theme styles
+.light-theme {
+    .label-small {
+        font-size: 11px;
+        color: lighten($blackColor, 15%);
+        font-weight: $boldFontWeight;
+    }
 }

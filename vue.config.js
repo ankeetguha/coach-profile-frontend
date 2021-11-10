@@ -1,10 +1,10 @@
 module.exports = {
-    outputDir: 'dist',
+    outputDir: '../backend/frontend',
     chainWebpack: config => {
         config
             .plugin('html')
             .tap(args => {
-                args[0].title = "Skipper - Launch Your Insta Website";
+                args[0].title = "🔥 Loading...";
                 return args;
             })
     },

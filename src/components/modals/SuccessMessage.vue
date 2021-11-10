@@ -97,4 +97,16 @@ export default {
     margin-right: 0.75rem;
   }
 }
+
+//Light Theme styles
+.light-theme {
+  .success-info-wrapper {
+    h3 {
+      color: $blackColor;
+    }
+    p {
+      color: $greyColor;
+    }
+  }
+}
 </style>

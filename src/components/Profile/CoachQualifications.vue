@@ -106,10 +106,13 @@ export default {
   position: relative;
   text-align: left;
   outline: none;
+  display: flex !important;
+  flex-direction: row;
+  align-items: stretch;
 }
 
 .coach-qualification::before {
-  background-color: $purpleColor;
+  background-color: var(--brand-color);
   content: "";
   position: absolute;
   top: 50%;
@@ -121,11 +124,11 @@ export default {
 }
 
 .coach-qualification-badge {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: -0.5rem;
-  width: 4.75rem;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 5rem;
+  height: 5rem;
 }
 
 .coach-qualification-badge svg {
@@ -133,17 +136,21 @@ export default {
   width: 70%;
   height: auto;
   margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
   /deep/ g {
-    fill: $purpleColor;
+    fill: var(--brand-color);
   }
 }
 
 svg.coach-qualification-badge-text {
   position: absolute;
-  transform: translateY(-50%) translateX(-50%);
-  top: 50%;
-  left: 50%;
+  transform: rotate(0);
+  top: 0;
+  left: -2.5%;
   width: 105%;
   height: auto;
   transform-origin: center center;
@@ -160,17 +167,20 @@ svg.coach-qualification-badge-text {
 
 @keyframes rotateBadgeText {
   0% {
-    transform: translateY(-50%) translateX(-50%) rotate(0);
+    transform: rotate(0);
   }
 
   100% {
-    transform: translateY(-50%) translateX(-50%) rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 
 .coach-qualification-description {
-  margin-left: 5.75rem;
+  margin-left: 1.5rem;
   margin-right: 0.5rem;
+  width: calc(100% - 7rem);
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .coach-qualification h3 {
@@ -213,6 +223,51 @@ svg.coach-qualification-badge-text {
   border-radius: 1rem;
 }
 
+//Light Theme styles
+.light-theme {
+  .coach-qualifications-slider /deep/ .slick-slide {
+    background-color: $whiteColor;
+    box-shadow: 0 1.5rem 0.7rem -0.1rem rgba(183, 183, 183, 0.5);
+    border: 1px solid #e2e2e2;
+  }
+  .coach-qualifications-wrapper {
+    background-color: #f7f7f7;
+    padding-bottom: 1rem;
+    border-radius: 0;
+    overflow: visible;
+
+    .coach-qualification {
+      h3 {
+        color: $blackColor;
+        opacity: $mediumOpacity;
+      }
+
+      svg.coach-qualification-badge-text /deep/ g {
+        fill: $blackColor;
+      }
+    }
+
+    &.extended-wrapper {
+      margin-top: 0;
+      padding-top: 0;
+    }
+
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      background: #efefef;
+      box-shadow: 0 -1rem 0.7rem -0.15rem rgba(208, 208, 208, 0.5);
+      left: 0;
+      width: 100%;
+      top: 50%;
+      height: 51%;
+      border-top-left-radius: 2rem;
+      border-top-right-radius: 2rem;
+    }
+  }
+}
+
 @media screen and (min-width: $mobileWidth) {
   .coach-qualifications-wrapper {
     padding: 6rem 25% 4rem;
@@ -242,7 +297,7 @@ svg.coach-qualification-badge-text {
         text-align: left;
         display: inline-block;
         padding-bottom: 1rem;
-        padding-right: .5rem;;
+        padding-right: 0.5rem;
       }
     }
 
@@ -254,6 +309,10 @@ svg.coach-qualification-badge-text {
 
   .qualifications-wrapper {
     flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    flex-wrap: wrap;
 
     .coach-qualification {
       position: relative;
@@ -269,9 +328,9 @@ svg.coach-qualification-badge-text {
       border-radius: 1rem;
 
       &::before {
-        right: 1rem;
+        right: 1.25rem;
         height: 50%;
-        width: 3px;
+        width: 4px;
       }
     }
 
@@ -280,8 +339,9 @@ svg.coach-qualification-badge-text {
     }
 
     .coach-qualification-badge {
-      width: 4rem;
+      width: 6rem;
       left: 1.25rem;
+      height: 5rem;
     }
   }
 
@@ -289,7 +349,35 @@ svg.coach-qualification-badge-text {
     .coach-qualification {
       display: inline-block;
       width: calc(50% - 5.5rem);
-      margin: 0 .5rem 1rem;
+      margin: 0 0.5rem 1rem;
+    }
+  }
+
+  .light-theme {
+    .label-small {
+      color: $blackColor;
+      opacity: $mediumOpacity;
+      font-family: $bodyFont;
+      font-size: $largeFontSize;
+      font-weight: $normalFontWeight;
+      border-bottom-color: #ececec;
+    }
+
+    .coach-qualification {
+      background-color: $whiteColor;
+      box-shadow: 0 0 0.9rem -0.2rem rgb(183, 183, 183);
+      border: 1px solid #e2e2e2;
+    }
+
+    .coach-qualifications-wrapper {
+      &.multiple {
+        padding-bottom: 1rem;
+      }
+
+      &::before {
+        top: 13em;
+        height: calc(100% - 11rem);
+      }
     }
   }
 }

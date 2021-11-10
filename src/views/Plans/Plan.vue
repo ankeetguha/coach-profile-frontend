@@ -1,12 +1,11 @@
 <template>
   <!--START: Profile Wrapper-->
   <div v-if="coach.fullName != undefined" class="plan-wrapper">
-    <!--START: Vue Headful-->
-    <vue-headful :title="meta.title" :description="meta.description" />
-    <!--END: Vue Headful-->
-
     <div class="plan-block-wrapper" :class="{ blur: showModal }">
-      <router-link class="go-back" :to="`/${coach.slug}`">
+      <router-link
+        class="go-back"
+        :to="`/${!$store.state.isSubDomain ? coach.slug + '/' : ''}`"
+      >
         <unicon name="angle-left"></unicon>
         <span>Back To Plans</span>
       </router-link>
@@ -16,10 +15,14 @@
 
         <div class="cover-wrapper">
           <div class="intro-wrapper">
-            <span class="coach-name">Coach {{ coach.fullName }}</span>
+            <span class="coach-name">{{ coach.fullName }}</span>
             <h3 class="plan-title">
               {{ plan.title }}
             </h3>
+            <span class="plan-schedule" v-if="plan.schedule != undefined">
+              <unicon name="clock"></unicon>
+              <em>{{ plan.schedule }}</em>
+            </span>
           </div>
           <div class="price-wrapper">
             <div
@@ -40,8 +43,10 @@
                 ₹<em>{{ convertToIndianNumber(plan.planPrice) }}</em>
               </span>
             </div>
-            <span class="plan-date" v-if="plan.hasDates == true"
-              >Starting from {{ convertToMonthDate(plan.startDate) }}</span
+            <span
+              class="plan-date"
+              v-if="plan.hasDates == true && plan.startDate != undefined"
+              >Starts {{ convertToMonthDate(plan.startDate) }}</span
             >
             <span
               class="plan-date"
@@ -52,15 +57,24 @@
               "
               >{{ plan.planDuration }}</span
             >
-            <span class="plan-date" v-else>Per Month</span>
+            <span class="plan-date" v-else-if="plan.hasDates == false"
+              >Per Month</span
+            >
+            <span class="plan-date" v-else></span>
           </div>
         </div>
       </div>
 
       <div class="details-wrapper">
+        <div v-if="plan.hasAttachments" class="attachment-wrapper">
+          <unicon name="paperclip"></unicon>
+          <div>
+            <h3>This plan has attachments</h3>
+            <p>You will receive them on your e-mail after signing up</p>
+          </div>
+        </div>
         <label class="label-small">About This Plan</label>
-        <p class="plan-description">{{ plan.description }}</p>
-
+        <div class="plan-description" v-html="plan.description"></div>
         <div
           v-if="
             plan.highlights.list != undefined && plan.highlights.list.length > 0
@@ -116,7 +130,7 @@
           </div>
         </div>
         <span class="plan-date" v-if="plan.hasDates == true"
-          >Starting from {{ convertToMonthDate(plan.startDate) }}</span
+          >Starts {{ convertToMonthDate(plan.startDate) }}</span
         >
         <span
           class="plan-date"
@@ -129,7 +143,7 @@
         >
         <span class="plan-date" v-else>Per Month</span>
       </div>
-      <button class="btn btn-primary" @click="showBookingModal">
+      <button class="btn btn-primary btn-book" @click="showBookingModal">
         Book Now
       </button>
     </div>
@@ -151,9 +165,6 @@
 </template>
 
 <script>
-//Import libraries
-import _ from "lodash";
-
 //Import components
 import BookingModal from "@/components/Profile/CoachBookingModal";
 
@@ -161,14 +172,54 @@ export default {
   name: "Plan",
   data() {
     return {
-      coach: {},
       showModal: false,
+      plan: {},
       meta: {
-        title: "Skipper Coach",
-        description:
-          "Skipper helps you find the best personal trainers and coaches to help you meet your fitness goals from home. We've got coaches for S&C, Yoga, Weight Training, Nutrition and more.",
+        title: null,
+        ogTitle: null,
+        ogDescription: null,
+        ogImage: null,
       },
-      plan: null,
+    };
+  },
+  props: {
+    coach: Object,
+  },
+  metaInfo() {
+    return {
+      title: this.meta.title,
+      meta: [
+        {
+          name: "description",
+          content: this.meta.ogDescription,
+          vmid: "description",
+        },
+        {
+          property: "og:title",
+          content: this.meta.ogTitle,
+          vmid: "og:title",
+        },
+        {
+          property: "og:image",
+          content: this.meta.ogImage,
+          vmid: "og:image",
+        },
+        {
+          property: "og:description",
+          content: this.meta.ogDescription,
+          vmid: "og:description",
+        },
+        {
+          property: "og:url",
+          content: window.location.href,
+          vmid: "og:url",
+        },
+        {
+          property: "og:type",
+          content: "website",
+          vmid: "og:type",
+        },
+      ],
     };
   },
   components: {
@@ -179,15 +230,13 @@ export default {
   },
   methods: {
     async getPlan() {
-      //Get coach and change meta details
-      const slug = this.$route.params.slug;
-      if (_.isEmpty(this.coach)) {
-        this.coach = await this.getCoach({ slug: slug });
-      }
-
       const planID = this.$route.params.plan;
       this.plan = this.coach.plans.find((plan) => plan._id === planID);
-      this.meta.title = `Coach ${this.coach.fullName} - ${this.coach.coverTitle}`;
+
+      this.meta.title = `${this.plan.title} | ${this.coach.fullName} - ${this.coach.coverTitle}`;
+      this.meta.ogTitle = this.plan.title;
+      this.meta.ogDescription = this.plan.description;
+      this.meta.ogImage = this.plan.coverImageURL;
     },
 
     showBookingModal() {
@@ -240,7 +289,7 @@ export default {
   /deep/ .unicon svg {
     height: auto;
     width: 1.5rem;
-    fill: $purpleColor;
+    fill: var(--brand-color);
   }
 
   span {
@@ -270,7 +319,6 @@ export default {
   // border-bottom: 1px solid lighten($blackColor, 10%);
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: center;
 }
 
@@ -288,12 +336,12 @@ export default {
   .coach-name {
     position: relative;
     display: table;
-    background-color: $purpleColor;
+    background-color: var(--brand-color);
     font-size: $smallerFontSize;
     font-weight: $mediumFontWeight;
     padding: 0.55rem 0.75rem;
     border-radius: 0.75rem;
-    margin-top: -2rem;
+    margin-top: -1.5rem;
     margin-bottom: 0.5rem;
   }
 
@@ -312,6 +360,7 @@ export default {
 }
 
 .price-wrapper {
+  margin-top: 0.5rem;
   margin-right: 0.5rem;
   text-align: right;
 }
@@ -349,9 +398,36 @@ export default {
 .details-wrapper {
   margin: 2rem 1.5rem 0;
 
-  .plan-description {
+  .plan-description,
+  .plan-description /deep/ *,
+  .plan-description /deep/ {
     font-size: $smallFontSize;
     color: $whiteColor;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+
+    b,
+    strong {
+      font-weight: 900;
+    }
+
+    i,
+    em {
+      font-style: italic;
+    }
+
+    ul,
+    ol {
+      margin-left: 1.5rem !important;
+    }
+
+    ul li {
+      list-style: disc !important;
+    }
+
+    ol li {
+      list-style: decimal !important;
+    }
   }
 }
 
@@ -402,8 +478,8 @@ export default {
   align-items: center;
 
   .unicon /deep/ svg {
-    background-color: $purpleColor;
-    fill: darken($purpleColor, 35%);
+    background-color: var(--brand-color);
+    fill: var(--brand-color-dark-35);
     width: 1.1rem;
     padding: 0.25rem;
     height: auto;
@@ -428,7 +504,7 @@ export default {
   left: 0;
   width: calc(100% - 3rem);
   background-color: $blackColor;
-  box-shadow: inset 0 0 50px rgba(183, 183, 183, 0.15);
+  box-shadow: 0 -0.15rem 1rem 0.8rem rgba(51, 51, 51, 0.6);
   border-top-left-radius: 1.5rem;
   border-top-right-radius: 1.5rem;
 }
@@ -443,6 +519,10 @@ export default {
       display: inline-block;
       vertical-align: bottom;
       margin-right: 0.5rem;
+
+      &:not(.slashed-price) em {
+        font-size: $mediumFontSize;
+      }
     }
   }
 
@@ -452,6 +532,147 @@ export default {
     color: $whiteColor;
     opacity: $lightOpacity;
     margin-top: 0.35rem;
+  }
+}
+
+.plan-schedule {
+  display: block;
+  margin-top: 0.75rem;
+  color: $whiteColor;
+
+  /deep/ .unicon svg {
+    display: inline-block;
+    vertical-align: topp;
+    width: 1rem;
+    height: auto;
+    fill: $purpleColor;
+    margin-right: 0.5rem;
+  }
+
+  em {
+    width: calc(100% - 2rem);
+    display: inline-block;
+    vertical-align: top;
+    font-size: $smallFontSize;
+    opacity: $lightOpacity;
+  }
+}
+
+.btn-book {
+  position: relative;
+  z-index: 10;
+}
+
+.attachment-wrapper {
+  border: 1px solid lighten($blackColor, 19%);
+  background-color: lighten($blackColor, 15%);
+  padding: 1rem;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  .unicon /deep/ svg {
+    fill: var(--brand-color);
+    width: 2rem;
+    height: auto;
+    margin-right: 0.75rem;
+  }
+
+  h3 {
+    font-size: $smallFontSize;
+    color: $whiteColor;
+  }
+
+  p {
+    font-size: $smallerFontSize;
+    color: $whiteColor;
+    opacity: $lightOpacity;
+  }
+}
+
+//Light Theme styles
+.light-theme {
+  .plan-intro-wrapper {
+    background-color: $whiteColor;
+    box-shadow: 0 0.5rem 0.9rem -0.1rem rgba(0, 0, 0, 0.15);
+  }
+
+  .coach-name {
+    color: $whiteColor;
+  }
+
+  .go-back {
+    background-color: darken($whiteColor, 2%);
+    border-color: darken($whiteColor, 5%);
+
+    span {
+      color: $blackColor;
+      opacity: $lightOpacity;
+    }
+  }
+
+  .equipment-details .unicon /deep/ svg {
+    fill: $whiteColor;
+  }
+
+  .highlights-wrapper {
+    border: 1px solid #e2e2e2;
+    background-color: $whiteColor;
+
+    .highlight-item span {
+      color: $blackColor;
+      opacity: $lightOpacity;
+    }
+  }
+
+  .equipment-details p,
+  .plan-price,
+  .plan-date,
+  .plan-schedule,
+  .plan-title,
+  .details-wrapper .plan-description,
+  .details-wrapper .plan-description /deep/ * {
+    color: $blackColor;
+  }
+
+  .details-wrapper .plan-description,
+  .details-wrapper .plan-description /deep/ * {
+    color: lighten($blackColor, 10%);
+    line-height: 1.4;
+  }
+
+  .cta-sticky-wrapper {
+    background-color: $whiteColor;
+    box-shadow: 0 0 1rem -0.1rem rgb(210, 210, 210);
+  }
+
+  .plan-title {
+    font-weight: 500;
+  }
+
+  .plan-price:not(.slashed-price) em {
+    font-size: 1.1rem;
+  }
+
+  .slashed-price,
+  .plan-schedule {
+    opacity: $mediumOpacity;
+  }
+
+  .attachment-wrapper {
+    border: 1px solid #e2e2e2;
+    background-color: $whiteColor;
+
+    h3 {
+      color: $blackColor;
+    }
+
+    p {
+      color: $blackColor;
+      opacity: $lightOpacity;
+    }
   }
 }
 
@@ -465,7 +686,8 @@ export default {
     margin-left: 16%;
     width: 39%;
 
-    .plan-description {
+    .plan-description,
+    .plan-description /deep/ * {
       font-size: $normalFontSize;
       line-height: 1.6;
     }
@@ -473,6 +695,10 @@ export default {
 
   .highlights-wrapper {
     margin: 3rem 0;
+  }
+
+  .cover-image {
+    margin-top: 2rem;
   }
 
   .intro-wrapper {

@@ -120,7 +120,7 @@ export default {
 
         //Convert to date and month
         convertToMonthDate(date) {
-            return moment(date).format('Do MMMM');
+            return moment(date).format('Do MMM');
         },
 
         //Check if the device is mobile

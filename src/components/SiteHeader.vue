@@ -3,7 +3,9 @@
   <div
     class="header-wrapper"
     :class="
-      coach.offerTicker != undefined && coach.offerTicker.showOffer ? 'extend-header' : ''
+      coach.offerTicker != undefined && coach.offerTicker.showOffer
+        ? 'extend-header'
+        : ''
     "
   >
     <div class="hero-wrapper">
@@ -19,6 +21,11 @@
         <h1 class="hero-title">
           <span>{{ coach.fullName }}</span>
         </h1>
+        <span
+          class="workout-category"
+          v-if="coach.workoutCategory != undefined"
+          >{{ coach.workoutCategory }}</span
+        >
         <p v-if="coach.coverTitle != undefined" class="hero-description">
           {{ coach.coverTitle }}
         </p>
@@ -35,10 +42,16 @@
 
     <!--START: Profile Menu-->
     <div class="profile-menu-list">
-      <router-link :to="`/${coach.slug}/`" class="profile-menu-item">
+      <router-link
+        :to="`/${!this.$store.state.isSubDomain ? coach.slug + '/' : ''}`"
+        class="profile-menu-item"
+      >
         Plans
       </router-link>
-      <router-link :to="`/${coach.slug}/about`" class="profile-menu-item">
+      <router-link
+        :to="`/${!this.$store.state.isSubDomain ? coach.slug + '/' : ''}about`"
+        class="profile-menu-item"
+      >
         About
       </router-link>
       <router-link
@@ -46,7 +59,7 @@
           coach.promotionalLinks != undefined &&
           coach.promotionalLinks.length > 0
         "
-        :to="`/${coach.slug}/links`"
+        :to="`/${!this.$store.state.isSubDomain ? coach.slug + '/' : ''}links`"
         class="profile-menu-item"
       >
         Links
@@ -87,14 +100,15 @@ export default {
 .hero-wrapper {
   position: relative;
   background: $blackColor;
-  padding: 2.5rem 0 0;
+  padding: 1.5rem 0 0;
   text-align: center;
 
   .profile-image-wrapper {
     position: relative;
     width: 4rem;
     height: 4rem;
-    border: 2px solid $purpleColor;
+    border: 2px solid var(--brand-color);
+    background-color: var(--brand-color);
     padding: 0.5rem;
     border-radius: 50%;
     margin: 0 auto 0.75rem;
@@ -135,6 +149,7 @@ export default {
   font-family: $titleFont;
   font-weight: $boldFontWeight;
   color: $whiteColor;
+  margin-top: 2rem;
   margin-bottom: 0.5rem;
   text-transform: uppercase;
 
@@ -147,7 +162,7 @@ export default {
   }
 
   &::before {
-    display: block;
+    display: none;
     content: "COACH";
     font-size: $largeFontSize;
     color: $blackColor;
@@ -157,6 +172,14 @@ export default {
     -webkit-text-stroke: 0.75px $whiteColor;
     opacity: $lightOpacity;
   }
+}
+
+.workout-category {
+  display: block;
+  font-size: $smallerFontSize;
+  color: $lightWhiteColor;
+  opacity: $lightOpacity;
+  margin: -0.15rem 0 0.75rem;
 }
 
 .hero-description {
@@ -170,7 +193,7 @@ export default {
   display: block;
   text-align: center;
   margin: 0;
-  padding: 0.5rem 0 1.25rem;
+  padding: 0 0 1.25rem;
 
   .profile-menu-item {
     display: inline-block;
@@ -185,16 +208,93 @@ export default {
     &.router-link-exact-active {
       opacity: 1;
       padding: 0.35rem 1.15rem;
-      color: darken($darkPurpleColor, 35%);
-      background-color: $purpleColor;
+      color: var(--brand-color-dark-35);
+      background-color: var(--brand-color);
       border-radius: 3rem;
+    }
+  }
+}
+
+//Light Theme styles
+.light-theme {
+  .header-wrapper,
+  .social-list,
+  .hero-wrapper {
+    background-color: #F7F7F7;
+  }
+
+  .profile-image-wrapper::before {
+    border-color: $lightWhiteColor;
+  }
+
+  .header-wrapper {
+    box-shadow: none;
+  }
+
+  .hero-title {
+    color: $lightBlackColor;
+    font-family: $bodyFont;
+    text-transform: none;
+  }
+
+  .workout-category {
+    color: lighten($blackColor, 30%);
+  }
+
+  .hero-description {
+    color: lighten($blackColor, 20%);
+  }
+
+  .profile-image-wrapper {
+    margin-top: -3.5rem;
+  }
+
+  .hero-wrapper {
+    &::before {
+      content: "";
+      display: block;
+      position: relative;
+      height: 4.5rem;
+      background-color: var(--brand-color);
+      background-image: url("/assets/images/light-theme/cover-bg.jpg");
+      background-repeat: no-repeat;
+      background-size: 100%;
+      background-blend-mode: darken;
+      margin-top: -1.5rem;
+    }
+    &::after {
+      box-shadow: 0 -1rem 1rem -0.5rem rgba(37, 37, 37, 0.2);
+      content: "";
+      display: block;
+      height: 2rem;
+      border-top-left-radius: 2rem;
+      border-top-right-radius: 2rem;
+      background: #f7f7f7;
+      position: absolute;
+      top: 3rem;
+      left: 0;
+      width: 100%;
+    }
+  }
+
+  .profile-menu-list {
+    padding: 0 0 0.25rem;
+
+    .profile-menu-item {
+      opacity: 1;
+      color: lighten($blackColor, 30%);
+
+      &.router-link-exact-active {
+        border: 2px solid var(--brand-color-light-10);
+        color: var(--brand-color-light-45);
+      }
     }
   }
 }
 
 @media screen and (min-width: $mobileWidth) {
   .extend-header {
-    padding-top: 3rem;
+    padding-top: 2.5rem;
   }
   .header-wrapper {
     border-bottom-left-radius: 0;
@@ -210,6 +310,7 @@ export default {
   .hero-wrapper {
     display: block;
     .profile-image-wrapper {
+      margin-top: 0;
       width: 5.5rem;
       height: 5.5rem;
     }
