@@ -66,15 +66,57 @@
       </div>
 
       <div class="details-wrapper">
-        <div v-if="plan.hasAttachments" class="attachment-wrapper">
+        <!--START: Plan Attachments-->
+        <div
+          v-if="plan.hasAttachments && !hasOnlinePlan"
+          class="attachment-wrapper"
+        >
           <unicon name="paperclip"></unicon>
           <div>
             <h3>This plan has attachments</h3>
             <p>You will receive them on your e-mail after signing up</p>
           </div>
         </div>
+        <!--END: Plan Attachments-->
+        
+
+        <!--START: Plan Description-->
         <label class="label-small">About This Plan</label>
-        <div class="plan-description" v-html="plan.description"></div>
+        <div
+          class="plan-description-wrapper"
+          :class="{ show: showFullDescription }"
+        >
+          <div class="plan-description" v-html="plan.description"></div>
+          <span
+            v-if="showFullDescription"
+            class="read-more"
+            @click="toggleDescription"
+            >Read Less</span
+          >
+          <span v-else class="read-more" @click="toggleDescription"
+            >Read More</span
+          >
+        </div>
+        <!--END: Plan Description-->
+
+
+        <!--START: Online Plan Component-->
+        <PageLoader
+          v-if="showOnlinePlanLoader"
+          class="online-plan-loader"
+        ></PageLoader>
+
+        <div class="online-plan-wrapper" v-if="hasOnlinePlan">
+          <OnlinePlanFeatures></OnlinePlanFeatures>
+          <PlanSampleWorkouts
+            :plan="onlinePlan"
+            @showSampleWorkouts="showWorkouts"
+          ></PlanSampleWorkouts>
+        </div>
+        <!--END: Online Plan Component-->
+
+
+        <!--START: Plan Highlights-->
         <div
           v-if="
             plan.highlights.list != undefined && plan.highlights.list.length > 0
@@ -92,7 +134,9 @@
             </div>
           </div>
         </div>
+        <!--END: Plan Highlights-->
 
+        <!--START: Plan Equipments-->
         <div
           v-if="plan.equipment != undefined && plan.equipment != ''"
           class="equipments-wrapper"
@@ -103,6 +147,7 @@
             <p>{{ plan.equipment }}</p>
           </div>
         </div>
+        <!--END: Plan Equipments-->
       </div>
     </div>
 
@@ -149,6 +194,15 @@
     </div>
     <!--END: CTA Plan-->
 
+    <!--START: Workout Exercises-->
+    <WorkoutExercises
+      :show="showWorkoutModal"
+      :workout="sampleWorkout"
+      :excercises="sampleExercises"
+      @closeWorkoutModal="closeWorkoutModal"
+    ></WorkoutExercises>
+    <!--START: Workout Exercises-->
+
     <!--START: Booking Modal-->
     <BookingModal
       :plan="plan"
@@ -165,15 +219,29 @@
 </template>
 
 <script>
+//Importing CoachService
+import CoachService from "@/controllers/CoachService";
+
 //Import components
+import PageLoader from "@/components/loaders/PageLoader";
 import BookingModal from "@/components/Profile/CoachBookingModal";
+import OnlinePlanFeatures from "@/components/Plan/OnlinePlanFeatures";
+import PlanSampleWorkouts from "@/components/Plan/PlanSampleWorkouts";
+import WorkoutExercises from "@/components/Plan/WorkoutExercises";
 
 export default {
   name: "Plan",
   data() {
     return {
       showModal: false,
+      showOnlinePlanLoader: true,
+      showWorkoutModal: false,
+      showFullDescription: false,
       plan: {},
+      onlinePlan: {},
+      hasOnlinePlan: false,
+      sampleWorkout: {},
+      sampleExercises: [],
       meta: {
         title: null,
         ogTitle: null,
@@ -223,7 +291,11 @@ export default {
     };
   },
   components: {
+    PageLoader,
     BookingModal,
+    OnlinePlanFeatures,
+    PlanSampleWorkouts,
+    WorkoutExercises,
   },
   async created() {
     this.getPlan();
@@ -237,10 +309,40 @@ export default {
       this.meta.ogTitle = this.plan.title;
       this.meta.ogDescription = this.plan.description;
       this.meta.ogImage = this.plan.coverImageURL;
+
+      //Check for Online Plan
+      this.getOnlinePlan();
+    },
+
+    async getOnlinePlan() {
+      if (this.plan.hasOnlinePlan) {
+        var response = await CoachService.GetOnlinePlan({
+          slug: this.coach.slug,
+          planID: this.plan._id,
+        });
+
+        if (!response.hasError) {
+          this.onlinePlan = response.data;
+          this.hasOnlinePlan = true;
+        } else this.hasOnlinePlan = false;
+      }
+      this.showOnlinePlanLoader = false;
+    },
+
+    showWorkouts() {
+      this.showWorkoutModal = true;
     },
 
     showBookingModal() {
       this.showModal = true;
+    },
+
+    closeWorkoutModal() {
+      this.showWorkoutModal = false;
+    },
+
+    toggleDescription() {
+      this.showFullDescription = !this.showFullDescription;
     },
 
     closeModal() {
@@ -391,6 +493,58 @@ export default {
 
     em {
       font-size: $smallerFontSize;
+    }
+  }
+}
+
+.online-plan-wrapper {
+  margin-left: -1rem;
+  width: calc(100% + 2rem);
+}
+
+.plan-description-wrapper {
+  position: relative;
+  padding-bottom: 1rem;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 8rem;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(39, 39, 39, 1) 100%
+    );
+  }
+
+  .read-more {
+    font-size: $smallerFontSize;
+    position: absolute;
+    bottom: -1rem;
+    left: -1rem;
+    padding: 1rem;
+    margin: auto;
+    color: var(--brand-color);
+    text-transform: uppercase;
+    letter-spacing: 0.15rem;
+    text-align: center;
+    z-index: 11;
+  }
+
+  .plan-description {
+    max-height: 50vh;
+    overflow: hidden;
+  }
+
+  &.show {
+    .plan-description {
+      max-height: none;
+    }
+    &::before {
+      display: none;
     }
   }
 }
@@ -672,6 +826,26 @@ export default {
     p {
       color: $blackColor;
       opacity: $lightOpacity;
+    }
+  }
+}
+
+.online-plan-loader {
+  /deep/ {
+    .buffer-hero {
+      background-color: transparent;
+      padding: 2rem 2rem 0;
+      margin-bottom: 0;
+    }
+
+    .buffer-title,
+    .buffer-line {
+      width: 100%;
+    }
+
+    .buffer-page-image,
+    .buffer-category {
+      display: none;
     }
   }
 }
