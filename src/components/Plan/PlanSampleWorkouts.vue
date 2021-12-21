@@ -191,7 +191,7 @@ export default {
     opacity: 0.5;
 
     &:hover {
-        background-color: transparent;
+      background-color: transparent;
     }
   }
 
@@ -228,6 +228,72 @@ export default {
 
     span {
       color: #828282;
+    }
+  }
+}
+
+//Light Theme styles
+.light-theme {
+  .plan-preview-wrapper {
+    .week-title {
+      color: $blackColor;
+    }
+
+    /deep/ .slick-dots li {
+      background-color: #ececec;
+      border-color: darken(#ececec, 15%);
+
+      &.slick-active {
+        background-color: var(--brand-color);
+        border-color: var(--brand-color);
+      }
+    }
+  }
+
+  .calendar-day {
+    color: $greyColor;
+
+    &.active {
+      background-color: var(--brand-color);
+
+      span,
+      b {
+        color: var(--brand-color-dark-50);
+      }
+    }
+  }
+
+  .workout-day {
+    border: 1px solid #e2e2e2;
+    background-color: #fff;
+
+    h3 {
+      color: $blackColor;
+      opacity: 0.75;
+    }
+
+    .btn-text {
+      color: $greyColor;
+      opacity: 1;
+    }
+
+    &.locked-workout {
+      border: 1px solid #d1d1d1;
+      background-color: #ebebeb;
+
+      .btn-text {
+        color: $blackColor;
+        opacity: 0.5;
+      }
+
+      h3 {
+        color: #5e5e5e;
+      }
+
+      .workout-icon /deep/ svg {
+        fill: $blackColor;
+        opacity: 0.5;
+      }
     }
   }
 }

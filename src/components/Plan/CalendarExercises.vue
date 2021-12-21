@@ -10,7 +10,7 @@
       <p class="excercise-description">{{ excercise.description }}</p>
     </div>
     <a
-      v-if="excercise.videoURL !== undefined && excercise.videoURL !== null"
+      v-if="excercise.videoURL !== undefined && excercise.videoURL !== null && excercise.videoURL != ''"
       :href="excercise.videoURL"
       target="_blank"
       class="btn btn-icon"

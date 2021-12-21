@@ -78,7 +78,6 @@
           </div>
         </div>
         <!--END: Plan Attachments-->
-        
 
         <!--START: Plan Description-->
         <label class="label-small">About This Plan</label>
@@ -99,7 +98,6 @@
         </div>
         <!--END: Plan Description-->
 
-
         <!--START: Online Plan Component-->
         <PageLoader
           v-if="showOnlinePlanLoader"
@@ -114,7 +112,6 @@
           ></PlanSampleWorkouts>
         </div>
         <!--END: Online Plan Component-->
-
 
         <!--START: Plan Highlights-->
         <div
@@ -325,6 +322,8 @@ export default {
           this.onlinePlan = response.data;
           this.hasOnlinePlan = true;
         } else this.hasOnlinePlan = false;
+      } else {
+        this.hasOnlinePlan = false;
       }
       this.showOnlinePlanLoader = false;
     },
@@ -769,6 +768,27 @@ export default {
 
   .equipment-details .unicon /deep/ svg {
     fill: $whiteColor;
+  }
+
+  .plan-description-wrapper {
+    &::before {
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #f7f7f7 100%);
+    }
+  }
+
+  .plan-steps-wrapper {
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+
+    /deep/ .plan-step-item {
+      h3,
+      p {
+        color: $blackColor;
+      }
+      P {
+        opacity: $lightOpacity;
+      }
+    }
   }
 
   .highlights-wrapper {
