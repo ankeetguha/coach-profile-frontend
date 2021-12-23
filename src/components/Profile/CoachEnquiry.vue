@@ -94,6 +94,13 @@ export default {
           required: true,
           hasError: false,
         },
+        email: {
+          type: "email",
+          title: "E-mail Address*",
+          placeholder: "Your e-mail address",
+          required: true,
+          hasError: false,
+        },
         message: {
           type: "textarea",
           title: "Your Message*",
