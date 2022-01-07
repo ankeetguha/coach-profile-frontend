@@ -230,8 +230,8 @@ export default {
       },
       successMessage: {
         show: false,
-        title: "I've got your booking",
-        message: "Will reach out to you soon enough",
+        title: this.coach.paymentsActive ? "Booking Confirmed! E-Mail Sent ":"I've got your booking",
+        message: this.coach.paymentsActive ? "Check your e-mail for details. If you can't find it, make sure to check your spam folder.":"Will reach out to you soon enough",
       },
     };
   },

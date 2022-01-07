@@ -50,15 +50,15 @@ Vue.use(Unicon);
 Vue.config.productionTip = false
 
 //START: Subdomain logic
-const subdomain = window.location.host.split('.')[0];
+// const subdomain = window.location.host.split('.')[0];
 const router = () => {
     let routes;
-    if (subdomain != 'www' && subdomain != 'skpr' && subdomain != 'localhost:8081') {
-        store.commit("updateIsSubDomain", true);
-        routes = routerSubDomain;
-    } else {
+    if (process.env.VUE_APP_MODE == 'development' || process.env.VUE_APP_MODE == 'staging') {
         store.commit("updateIsSubDomain", false);
         routes = routerSubDirectory;
+    } else {
+        store.commit("updateIsSubDomain", true);
+        routes = routerSubDomain;
     }
     return routes;
 };
