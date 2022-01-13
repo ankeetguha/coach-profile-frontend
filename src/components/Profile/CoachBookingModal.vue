@@ -271,7 +271,7 @@ export default {
       this.status.show = false;
       this.successMessage.show = false;
       this.isSuccess = false;
-      
+
       this.modalLoader.content.title = "Redirecting To Payment Gateway";
       this.modalLoader.content.description =
         "Don't close this page. We're sending you to the payment gateway";
@@ -351,9 +351,9 @@ export default {
       };
 
       var rzp = new window.Razorpay(razorpayOptions);
-      setTimeout(() => {
-        rzp.open(), (this.modalLoader.show = false), (this.showLoader = true);
-      }, 1500);
+      rzp.open();
+      this.modalLoader.show = false;
+      this.showLoader = true;
 
       //Handle failed payments
       rzp.on("payment.failed", function (response) {
