@@ -150,7 +150,12 @@
       <!--END: Status Message-->
 
       <!--START: Line Loader -->
+      <ModalLoader
+        :show="modalLoader.show"
+        :content="modalLoader.content"
+      ></ModalLoader>
       <LineLoader :showLoader="showLoader"></LineLoader>
+      <div class="bg-overlay" :class="{ show: modalLoader.show }"></div>
       <!--END: Line Loader -->
 
       <!--START: Status Message-->
@@ -174,6 +179,7 @@ import FormBuilder from "@/components/form/FormBuilder";
 import StatusMessage from "@/components/modals/StatusMessage";
 import SuccessMessage from "@/components/modals/SuccessMessage";
 import LineLoader from "@/components/loaders/LineLoader";
+import ModalLoader from "@/components/loaders/ModalLoader";
 
 export default {
   name: "CoachBooking",
@@ -228,10 +234,18 @@ export default {
         successMessage: "🙌 I've got your booking!",
         errorMessage: "😕 Something's not right. Try again",
       },
+      modalLoader: {
+        show: false,
+        content: {},
+      },
       successMessage: {
         show: false,
-        title: this.coach.paymentsActive ? "Booking Confirmed! E-Mail Sent ":"I've got your booking",
-        message: this.coach.paymentsActive ? "Check your e-mail for details. If you can't find it, make sure to check your spam folder.":"Will reach out to you soon enough",
+        title: this.coach.paymentsActive
+          ? "Booking Confirmed! E-Mail Sent "
+          : "I've got your booking",
+        message: this.coach.paymentsActive
+          ? "Check your e-mail for details. If you can't find it, make sure to check your spam folder."
+          : "Will reach out to you soon enough",
       },
     };
   },
@@ -241,6 +255,7 @@ export default {
     LineLoader,
     StatusMessage,
     SuccessMessage,
+    ModalLoader,
   },
 
   mounted() {
@@ -256,7 +271,11 @@ export default {
       this.status.show = false;
       this.successMessage.show = false;
       this.isSuccess = false;
-      this.showLoader = true;
+      
+      this.modalLoader.content.title = "Redirecting To Payment Gateway";
+      this.modalLoader.content.description =
+        "Don't close this page. We're sending you to the payment gateway";
+      this.modalLoader.show = true;
 
       //Check if the form has valid input
       var formFields = {
@@ -286,7 +305,6 @@ export default {
 
           this.status.show = true;
           this.disableButton = true;
-          this.showLoader = false;
 
           //Hide the notification
           timeoutHandler = setTimeout(() => (this.status.show = false), 3000);
@@ -333,7 +351,9 @@ export default {
       };
 
       var rzp = new window.Razorpay(razorpayOptions);
-      rzp.open();
+      setTimeout(() => {
+        rzp.open(), (this.modalLoader.show = false), (this.showLoader = true);
+      }, 1500);
 
       //Handle failed payments
       rzp.on("payment.failed", function (response) {
@@ -343,6 +363,12 @@ export default {
 
     //Verify and register a payment
     async registerPayment(response, orderID) {
+      this.modalLoader.content.title = "Processing Your Booking";
+      this.modalLoader.content.description =
+        "Don't close this page. We're saving your details!";
+      this.modalLoader.show = true;
+      this.showLoader = false;
+
       const paymentStatus = await CoachService.VerifyPayment({
         paymentResponse: response,
         orderID: orderID,
@@ -357,6 +383,7 @@ export default {
       this.status.show = true;
       this.disableButton = true;
       this.showLoader = false;
+      this.modalLoader.show = false;
     },
 
     //Handle a failed payment
