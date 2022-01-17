@@ -332,6 +332,7 @@ export default {
           this.resetFields(this.fields);
 
           this.status.show = true;
+          this.status.isSuccess = true;
           this.disableButton = true;
           this.showLoader = false;
 
