@@ -1,6 +1,7 @@
 <template>
   <div class="module-container">
-    <h3>Downloading your E-Book</h3>
+    <h3>Please Wait</h3>
+    <p>We're getting your e-book</p>
     <LineLoader :showLoader="true"></LineLoader>
   </div>
 </template>
@@ -92,6 +93,7 @@ export default {
       };
 
       const response = await CoachService.GetDownloads(fields);
+      this.showLoader = false;
 
       if (!response.hasError) {
         // Create an invisible element
@@ -107,7 +109,6 @@ export default {
         // Cleanup
         window.URL.revokeObjectURL(a.href);
         document.body.removeChild(a);
-        this.showLoader = false;
       }
     },
   },
@@ -123,7 +124,17 @@ export default {
 
   h3 {
     color: $whiteColor;
-    padding-bottom: 3rem;
+    margin-bottom: .5rem;
   }
+
+  p {
+    color: $whiteColor;
+    opacity: .75;
+  }
+}
+
+/deep/ .line-loader {
+  position: relative;
+  margin-top: 4rem;
 }
 </style>
