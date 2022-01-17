@@ -7,6 +7,7 @@ import Plans from '@/views/Plans/Plans';
 import Plan from '@/views/Plans/Plan';
 import About from '@/views/About';
 import Links from '@/views/Links';
+import Download from '@/views/Download';
 
 Vue.use(VueRouter);
 
@@ -38,6 +39,13 @@ export default new VueRouter({
             }, {
                 path: '/:slug/links',
                 component: Links,
+                props: true,
+                meta: {
+                    showRouteModal: true
+                }
+            }, {
+                path: '/:slug/download',
+                component: Download,
                 props: true,
                 meta: {
                     showRouteModal: true

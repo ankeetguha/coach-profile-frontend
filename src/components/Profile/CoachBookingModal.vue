@@ -157,10 +157,11 @@
         <a
           :href="attachment.data"
           target="_blank"
+          download
           class="btn btn-primary"
-          :download="attachment.name"
-          >Download</a
         >
+          Download
+        </a>
       </div>
       <!--END: Status Message-->
 
@@ -253,10 +254,7 @@ export default {
         show: false,
         content: {},
       },
-      attachment: {
-        name: null,
-        data: null,
-      },
+      attachment: { name: null, path: null },
       successMessage: {
         show: false,
         title: this.coach.paymentsActive
@@ -398,11 +396,7 @@ export default {
             "You're E-Book download will start shortly";
           this.successMessage.message =
             "We've also sent you an e-mail with the E-Book. Check SPAM folder if you can't find it";
-          this.downloadAttachment(
-            paymentStatus.attachment,
-            paymentStatus.name,
-            "application/pdf"
-          );
+          this.initAttachment(paymentStatus.attachment, paymentStatus.name);
         }
 
         this.successMessage.show = true;
@@ -428,9 +422,16 @@ export default {
       this.showLoader = false;
     },
 
-    downloadAttachment(data, fileName, type) {
-      this.attachment.data = `data:${type};base64,${data}`
+    initAttachment(data, fileName) {
       this.attachment.name = fileName;
+      this.attachment.path = "/download";
+      if (
+        process.env.VUE_APP_MODE == "development" ||
+        process.env.VUE_APP_MODE == "staging"
+      )
+        this.attachment.path = `/${this.coach.slug}/download`;
+
+      this.attachment.path += `?blob=${data}&name=${fileName}`;
     },
   },
 };
