@@ -1,12 +1,14 @@
 <template>
   <div class="module-container">
     <h3>Downloading your E-Book</h3>
+    <LineLoader :showLoader="true"></LineLoader>
   </div>
 </template>
 
 <script>
 //Import libraries
 import _ from "lodash";
+import LineLoader from "@/components/loaders/LineLoader";
 
 //Importing CoachService
 import CoachService from "@/controllers/CoachService";
@@ -52,6 +54,7 @@ export default {
   },
   data() {
     return {
+      showLoader: true,
       meta: {
         title: null,
         ogTitle: null,
@@ -64,7 +67,9 @@ export default {
     coach: Object,
     show: Boolean,
   },
-  components: {},
+  components: {
+    LineLoader,
+  },
   async created() {
     //Get coach and change meta details
     if (_.isEmpty(this.coach)) {
@@ -89,19 +94,20 @@ export default {
       const response = await CoachService.GetDownloads(fields);
 
       if (!response.hasError) {
-          // Create an invisible element
-          const a = document.createElement("a");
-          a.style.display = "none";
-          document.body.appendChild(a);
-          // Set the HREF to a Blob representation of the data to be downloaded
-          a.href = `data:application/pdf;base64,${response.data.blob}`;
-          // Use download attribute to set set desired file name
-          a.setAttribute("download", response.data.name);
-          // Trigger the download by simulating click
-          a.click();
-          // Cleanup
-          window.URL.revokeObjectURL(a.href);
-          document.body.removeChild(a);
+        // Create an invisible element
+        const a = document.createElement("a");
+        a.style.display = "none";
+        document.body.appendChild(a);
+        // Set the HREF to a Blob representation of the data to be downloaded
+        a.href = `data:application/pdf;base64,${response.data.blob}`;
+        // Use download attribute to set set desired file name
+        a.setAttribute("download", response.data.name);
+        // Trigger the download by simulating click
+        a.click();
+        // Cleanup
+        window.URL.revokeObjectURL(a.href);
+        document.body.removeChild(a);
+        this.showLoader = false;
       }
     },
   },
@@ -111,9 +117,13 @@ export default {
 <style scoped lang="scss">
 .module-container {
   text-align: center;
+  max-width: 50rem;
+  margin: auto;
+  overflow: hidden;
 
   h3 {
     color: $whiteColor;
+    padding-bottom: 3rem;
   }
 }
 </style>
