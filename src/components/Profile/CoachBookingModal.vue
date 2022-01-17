@@ -155,12 +155,12 @@
         <img src="@/assets/images/icons/file.png" alt="Attachment" />
         <label>{{ attachment.name }}</label>
         <a
-          :href="attachment.data"
+          :href="attachment.path"
           target="_blank"
-          download
           class="btn btn-primary"
+          ref="pdfDownloadButton"
         >
-          Download
+          Download >
         </a>
       </div>
       <!--END: Status Message-->
@@ -396,7 +396,7 @@ export default {
             "You're E-Book download will start shortly";
           this.successMessage.message =
             "We've also sent you an e-mail with the E-Book. Check SPAM folder if you can't find it";
-          this.initAttachment(paymentStatus.attachment, paymentStatus.name);
+          this.initAttachment(paymentStatus.bookingID, paymentStatus.name);
         }
 
         this.successMessage.show = true;
@@ -422,7 +422,7 @@ export default {
       this.showLoader = false;
     },
 
-    initAttachment(data, fileName) {
+    initAttachment(bookingID, fileName) {
       this.attachment.name = fileName;
       this.attachment.path = "/download";
       if (
@@ -431,7 +431,10 @@ export default {
       )
         this.attachment.path = `/${this.coach.slug}/download`;
 
-      this.attachment.path += `?blob=${data}&name=${fileName}`;
+      if (navigator.userAgent.includes("Instagram"))
+        this.$refs.pdfDownloadButton.setAttribute("download");
+        
+      this.attachment.path += `?bookingID=${bookingID}&phone=${this.fields.phone.value}`;
     },
   },
 };

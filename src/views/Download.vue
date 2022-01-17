@@ -8,6 +8,9 @@
 //Import libraries
 import _ from "lodash";
 
+//Importing CoachService
+import CoachService from "@/controllers/CoachService";
+
 export default {
   name: "Download",
   metaInfo() {
@@ -76,29 +79,30 @@ export default {
     this.downloadEBook();
   },
   methods: {
-    downloadEBook() {
+    async downloadEBook() {
       const urlParams = new URLSearchParams(window.location.search);
-      const blob = urlParams.get("blob");
-      const fileName = urlParams.get("name");
-      const type = "application/pdf";
+      const fields = {
+        bookingID: urlParams.get("bookingID"),
+        phone: urlParams.get("phone"),
+      };
 
-      // Create an invisible element
-      const a = document.createElement("a");
-      a.style.display = "none";
-      document.body.appendChild(a);
+      const response = await CoachService.GetDownloads(fields);
 
-      // Set the HREF to a Blob representation of the data to be downloaded
-      a.href = window.URL.createObjectURL(new Blob([blob], { type }));
-
-      // Use download attribute to set set desired file name
-      a.setAttribute("download", fileName);
-
-      // Trigger the download by simulating click
-      a.click();
-
-      // Cleanup
-      window.URL.revokeObjectURL(a.href);
-      document.body.removeChild(a);
+      if (!response.hasError) {
+          // Create an invisible element
+          const a = document.createElement("a");
+          a.style.display = "none";
+          document.body.appendChild(a);
+          // Set the HREF to a Blob representation of the data to be downloaded
+          a.href = `data:application/pdf;base64,${response.data.blob}`;
+          // Use download attribute to set set desired file name
+          a.setAttribute("download", response.data.name);
+          // Trigger the download by simulating click
+          a.click();
+          // Cleanup
+          window.URL.revokeObjectURL(a.href);
+          document.body.removeChild(a);
+      }
     },
   },
 };

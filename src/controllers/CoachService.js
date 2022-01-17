@@ -156,6 +156,30 @@ class CoachService {
         })
     }
 
+    static GetDownloads(fields) {
+        return new Promise((resolve, reject) => {
+            resolve(
+                (async() => {
+                    try {
+                        return await axios.post(`${apiURL}/coach/get-downloads`, {
+                                fields
+                            }, {
+                                withCredentials: true
+                            })
+                            .then((response) => {
+                                return response.data;
+                            }, (error) => {
+                                return error.response.data;
+                            });
+                    } catch (e) {
+                        console.log('err', e);
+                        reject(e);
+                    }
+                })()
+            );
+        })
+    }
+
 }
 
 export default CoachService;
