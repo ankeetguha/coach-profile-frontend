@@ -171,9 +171,6 @@
 </template>
 
 <script>
-//Import libraries
-import download from "downloadjs";
-
 //Importing CoachService
 import CoachService from "@/controllers/CoachService";
 
@@ -244,10 +241,10 @@ export default {
       successMessage: {
         show: false,
         title: this.coach.paymentsActive
-          ? "Booking Confirmed! E-Mail Sent "
+          ? "Booking Completed!"
           : "I've got your booking",
         message: this.coach.paymentsActive
-          ? "Check your e-mail for details. If you can't find it, make sure to check your spam folder."
+          ? "We've also sent you an email with details. Check SPAM folder if you can't find it"
           : "Will reach out to you soon enough",
       },
     };
@@ -366,9 +363,8 @@ export default {
 
     //Verify and register a payment
     async registerPayment(response, orderID) {
-      this.modalLoader.content.title = "Processing Your Booking";
-      this.modalLoader.content.description =
-        "Don't close this page. We're saving your details!";
+      this.modalLoader.content.title = "DO NOT close this page";
+      this.modalLoader.content.description = "We're processing your booking.";
       this.modalLoader.show = true;
       this.showLoader = false;
 
@@ -379,7 +375,15 @@ export default {
 
       if (!paymentStatus.hasError) {
         if (paymentStatus.name != undefined) {
-          download(`data:application/pdf;base64,${encodeURI(paymentStatus.attachment)}`, paymentStatus.name, "application/pdf");
+          this.modalLoader.content.description =
+            "You're E-Book download will start shortly";
+          this.successMessage.message =
+            "We've also sent you an e-mail with the E-Book. Check SPAM folder if you can't find it";
+          this.downloadAttachment(
+            paymentStatus.attachment,
+            paymentStatus.name,
+            "application/pdf"
+          );
         }
 
         this.successMessage.show = true;
@@ -403,6 +407,26 @@ export default {
       this.successMessage.show = false;
       this.disableButton = true;
       this.showLoader = false;
+    },
+
+    downloadAttachment(data, fileName, type) {
+      // Create an invisible A element
+      const a = document.createElement("a");
+      a.style.display = "none";
+      document.body.appendChild(a);
+
+      // Set the HREF to a Blob representation of the data to be downloaded
+      a.href = window.URL.createObjectURL(new Blob([data], { type }));
+
+      // Use download attribute to set set desired file name
+      a.setAttribute("download", fileName);
+
+      // Trigger the download by simulating click
+      a.click();
+
+      // Cleanup
+      window.URL.revokeObjectURL(a.href);
+      document.body.removeChild(a);
     },
   },
 };
