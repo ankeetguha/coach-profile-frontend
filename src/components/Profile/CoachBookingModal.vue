@@ -432,8 +432,8 @@ export default {
         this.attachment.path = `/${this.coach.slug}/download`;
 
       if (navigator.userAgent.includes("Instagram"))
-        this.$refs.pdfDownloadButton.setAttribute("download");
-        
+        this.$refs.pdfDownloadButton.setAttribute("download", fileName);
+
       this.attachment.path += `?bookingID=${bookingID}&phone=${this.fields.phone.value}`;
     },
   },
