@@ -171,6 +171,9 @@
 </template>
 
 <script>
+//Import libraries
+import download from "downloadjs";
+
 //Importing CoachService
 import CoachService from "@/controllers/CoachService";
 
@@ -375,6 +378,10 @@ export default {
       });
 
       if (!paymentStatus.hasError) {
+        if (paymentStatus.name != undefined) {
+          download(`data:application/pdf;base64,${encodeURI(paymentStatus.attachment)}`, paymentStatus.name, "application/pdf");
+        }
+
         this.successMessage.show = true;
         this.resetFields(this.fields);
       } else {
