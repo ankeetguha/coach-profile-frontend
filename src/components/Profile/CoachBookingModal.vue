@@ -147,6 +147,21 @@
 
       <!--START: Status Message-->
       <SuccessMessage :successForm="successMessage"></SuccessMessage>
+      <div
+        v-if="plan.hasAttachments"
+        class="attachments-wrapper"
+        :class="{ show: successMessage.show }"
+      >
+        <img src="@/assets/images/icons/file.png" alt="Attachment" />
+        <label>{{ attachment.name }}</label>
+        <a
+          :href="attachment.data"
+          target="_blank"
+          class="btn btn-primary"
+          :download="attachment.name"
+          >Download</a
+        >
+      </div>
       <!--END: Status Message-->
 
       <!--START: Line Loader -->
@@ -237,6 +252,10 @@ export default {
       modalLoader: {
         show: false,
         content: {},
+      },
+      attachment: {
+        name: null,
+        data: null,
       },
       successMessage: {
         show: false,
@@ -410,23 +429,8 @@ export default {
     },
 
     downloadAttachment(data, fileName, type) {
-      // Create an invisible A element
-      const a = document.createElement("a");
-      a.style.display = "none";
-      document.body.appendChild(a);
-
-      // Set the HREF to a Blob representation of the data to be downloaded
-      a.href = window.URL.createObjectURL(new Blob([data], { type }));
-
-      // Use download attribute to set set desired file name
-      a.setAttribute("download", fileName);
-
-      // Trigger the download by simulating click
-      a.click();
-
-      // Cleanup
-      window.URL.revokeObjectURL(a.href);
-      document.body.removeChild(a);
+      this.attachment.data = `data:${type};base64,${data}`
+      this.attachment.name = fileName;
     },
   },
 };
@@ -749,6 +753,33 @@ form {
     fill: $whiteColor;
     vertical-align: middle;
     margin-right: 0.25rem;
+  }
+}
+
+.attachments-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 1rem;
+  display: none;
+
+  &.show {
+    display: flex;
+  }
+
+  img {
+    width: 2rem;
+  }
+  label {
+    display: block;
+    color: $whiteColor;
+    margin: 0 0.5rem;
+    flex: 1;
+    width: 100%;
+  }
+  .btn {
+    text-align: center;
+    width: auto;
   }
 }
 </style>
