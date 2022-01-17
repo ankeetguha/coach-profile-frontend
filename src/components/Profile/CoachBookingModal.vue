@@ -254,15 +254,18 @@ export default {
         show: false,
         content: {},
       },
+      customerPhone: null,
       attachment: { name: null, path: null },
       successMessage: {
         show: false,
-        title: this.coach.paymentsActive
-          ? "Booking Completed!"
-          : "I've got your booking",
-        message: this.coach.paymentsActive
-          ? "We've also sent you an email with details. Check SPAM folder if you can't find it"
-          : "Will reach out to you soon enough",
+        title:
+          this.coach.paymentsActive || this.plan.hasAttachments
+            ? "Booking Completed!"
+            : "I've got your booking",
+        message:
+          this.coach.paymentsActive || this.plan.hasAttachments
+            ? "We've also sent you an email with details. Check SPAM folder if you can't find it"
+            : "Will reach out to you soon enough",
       },
     };
   },
@@ -288,11 +291,15 @@ export default {
       this.status.show = false;
       this.successMessage.show = false;
       this.isSuccess = false;
+      this.modalLoader.show = false;
 
-      this.modalLoader.content.title = "Redirecting To Payment Gateway";
-      this.modalLoader.content.description =
-        "Don't close this page. We're sending you to the payment gateway";
-      this.modalLoader.show = true;
+      //Show Payments loading modal
+      if (this.coach.paymentsActive) {
+        this.modalLoader.content.title = "Redirecting To Payment Gateway";
+        this.modalLoader.content.description =
+          "Don't close this page. We're sending you to the payment gateway";
+        this.modalLoader.show = true;
+      } else this.showLoader = true;
 
       //Check if the form has valid input
       var formFields = {
@@ -306,6 +313,7 @@ export default {
         this.status.show = true;
         this.disableButton = true;
         this.showLoader = false;
+        this.modalLoader.show = false;
 
         //Hide the notification
         timeoutHandler = setTimeout(() => (this.status.show = false), 3000);
@@ -315,6 +323,9 @@ export default {
           plan: this.plan,
           coachSlug: this.coach.slug,
         };
+
+        this.customerPhone = this.fields.phone.value;
+
         const bookingResult = await CoachService.BookPlan(formFields);
         if (!this.coach.paymentsActive) {
           this.successMessage.show = true;
@@ -322,6 +333,15 @@ export default {
 
           this.status.show = true;
           this.disableButton = true;
+          this.showLoader = false;
+
+          if (bookingResult.name != undefined) {
+            this.modalLoader.content.description =
+              "You're E-Book download will start shortly";
+            this.successMessage.message =
+              "We've also sent you an e-mail with the E-Book. Check SPAM folder if you can't find it";
+            this.initAttachment(bookingResult.bookingID, bookingResult.name);
+          }
 
           //Hide the notification
           timeoutHandler = setTimeout(() => (this.status.show = false), 3000);
@@ -434,7 +454,7 @@ export default {
       if (navigator.userAgent.includes("Instagram"))
         this.$refs.pdfDownloadButton.setAttribute("download", fileName);
 
-      this.attachment.path += `?bookingID=${bookingID}&phone=${this.fields.phone.value}`;
+      this.attachment.path += `?bookingID=${bookingID}&phone=${this.customerPhone}`;
     },
   },
 };
@@ -764,7 +784,7 @@ form {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 1rem;
+  margin: 0 1rem 1rem;
   display: none;
 
   &.show {
