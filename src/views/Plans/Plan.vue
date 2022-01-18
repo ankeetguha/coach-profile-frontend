@@ -352,8 +352,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.bg-overlay.show {
-  z-index: 4;
+.bg-overlay {
+  display: none;
+  .show {
+    display: block;
+    z-index: 4;
+  }
 }
 
 .plan-block-wrapper {

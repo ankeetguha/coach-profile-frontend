@@ -486,6 +486,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.bg-overlay {
+  display: none;
+  &.show {
+    display: block;
+  }
+}
 .plan-book-modal {
   transition: all 0.3s;
   background-color: $blackColor;
@@ -753,7 +759,7 @@ form {
 
     .email-attachments-info {
       color: lighten($blackColor, 15%);
-      border-color: #CECECE;
+      border-color: #cecece;
     }
   }
 }
