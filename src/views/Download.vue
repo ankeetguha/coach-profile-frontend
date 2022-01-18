@@ -96,7 +96,7 @@ export default {
         phone: urlParams.get("phone"),
       };
 
-      setTimeout(() => (this.loaderInfo.title = "Preparing Your Download"), 4500);
+      setTimeout(() => (this.loaderInfo.title = "Preparing Your Download"), 7500);
 
       const response = await CoachService.GetDownloads(fields);
 
@@ -133,7 +133,7 @@ export default {
   overflow: hidden;
 
   h3 {
-    font-size: $largeFontSize;
+    font-size: $largestFontSize;
     color: $whiteColor;
     margin-bottom: 0.5rem;
   }
