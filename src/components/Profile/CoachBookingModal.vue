@@ -152,16 +152,28 @@
         class="attachments-wrapper"
         :class="{ show: successMessage.show }"
       >
-        <img src="@/assets/images/icons/file.png" alt="Attachment" />
-        <label>{{ attachment.name }}</label>
-        <a
-          :href="attachment.path"
-          target="_blank"
-          class="btn btn-primary"
-          ref="pdfDownloadButton"
-        >
-          Download >
-        </a>
+        <div class="attachments-file-wrapper" v-if="mobilePlatform != 'iOS'">
+          <img src="@/assets/images/icons/file.png" alt="Attachment" />
+          <label>{{ attachment.name }}</label>
+          <a
+            :href="attachment.path"
+            target="_blank"
+            class="btn btn-primary"
+            ref="pdfDownloadButton"
+          >
+            Download >
+          </a>
+        </div>
+        <div class="email-attachments-wrapper" v-else>
+          <div class="email-attachments-file">
+            <img src="@/assets/images/icons/file.png" alt="Attachment" />
+            <label>{{ attachment.name }}</label>
+          </div>
+          <div class="email-attachments-info">
+            Attachment has been mailed! Make sure to check your
+            <span>Promotions</span> folder and your <span>Spam</span> folder
+          </div>
+        </div>
       </div>
       <!--END: Status Message-->
 
@@ -255,6 +267,7 @@ export default {
         content: {},
       },
       customerPhone: null,
+      mobilePlatform: this.getMobileOS,
       attachment: { name: null, path: null },
       successMessage: {
         show: false,
@@ -264,7 +277,7 @@ export default {
             : "I've got your booking",
         message:
           this.coach.paymentsActive || this.plan.hasAttachments
-            ? "We've also sent you an email with details. Check SPAM folder if you can't find it"
+            ? "We've also sent you an email with details. Check Promotions and Spam folder if you can't find it"
             : "Will reach out to you soon enough",
       },
     };
@@ -281,7 +294,17 @@ export default {
   mounted() {
     this.initPaymentGateway();
   },
-
+  computed: {
+    getMobileOS: function () {
+      const ua = navigator.userAgent;
+      if (
+        /iPad|iPhone|iPod/.test(ua) ||
+        (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)
+      )
+        return "iOS";
+      else return "other";
+    },
+  },
   methods: {
     async bookPlan() {
       var timeoutHandler = null;
@@ -590,6 +613,77 @@ form {
   margin-top: 0.5rem;
 }
 
+.attachments-wrapper {
+  margin: 0 1rem 1rem;
+  display: none;
+
+  &.show {
+    display: flex;
+  }
+}
+
+.attachments-file-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  img {
+    width: 2rem;
+  }
+  label {
+    display: block;
+    color: $whiteColor;
+    margin: 0 0.5rem;
+    flex: 1;
+    width: 100%;
+  }
+  .btn {
+    text-align: center;
+    width: auto;
+  }
+}
+
+.email-attachments-wrapper {
+  border: 1px solid #444;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  background-color: lighten($blackColor, 5%);
+
+  .email-attachments-file {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 1rem;
+    img {
+      width: 2rem;
+    }
+    label {
+      display: block;
+      color: $whiteColor;
+      margin: 0 0.5rem;
+      flex: 1;
+      width: 100%;
+    }
+  }
+
+  .email-attachments-info {
+    color: darken($whiteColor, 10%);
+    line-height: 1.4;
+    border-top: 1px dashed #ececec;
+    padding-top: 1rem;
+
+    span {
+      font-size: $smallerFontSize;
+      font-weight: $mediumFontWeight;
+      display: inline-block;
+      padding: 0.05rem 0.25rem;
+      border-radius: 0.25rem;
+      background-color: $yellowColor;
+      color: darken($yellowColor, 45%);
+    }
+  }
+}
+
 //Light Theme styles
 .light-theme {
   .plan-book-modal {
@@ -639,6 +733,27 @@ form {
 
     .total-price-wrapper {
       border-top-color: #ececec;
+    }
+  }
+
+  .attachments-file-wrapper {
+    label {
+      color: $blackColor;
+    }
+  }
+
+  .email-attachments-wrapper {
+    background-color: darken($whiteColor, 5%);
+    border-color: #ececec;
+
+    .email-attachments-file label {
+      font-weight: $mediumFontWeight;
+      color: lighten($blackColor, 5%);
+    }
+
+    .email-attachments-info {
+      color: lighten($blackColor, 15%);
+      border-color: #CECECE;
     }
   }
 }
@@ -778,33 +893,6 @@ form {
     fill: $whiteColor;
     vertical-align: middle;
     margin-right: 0.25rem;
-  }
-}
-
-.attachments-wrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin: 0 1rem 1rem;
-  display: none;
-
-  &.show {
-    display: flex;
-  }
-
-  img {
-    width: 2rem;
-  }
-  label {
-    display: block;
-    color: $whiteColor;
-    margin: 0 0.5rem;
-    flex: 1;
-    width: 100%;
-  }
-  .btn {
-    text-align: center;
-    width: auto;
   }
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
   <div class="module-container">
-    <h3>Please Wait</h3>
-    <p>We're getting your e-book</p>
-    <LineLoader :showLoader="true"></LineLoader>
+    <h3>{{ loaderInfo.title }}</h3>
+    <p>{{ loaderInfo.description }}</p>
+    <LineLoader :showLoader="showLoader"></LineLoader>
   </div>
 </template>
 
@@ -56,6 +56,10 @@ export default {
   data() {
     return {
       showLoader: true,
+      loaderInfo: {
+        title: "Converting Your E-Book",
+        description: "Hold on! This will take a little time :)",
+      },
       meta: {
         title: null,
         ogTitle: null,
@@ -93,7 +97,11 @@ export default {
       };
 
       const response = await CoachService.GetDownloads(fields);
+
       this.showLoader = false;
+      this.loaderInfo.title = "Your E-Book is ready!";
+      this.loaderInfo.description =
+        "We've also sent you an e-mail with the attachment";
 
       if (!response.hasError) {
         // Create an invisible element
@@ -124,12 +132,12 @@ export default {
 
   h3 {
     color: $whiteColor;
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
   }
 
   p {
     color: $whiteColor;
-    opacity: .75;
+    opacity: 0.75;
   }
 }
 
@@ -137,4 +145,18 @@ export default {
   position: relative;
   margin-top: 4rem;
 }
+
+//Light Theme styles
+.light-theme {
+  .module-container {
+    h3,
+    p {
+      color: $blackColor;
+    }
+    p {
+      opacity: $lightOpacity;
+    }
+  }
+}
+//Light Theme styles
 </style>
