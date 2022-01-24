@@ -147,8 +147,10 @@
 
       <!--START: Status Message-->
       <SuccessMessage :successForm="successMessage"></SuccessMessage>
+
+      <!--START: Plan Attachments Details-->
       <div
-        v-if="plan.hasAttachments"
+        v-if="plan.hasAttachments && !plan.hasOnlinePlan"
         class="attachments-wrapper"
         :class="{ show: successMessage.show }"
       >
@@ -175,6 +177,26 @@
           </div>
         </div>
       </div>
+      <!--END: Plan Attachments Details-->
+
+      <!--START: Online Plan Details-->
+      <div
+        v-else-if="plan.hasOnlinePlan"
+        class="client-login-wrapper"
+        :class="{ show: successMessage.show }"
+      >
+        <p>Login and access your plan to get started</p>
+        <a
+          class="btn btn-primary"
+          href="https://coach.skipperfit.com/client/login"
+          target="_blank"
+        >
+          <unicon name="user"></unicon>
+          <span>Login</span>
+        </a>
+      </div>
+      <!--END: Online Plan Details-->
+
       <!--END: Status Message-->
 
       <!--START: Line Loader -->
@@ -622,6 +644,27 @@ form {
 .attachments-wrapper {
   margin: 0 1rem 1rem;
   display: none;
+
+  &.show {
+    display: flex;
+  }
+}
+
+.client-login-wrapper {
+  margin: 0 1rem 1rem;
+  display: none;
+
+  p {
+    flex: 1;
+    color: $whiteColor; 
+    opacity: .75;
+  }
+
+  .btn {
+    text-align: center;
+    width: 5rem;
+    margin-left: 1rem;
+  }
 
   &.show {
     display: flex;

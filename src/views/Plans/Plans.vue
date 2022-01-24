@@ -1,6 +1,7 @@
 <template>
   <!--START: Profile Wrapper-->
   <div v-if="coach.fullName != undefined" class="profile-content-wrapper">
+    
     <!--START: Plans List-->
     <CoachPlans :plans="coach.plans" :coachSlug="coach.slug"></CoachPlans>
     <!--END: Plans List-->

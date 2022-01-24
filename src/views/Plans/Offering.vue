@@ -1,228 +1,5 @@
 <template>
-  <!--START: Profile Wrapper-->
-  <div v-if="coach.fullName != undefined" class="plan-wrapper">
-    <div class="plan-block-wrapper" :class="{ blur: showModal }">
-      <div class="plan-header-wrapper">
-        <router-link
-          class="go-back"
-          :to="`/${!$store.state.isSubDomain ? coach.slug + '/' : ''}`"
-        >
-          <unicon name="angle-left"></unicon>
-          <span>Back To Plans</span>
-        </router-link>
-        <a
-          class="btn btn-text btn-small"
-          href="https://coach.skipperfit.com/client/login"
-          target="_blank"
-        >
-          <unicon name="user"></unicon>
-          <span>Client Login</span>
-        </a>
-      </div>
-
-      <div class="plan-intro-wrapper">
-        <img :src="plan.coverImageURL" class="cover-image" :alt="plan.title" />
-
-        <div class="cover-wrapper">
-          <div class="intro-wrapper">
-            <span class="coach-name">{{ coach.fullName }}</span>
-            <h3 class="plan-title">
-              {{ plan.title }}
-            </h3>
-            <span class="plan-schedule" v-if="plan.schedule != undefined">
-              <unicon name="clock"></unicon>
-              <em>{{ plan.schedule }}</em>
-            </span>
-          </div>
-          <div class="price-wrapper">
-            <div
-              v-if="
-                plan.isDiscountedPlan != undefined &&
-                plan.isDiscountedPlan == true
-              "
-            >
-              <span class="plan-price slashed-price">
-                ₹<em>{{ convertToIndianNumber(plan.planPrice) }}</em>
-              </span>
-              <span class="plan-price">
-                ₹<em>{{ convertToIndianNumber(plan.discountedPrice) }}</em>
-              </span>
-            </div>
-            <div v-else>
-              <span class="plan-price">
-                ₹<em>{{ convertToIndianNumber(plan.planPrice) }}</em>
-              </span>
-            </div>
-            <span
-              class="plan-date"
-              v-if="plan.hasDates == true && plan.startDate != undefined"
-              >Starts {{ convertToMonthDate(plan.startDate) }}</span
-            >
-            <span
-              class="plan-date"
-              v-else-if="
-                plan.isMonthlyPlan != null &&
-                plan.planDuration != null &&
-                plan.isMonthlyPlan == false
-              "
-              >{{ plan.planDuration }}</span
-            >
-            <span class="plan-date" v-else-if="plan.hasDates == false"
-              >Per Month</span
-            >
-            <span class="plan-date" v-else></span>
-          </div>
-        </div>
-      </div>
-
-      <div class="details-wrapper">
-        <!--START: Plan Attachments-->
-        <div
-          v-if="plan.hasAttachments && !hasOnlinePlan"
-          class="attachment-wrapper"
-        >
-          <unicon name="paperclip"></unicon>
-          <div>
-            <h3>This plan has attachments</h3>
-            <p>You will receive them on your e-mail after signing up</p>
-          </div>
-        </div>
-        <!--END: Plan Attachments-->
-
-        <!--START: Plan Description-->
-        <label class="label-small">About This Plan</label>
-        <div
-          class="plan-description-wrapper"
-          :class="{ show: showFullDescription }"
-        >
-          <div class="plan-description" v-html="plan.description"></div>
-          <span
-            v-if="showFullDescription"
-            class="read-more"
-            @click="toggleDescription"
-            >Read Less</span
-          >
-          <span v-else class="read-more" @click="toggleDescription"
-            >Read More</span
-          >
-        </div>
-        <!--END: Plan Description-->
-
-        <!--START: Online Plan Component-->
-        <PageLoader
-          v-if="showOnlinePlanLoader"
-          class="online-plan-loader"
-        ></PageLoader>
-
-        <div class="online-plan-wrapper" v-if="hasOnlinePlan">
-          <OnlinePlanFeatures></OnlinePlanFeatures>
-          <PlanSampleWorkouts
-            :plan="onlinePlan"
-            @showSampleWorkouts="showWorkouts"
-          ></PlanSampleWorkouts>
-        </div>
-        <!--END: Online Plan Component-->
-
-        <!--START: Plan Highlights-->
-        <div
-          v-if="
-            plan.highlights.list != undefined && plan.highlights.list.length > 0
-          "
-        >
-          <div class="highlights-wrapper">
-            <label class="label-small">{{ plan.highlights.title }}</label>
-            <div
-              class="highlight-item"
-              v-for="highlight in plan.highlights.list"
-              :key="highlight._id"
-            >
-              <unicon name="check"></unicon>
-              <span>{{ highlight.title }}</span>
-            </div>
-          </div>
-        </div>
-        <!--END: Plan Highlights-->
-
-        <!--START: Plan Equipments-->
-        <div
-          v-if="plan.equipment != undefined && plan.equipment != ''"
-          class="equipments-wrapper"
-        >
-          <label class="label-small">Equipment</label>
-          <div class="equipment-details">
-            <unicon name="dumbbell"></unicon>
-            <p>{{ plan.equipment }}</p>
-          </div>
-        </div>
-        <!--END: Plan Equipments-->
-      </div>
-    </div>
-
-    <!--START: CTA Plan-->
-    <div v-if="this.isMobile()" class="cta-sticky-wrapper">
-      <div class="cta-sticky-info">
-        <div class="price-wrapper">
-          <div
-            v-if="
-              plan.isDiscountedPlan != undefined &&
-              plan.isDiscountedPlan == true
-            "
-          >
-            <span class="plan-price">
-              ₹<em>{{ convertToIndianNumber(plan.discountedPrice) }}</em>
-            </span>
-            <span class="plan-price slashed-price">
-              ₹<em>{{ convertToIndianNumber(plan.planPrice) }}</em>
-            </span>
-          </div>
-          <div v-else>
-            <span class="plan-price">
-              ₹<em>{{ convertToIndianNumber(plan.planPrice) }}</em>
-            </span>
-          </div>
-        </div>
-        <span class="plan-date" v-if="plan.hasDates == true"
-          >Starts {{ convertToMonthDate(plan.startDate) }}</span
-        >
-        <span
-          class="plan-date"
-          v-else-if="
-            plan.isMonthlyPlan != null &&
-            plan.planDuration != null &&
-            plan.isMonthlyPlan == false
-          "
-          >{{ plan.planDuration }}</span
-        >
-        <span class="plan-date" v-else>Per Month</span>
-      </div>
-      <button class="btn btn-primary btn-book" @click="showBookingModal">
-        Book Now
-      </button>
-    </div>
-    <!--END: CTA Plan-->
-
-    <!--START: Workout Exercises-->
-    <WorkoutExercises
-      :show="showWorkoutModal"
-      :workout="sampleWorkout"
-      :excercises="sampleExercises"
-      @closeWorkoutModal="closeWorkoutModal"
-    ></WorkoutExercises>
-    <!--START: Workout Exercises-->
-
-    <!--START: Booking Modal-->
-    <BookingModal
-      :plan="plan"
-      :coach="coach"
-      :show="isMobile() ? showModal : true"
-    ></BookingModal>
-    <div
-      class="bg-overlay"
-      :class="{ show: showModal }"
-      @click="closeModal"
-    ></div>
-    <!--END: Booking Modal-->
-  </div>
+  <div></div>
 </template>
 
 <script>
@@ -305,7 +82,7 @@ export default {
     WorkoutExercises,
   },
   async created() {
-    this.getPlan();
+    this.getOffering();
   },
   methods: {
     async getPlan() {
@@ -384,7 +161,11 @@ export default {
   padding-bottom: 7rem;
 }
 
-.plan-header-wrapper {
+.go-back {
+  text-decoration: none;
+  border: none;
+  line-height: 1;
+  color: $whiteColor;
   background-color: $blackColor;
   position: fixed;
   z-index: 1;
@@ -393,39 +174,9 @@ export default {
   padding: 0.75rem 1rem;
   border-bottom: 1px solid lighten($blackColor, 5%);
   width: calc(100% - 2rem);
-
-  .btn {
-    float: right;
-    color: lighten($blackColor, 50%);
-    border: 1px solid lighten($blackColor, 40%);
-
-    /deep/ .unicon svg {
-      height: auto;
-      width: 1.5rem;
-      fill: lighten($blackColor, 50%);
-    }
-
-    &:hover {
-      background-color: var(--brand-color);
-      color: var(--brand-color-dark-50);
-      border-color: var(--brand-color-dark-20);
-
-      /deep/ .unicon svg {
-        fill: var(--brand-color-dark-50);
-      }
-    }
-  }
-}
-
-.go-back {
-  text-decoration: none;
-  border: none;
-  line-height: 1;
-  color: $whiteColor;
   display: flex;
   flex-direction: row;
   align-items: center;
-  float: left;
 
   /deep/ .unicon svg {
     height: auto;
