@@ -2,6 +2,10 @@
   <!--START: Profile Wrapper-->
   <div v-if="coach.fullName != undefined" class="profile-content-wrapper">
     
+    <!--START: Offerings List-->
+    <CoachOfferings :offerings="coach.offerings" :coachSlug="coach.slug"></CoachOfferings>
+    <!--END: Offerings List-->
+
     <!--START: Plans List-->
     <CoachPlans :plans="coach.plans" :coachSlug="coach.slug"></CoachPlans>
     <!--END: Plans List-->
@@ -35,6 +39,7 @@ import _ from "lodash";
 
 //Imoprt components
 import CoachPlans from "@/components/Profile/CoachPlans";
+import CoachOfferings from "@/components/Profile/CoachOfferings";
 import MessageCoach from "@/components/Profile/MessageCoach";
 import CoachSpecialities from "@/components/Profile/CoachSpecialities";
 import CoachTransformations from "@/components/Profile/CoachTransformations";
@@ -94,6 +99,7 @@ export default {
   },
   components: {
     CoachPlans,
+    CoachOfferings,
     MessageCoach,
     CoachSpecialities,
     CoachTransformations,

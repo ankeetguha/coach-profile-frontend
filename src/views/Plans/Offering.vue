@@ -1,31 +1,159 @@
 <template>
-  <div></div>
+  <div class="offering" v-if="offering.title != null">
+    <!--START: Header-->
+    <div class="header-wrapper">
+      <router-link
+        class="go-back"
+        :to="`/${!$store.state.isSubDomain ? coach.slug + '/' : ''}`"
+      >
+        <unicon name="angle-left"></unicon>
+        <span>Back To Offerings</span>
+      </router-link>
+      <div class="filler"></div>
+      <a
+        class="btn btn-text btn-small"
+        href="https://coach.skipperfit.com/client/login"
+        target="_blank"
+      >
+        <unicon name="user"></unicon>
+        <span>Client Login</span>
+      </a>
+    </div>
+    <!--END: Header-->
+
+    <!--START: Hero-->
+    <div class="hero-wrapper">
+      <!--START: Cover-->
+      <div
+        class="cover-image-wrapper"
+        :class="{ extend: offering.coverVideoURL != undefined }"
+        @click="showVideoPlayer"
+      >
+        <img
+          :src="offering.coverImageURL"
+          class="cover-image"
+          alt="Cover Image"
+        />
+        <div
+          v-show="offering.coverVideoURL != undefined"
+          class="video-wrapper"
+          :class="{ float: offering.coverImageURL != undefined }"
+        >
+          <unicon name="play" class="play-btn"></unicon>
+          <div class="video-info">
+            <span>Watch the Video</span>
+            <h3>Plan Introduction</h3>
+          </div>
+        </div>
+      </div>
+      <!--END: Cover-->
+
+      <div class="title-info-wrapper">
+        <!--START: Title-->
+        <h1 class="title">{{ offering.title }}</h1>
+        <!--END: Title-->
+      </div>
+      <!--END: Hero-->
+
+      <!--START: Highlights-->
+      <TypeHighlights :offeringType="offering.offeringType"></TypeHighlights>
+      <!--END: Highlights-->
+
+      <!--START: Variants-->
+      <Variants
+        v-show="offering.price.variants.length"
+        :variants="offering.price.variants"
+        @changeVariant="changeVariant"
+      ></Variants>
+      <!--END: Variants-->
+    </div>
+
+    <!--START: Preview Type-->
+    <TypePreview :offering="offering" :coachSlug="coach.slug"></TypePreview>
+    <!--END: Preview Type-->
+
+    <!--START: Description-->
+    <div class="description-wrapper">
+      <h3 class="sub-title">Description</h3>
+      <div class="description" v-html="offering.description"></div>
+      <span class="read-more-btn">Read More</span>
+    </div>
+    <!--END: Description-->
+
+    <!--START: Features-->
+    <TypeFeatures :offering="offering" :coachSlug="coach.slug"></TypeFeatures>
+    <!--END: Features-->
+
+    <!--START: Inclusions-->
+    <Inclusions
+      v-show="offering.inclusions"
+      :inclusions="offering.inclusions"
+    ></Inclusions>
+    <!--END: Inclusions-->
+
+    <!--START: Highlights-->
+    <Highlights
+      v-show="offering.highlights"
+      :highlights="offering.highlights"
+    ></Highlights>
+    <!--END: Highlights-->
+
+    <!--START: Testimonials-->
+    <Testimonials
+      v-show="offering.testimonials"
+      :testimonials="offering.testimonials"
+      :coachName="coach.fullName"
+    ></Testimonials>
+    <!--END: Testimonials-->
+
+    <!--START: FAQs-->
+    <FAQs v-show="offering.faqs" :faqs="offering.faqs" :coach="coach"></FAQs>
+    <!--END: FAQs-->
+
+    <!--START: Video Player-->
+    <VideoPlayer
+      v-show="offering.coverVideoURL != undefined"
+      :show="showOptions.videoPlayer"
+      :videoLink="offering.coverVideoURL"
+      @closePlayer="closeVideoPlayer"
+    ></VideoPlayer>
+    <!--END: Video Player-->
+
+    <!--START: Price CTA-->
+    <PriceBox :price="selectedVariant"></PriceBox>
+    <!--END: Price CTA-->
+  </div>
 </template>
 
 <script>
+//Import libraries
+import _ from "lodash";
+
 //Importing CoachService
 import CoachService from "@/controllers/CoachService";
 
 //Import components
-import PageLoader from "@/components/loaders/PageLoader";
-import BookingModal from "@/components/Profile/CoachBookingModal";
-import OnlinePlanFeatures from "@/components/Plan/OnlinePlanFeatures";
-import PlanSampleWorkouts from "@/components/Plan/PlanSampleWorkouts";
-import WorkoutExercises from "@/components/Plan/WorkoutExercises";
+import TypeHighlights from "@/components/Profile/Offerings/TypeHighlights";
+import TypeFeatures from "@/components/Profile/Offerings/Features/Index";
+import TypePreview from "@/components/Profile/Offerings/Preview/Index";
+
+import Variants from "@/components/Profile/Offerings/Variants";
+import Inclusions from "@/components/Profile/Offerings/Inclusions";
+import Highlights from "@/components/Profile/Offerings/Highlights";
+import Testimonials from "@/components/Profile/Offerings/Testimonials";
+import FAQs from "@/components/Profile/Offerings/FAQs";
+import PriceBox from "@/components/Profile/Offerings/PriceBox";
+import VideoPlayer from "@/components/Profile/Offerings/VideoPlayer";
 
 export default {
-  name: "Plan",
+  name: "Offering",
   data() {
     return {
-      showModal: false,
-      showOnlinePlanLoader: true,
-      showWorkoutModal: false,
-      showFullDescription: false,
-      plan: {},
-      onlinePlan: {},
-      hasOnlinePlan: false,
-      sampleWorkout: {},
-      sampleExercises: [],
+      offering: {},
+      selectedVariant: null,
+      showOptions: {
+        videoPlayer: false,
+      },
       meta: {
         title: null,
         ogTitle: null,
@@ -75,90 +203,108 @@ export default {
     };
   },
   components: {
-    PageLoader,
-    BookingModal,
-    OnlinePlanFeatures,
-    PlanSampleWorkouts,
-    WorkoutExercises,
+    TypeHighlights,
+    TypeFeatures,
+    TypePreview,
+    Variants,
+    Inclusions,
+    Highlights,
+    Testimonials,
+    FAQs,
+    PriceBox,
+    VideoPlayer,
   },
   async created() {
+    //Get coach and change meta details
+    if (_.isEmpty(this.coach)) {
+      this.coach = await this.getCoach();
+    }
+
     this.getOffering();
   },
   methods: {
-    async getPlan() {
-      const planID = this.$route.params.plan;
-      this.plan = this.coach.plans.find((plan) => plan._id === planID);
+    async getOffering() {
+      const offeringSlug = this.$route.params.offering;
 
-      this.meta.title = `${this.plan.title} | ${this.coach.fullName} - ${this.coach.coverTitle}`;
-      this.meta.ogTitle = this.plan.title;
-      this.meta.ogDescription = this.plan.description;
-      this.meta.ogImage = this.plan.coverImageURL;
+      this.offering = await CoachService.GetOffering({
+        offeringSlug: offeringSlug,
+        coachSlug: this.coach.slug,
+      });
 
-      //Check for Online Plan
-      this.getOnlinePlan();
+      this.initVariant();
+
+      this.meta.title = `${this.offering.title} | ${this.coach.fullName} - ${this.coach.coverTitle}`;
+      this.meta.ogTitle = this.offering.title;
+      this.meta.ogDescription = this.offering.description;
+      this.meta.ogImage = this.offering.coverImageURL;
     },
 
-    async getOnlinePlan() {
-      if (this.plan.hasOnlinePlan) {
-        var response = await CoachService.GetOnlinePlan({
-          slug: this.coach.slug,
-          planID: this.plan._id,
-        });
-
-        if (!response.hasError) {
-          this.onlinePlan = response.data;
-          this.hasOnlinePlan = true;
-        } else this.hasOnlinePlan = false;
+    initVariant() {
+      if (this.offering.price.variants.length) {
+        this.selectedVariant = this.offering.price.variants[0];
       } else {
-        this.hasOnlinePlan = false;
+        this.selectedVariant = {
+          originalPrice: this.offering.price.originalPrice,
+          discountedPrice: this.offering.price.discountedPrice,
+        };
       }
-      this.showOnlinePlanLoader = false;
     },
 
-    showWorkouts() {
-      this.showWorkoutModal = true;
+    changeVariant(newVariant) {
+      this.selectedVariant = newVariant;
     },
 
-    showBookingModal() {
-      this.showModal = true;
+    showVideoPlayer() {
+      if (this.offering.coverVideoURL != undefined)
+        this.showOptions.videoPlayer = true;
     },
 
-    closeWorkoutModal() {
-      this.showWorkoutModal = false;
-    },
-
-    toggleDescription() {
-      this.showFullDescription = !this.showFullDescription;
-    },
-
-    closeModal() {
-      this.showModal = false;
+    closeVideoPlayer() {
+      this.showOptions.videoPlayer = false;
     },
   },
 };
 </script>
 
 <style scoped lang="scss">
-.bg-overlay {
-  display: none;
-  .show {
-    display: block;
-    z-index: 4;
-  }
+.offering {
+  padding-bottom: 6rem;
 }
 
-.plan-block-wrapper {
-  transition: all 0.3s;
-  padding-top: 3rem;
-  filter: blur(0);
+.header-wrapper {
+  background-color: $blackColor;
+  position: relative;
+  z-index: 10;
+  padding: 0.55rem 1rem;
+  border-bottom: 1px solid lighten($blackColor, 5%);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 
-  &.blur {
-    filter: blur(3px);
+  .filler {
+    flex-grow: 1;
   }
-}
 
-.plan-wrapper {
-  padding-bottom: 7rem;
+  .btn {
+    color: lighten($blackColor, 50%);
+    border: 1px solid lighten($blackColor, 30%);
+
+    /deep/ .unicon svg {
+      height: auto;
+      width: 1.5rem;
+      fill: lighten($blackColor, 50%);
+    }
+
+    &:hover {
+      background-color: var(--brand-color);
+      color: var(--brand-color-dark-50);
+      border-color: var(--brand-color-dark-20);
+
+      /deep/ .unicon svg {
+        fill: var(--brand-color-dark-50);
+      }
+    }
+  }
 }
 
 .go-back {
@@ -166,17 +312,10 @@ export default {
   border: none;
   line-height: 1;
   color: $whiteColor;
-  background-color: $blackColor;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid lighten($blackColor, 5%);
-  width: calc(100% - 2rem);
   display: flex;
   flex-direction: row;
   align-items: center;
+  float: left;
 
   /deep/ .unicon svg {
     height: auto;
@@ -185,516 +324,180 @@ export default {
   }
 
   span {
+    font-size: $smallerFontSize;
     color: $whiteColor;
     opacity: $lightOpacity;
-    margin-top: -0.15rem;
   }
 }
 
-.coach-plan {
-  background-color: #1e1e1e;
-}
-
-.label-small {
-  font-size: $smallerFontSize;
-  margin-bottom: 0.75rem;
-}
-
-.cover-image {
-  width: calc(100% - 1rem);
-  margin: 1rem 0.5rem 0.5rem;
-  border-radius: 1rem;
-}
-
-.cover-wrapper {
-  margin: 0 1rem;
-  // border-bottom: 1px solid lighten($blackColor, 10%);
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-.plan-intro-wrapper {
+.hero-wrapper {
   background-color: $blackColor;
-  padding: 0 0.5rem 1.5rem;
+  padding: 0.75rem 1.5rem 1.5rem;
+  margin-bottom: 1.5rem;
   border-bottom-left-radius: 2rem;
   border-bottom-right-radius: 2rem;
+  box-shadow: 0 0 2.7rem -0.15rem rgb(20, 20, 20);
 }
 
-.intro-wrapper {
-  flex: 1;
-  margin-right: 2rem;
-
-  .coach-name {
-    position: relative;
-    display: table;
-    background-color: var(--brand-color);
-    font-size: $smallerFontSize;
-    font-weight: $mediumFontWeight;
-    padding: 0.55rem 0.75rem;
-    border-radius: 0.75rem;
-    margin-top: -1.5rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .plan-title {
-    font-size: $mediumFontSize;
-    text-transform: capitalize;
-    color: $whiteColor;
-    line-height: 1.1;
-    margin-left: 0.15rem;
-  }
-
-  .plan-dates {
-    color: $whiteColor;
-    opacity: $lightOpacity;
-  }
-}
-
-.price-wrapper {
-  margin-top: 0.5rem;
-  margin-right: 0.5rem;
-  text-align: right;
-}
-
-.plan-date {
-  display: block;
-  font-size: $smallestFontSize;
-  color: $lightWhiteColor;
-  opacity: $lightOpacity;
-  margin-top: 0.25rem;
-}
-
-.plan-price {
-  font-size: $smallFontSize;
-  font-weight: $mediumFontWeight;
-  display: block;
+.sub-title {
   color: $whiteColor;
-
-  em {
-    font-size: $normalFontSize;
-    margin-left: 0.15rem;
-  }
-
-  &.slashed-price {
-    opacity: $lightOpacity;
-    text-decoration: line-through;
-    margin-top: 0.15rem;
-
-    em {
-      font-size: $smallerFontSize;
-    }
-  }
+  font-size: $normalFontSize;
+  font-weight: $mediumFontWeight;
 }
 
-.online-plan-wrapper {
+.cover-image-wrapper {
+  position: relative;
   margin-left: -1rem;
   width: calc(100% + 2rem);
+
+  .cover-image {
+    display: block;
+    width: 100%;
+    border-radius: 1rem;
+  }
+
+  &.extend {
+    padding-bottom: 3rem;
+  }
 }
 
-.plan-description-wrapper {
-  position: relative;
-  padding-bottom: 1rem;
+.video-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 
-  &::before {
-    content: "";
+  .unicon {
+    margin-right: 0.5rem;
+
+    /deep/ svg {
+      fill: var(--brand-color);
+      background-color: rgba(39, 39, 39, 1);
+      height: auto;
+      width: 1.25rem;
+      padding: 0.5rem;
+      border-radius: 50%;
+    }
+  }
+
+  .video-info {
+    span {
+      display: block;
+      color: $whiteColor;
+      opacity: 0.65;
+      font-size: $smallestFontSize;
+      text-transform: uppercase;
+      letter-spacing: 0.05rem;
+    }
+
+    h3 {
+      color: $whiteColor;
+      font-size: $normalFontSize;
+      font-weight: $mediumFontWeight;
+      opacity: 0.85;
+    }
+  }
+
+  &.float {
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 100%;
-    height: 8rem;
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(39, 39, 39, 1) 100%
-    );
-  }
-
-  .read-more {
-    font-size: $smallerFontSize;
-    position: absolute;
-    bottom: -1rem;
-    left: -1rem;
-    padding: 1rem;
-    margin: auto;
-    color: var(--brand-color);
-    text-transform: uppercase;
-    letter-spacing: 0.15rem;
-    text-align: center;
-    z-index: 11;
-  }
-
-  .plan-description {
-    max-height: 50vh;
-    overflow: hidden;
-  }
-
-  &.show {
-    .plan-description {
-      max-height: none;
-    }
-    &::before {
-      display: none;
-    }
+    padding: 3rem 1rem 0.75rem;
+    width: calc(100% - 2rem);
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #181818 50%);
   }
 }
 
-.details-wrapper {
-  margin: 2rem 1.5rem 0;
+.title-info-wrapper {
+  position: relative;
+  margin: 1rem 0 0;
 
-  .plan-description,
-  .plan-description /deep/ *,
-  .plan-description /deep/ {
-    font-size: $smallFontSize;
+  .title {
+    font-size: $mediumFontSize;
+    font-weight: $mediumFontWeight;
     color: $whiteColor;
-    line-height: 1.5;
-    margin-bottom: 0.75rem;
-
-    b,
-    strong {
-      font-weight: 900;
-    }
-
-    i,
-    em {
-      font-style: italic;
-    }
-
-    ul,
-    ol {
-      margin-left: 1.5rem !important;
-    }
-
-    ul li {
-      list-style: disc !important;
-    }
-
-    ol li {
-      list-style: decimal !important;
-    }
-  }
-}
-
-.highlights-wrapper {
-  border: 1px solid lighten($blackColor, 19%);
-  background-color: lighten($blackColor, 15%);
-  padding: 1rem;
-  border-radius: 0.75rem;
-  margin-top: 2rem;
-}
-
-.highlight-item {
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  margin-bottom: 1rem;
-
-  /deep/ .unicon svg {
-    fill: darken($greenColor, 35%);
-    background-color: $greenColor;
-    height: auto;
-    width: 1rem;
-    border-radius: 50%;
-    margin-right: 0.75rem;
-    margin-top: 0.25rem;
-  }
-
-  span {
-    font-size: $smallFontSize;
-    color: $whiteColor;
-    opacity: $mediumOpacity;
-    line-height: 1.4;
-  }
-
-  &:last-child {
     margin-bottom: 0;
   }
 }
 
-.equipments-wrapper {
-  margin-top: 2rem;
-}
-
-.equipment-details {
-  text-align: left;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  .unicon /deep/ svg {
-    background-color: var(--brand-color);
-    fill: var(--brand-color-dark-35);
-    width: 1.1rem;
-    padding: 0.25rem;
-    height: auto;
-    border-radius: 0.5rem;
-    margin-right: 1rem;
-  }
-
-  p {
-    color: $whiteColor;
-    opacity: $mediumOpacity;
-    font-size: $smallFontSize;
-  }
-}
-
-.cta-sticky-wrapper {
-  position: fixed;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 1rem 1.5rem;
-  bottom: 0;
-  left: 0;
-  width: calc(100% - 3rem);
-  background-color: $blackColor;
-  box-shadow: 0 -0.15rem 1rem 0.8rem rgba(51, 51, 51, 0.6);
-  border-top-left-radius: 1.5rem;
-  border-top-right-radius: 1.5rem;
-}
-.cta-sticky-info {
-  display: block;
-  flex: 1;
-
-  .price-wrapper {
-    text-align: left;
-
-    .plan-price {
-      display: inline-block;
-      vertical-align: bottom;
-      margin-right: 0.5rem;
-
-      &:not(.slashed-price) em {
-        font-size: $mediumFontSize;
-      }
-    }
-  }
-
-  .plan-dates {
-    display: block;
-    font-size: $smallestFontSize;
-    color: $whiteColor;
-    opacity: $lightOpacity;
-    margin-top: 0.35rem;
-  }
-}
-
-.plan-schedule {
-  display: block;
-  margin-top: 0.75rem;
-  color: $whiteColor;
-
-  /deep/ .unicon svg {
-    display: inline-block;
-    vertical-align: topp;
-    width: 1rem;
-    height: auto;
-    fill: $purpleColor;
-    margin-right: 0.5rem;
-  }
-
-  em {
-    width: calc(100% - 2rem);
-    display: inline-block;
-    vertical-align: top;
-    font-size: $smallFontSize;
-    opacity: $lightOpacity;
-  }
-}
-
-.btn-book {
+.description-wrapper {
   position: relative;
-  z-index: 10;
-}
+  margin: 1.5rem 1.5rem 0;
 
-.attachment-wrapper {
-  border: 1px solid lighten($blackColor, 19%);
-  background-color: lighten($blackColor, 15%);
-  padding: 1rem;
-  border-radius: 0.75rem;
-  padding: 0.75rem;
-  display: flex;
-  align-items: center;
-  margin-bottom: 2rem;
-
-  .unicon /deep/ svg {
-    fill: var(--brand-color);
-    width: 2rem;
-    height: auto;
-    margin-right: 0.75rem;
-  }
-
-  h3 {
-    font-size: $smallFontSize;
-    color: $whiteColor;
-  }
-
-  p {
+  .read-more-btn {
+    position: absolute;
+    cursor: pointer;
     font-size: $smallerFontSize;
-    color: $whiteColor;
-    opacity: $lightOpacity;
-  }
-}
-
-//Light Theme styles
-.light-theme {
-  .plan-intro-wrapper {
-    background-color: $whiteColor;
-    box-shadow: 0 0.5rem 0.9rem -0.1rem rgba(0, 0, 0, 0.15);
+    color: var(--brand-color);
+    bottom: 0;
+    left: 0;
+    z-index: 5;
   }
 
-  .coach-name {
-    color: $whiteColor;
-  }
+  .description {
+    position: relative;
+    max-height: 20vh;
+    overflow: hidden;
+    padding-bottom: 1rem;
 
-  .go-back {
-    background-color: darken($whiteColor, 2%);
-    border-color: darken($whiteColor, 5%);
-
-    span {
-      color: $blackColor;
-      opacity: $lightOpacity;
-    }
-  }
-
-  .equipment-details .unicon /deep/ svg {
-    fill: $whiteColor;
-  }
-
-  .plan-description-wrapper {
     &::before {
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #f7f7f7 100%);
-    }
-  }
-
-  .plan-steps-wrapper {
-    border-top: 1px solid #e5e5e5;
-    border-bottom: 1px solid #e5e5e5;
-
-    /deep/ .plan-step-item {
-      h3,
-      p {
-        color: $blackColor;
-      }
-      P {
-        opacity: $lightOpacity;
-      }
-    }
-  }
-
-  .highlights-wrapper {
-    border: 1px solid #e2e2e2;
-    background-color: $whiteColor;
-
-    .highlight-item span {
-      color: $blackColor;
-      opacity: $lightOpacity;
-    }
-  }
-
-  .equipment-details p,
-  .plan-price,
-  .plan-date,
-  .plan-schedule,
-  .plan-title,
-  .details-wrapper .plan-description,
-  .details-wrapper .plan-description /deep/ * {
-    color: $blackColor;
-  }
-
-  .details-wrapper .plan-description,
-  .details-wrapper .plan-description /deep/ * {
-    color: lighten($blackColor, 10%);
-    line-height: 1.4;
-  }
-
-  .cta-sticky-wrapper {
-    background-color: $whiteColor;
-    box-shadow: 0 0 1rem -0.1rem rgb(210, 210, 210);
-  }
-
-  .plan-title {
-    font-weight: 500;
-  }
-
-  .plan-price:not(.slashed-price) em {
-    font-size: 1.1rem;
-  }
-
-  .slashed-price,
-  .plan-schedule {
-    opacity: $mediumOpacity;
-  }
-
-  .attachment-wrapper {
-    border: 1px solid #e2e2e2;
-    background-color: $whiteColor;
-
-    h3 {
-      color: $blackColor;
-    }
-
-    p {
-      color: $blackColor;
-      opacity: $lightOpacity;
-    }
-  }
-}
-
-.online-plan-loader {
-  /deep/ {
-    .buffer-hero {
-      background-color: transparent;
-      padding: 2rem 2rem 0;
-      margin-bottom: 0;
-    }
-
-    .buffer-title,
-    .buffer-line {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
       width: 100%;
+      height: 8rem;
+      z-index: 1;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(39, 39, 39, 1) 90%
+      );
     }
+    /deep/ {
+      * {
+        font-size: $smallFontSize;
+        color: darken($whiteColor, 18%) !important;
+      }
 
-    .buffer-page-image,
-    .buffer-category {
-      display: none;
-    }
-  }
-}
+      p,
+      li {
+        line-height: 1.4;
+      }
 
-@media screen and (min-width: $mobileWidth) {
-  .plan-intro-wrapper {
-    padding-left: 15%;
-    padding-right: 45%;
-  }
+      ul {
+        margin-left: 1rem;
+      }
 
-  .details-wrapper {
-    margin-left: 16%;
-    width: 39%;
+      li {
+        position: relative;
+        margin-bottom: 1rem;
 
-    .plan-description,
-    .plan-description /deep/ * {
-      font-size: $normalFontSize;
-      line-height: 1.6;
-    }
-  }
+        &::before {
+          position: absolute;
+          display: block;
+          content: "";
+          height: 6px;
+          top: 0.25rem;
+          left: -1rem;
+          width: 6px;
+          border-radius: 50%;
+          background-color: var(--brand-color);
+        }
+      }
 
-  .highlights-wrapper {
-    margin: 3rem 0;
-  }
-
-  .cover-image {
-    margin-top: 2rem;
-  }
-
-  .intro-wrapper {
-    .plan-title {
-      font-size: $largeFontSize;
-    }
-  }
-
-  .plan-price {
-    em {
-      font-size: $mediumFontSize;
+      h3,
+      h4,
+      h5,
+      h6 {
+        color: $whiteColor !important;
+        font-size: $normalFontSize;
+        * {
+          color: $whiteColor !important;
+          font-size: $normalFontSize;
+        }
+      }
     }
   }
 }

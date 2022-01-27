@@ -5,6 +5,7 @@ import VueRouter from 'vue-router';
 import Profile from '@/views/Profile';
 import Plans from '@/views/Plans/Plans';
 import Plan from '@/views/Plans/Plan';
+import Offering from '@/views/Plans/Offering';
 import About from '@/views/About';
 import Links from '@/views/Links';
 import Download from '@/views/Download';
@@ -57,6 +58,14 @@ export default new VueRouter({
             path: '/:slug/plans/:plan',
             name: 'Plan',
             component: Plan,
+            meta: {
+                hideHeader: true
+            }
+        },
+        {
+            path: '/:slug/offerings/:offering',
+            name: 'Offering',
+            component: Offering,
             meta: {
                 hideHeader: true
             }

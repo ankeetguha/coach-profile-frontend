@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueMeta from 'vue-meta'
 import App from '@/App.vue'
 import store from "@/store";
+import VueYoutube from 'vue-youtube'
 
 //Importing the main routes for the App
 import routerSubDirectory from '@/router/subdirectory';
@@ -21,6 +22,9 @@ Vue.use(VueMeta, {
     refreshOnceOnNavigation: true
 })
 
+//Adding YouTube functionality
+Vue.use(VueYoutube)
+
 //Importing Font Awesome icons
 import Unicon from 'vue-unicons/dist/vue-unicons-vue2.umd';
 import {
@@ -37,6 +41,7 @@ import {
     uniCheck,
     uniDumbbell,
     uniAngleLeft,
+    uniAngleUp,
     uniHeart,
     uniSnapchatGhost,
     uniClock,
@@ -45,8 +50,9 @@ import {
     uniVideo,
     uniBoltAlt,
     uniUser,
+    uniPathfinder
 } from 'vue-unicons/dist/icons';
-Unicon.add([uniTrashAlt, uniAngleRight, uniAngleLeft, uniLock, uniFacebookF, uniInstagram, uniWhatsapp, uniTwitter, uniYoutube, uniTimes, uniPlay, uniCheck, uniDumbbell, uniHeart, uniSnapchatGhost, uniClock, uniEnvelope, uniPaperclip, uniVideo, uniBoltAlt, uniUser]);
+Unicon.add([uniTrashAlt, uniAngleRight, uniAngleLeft, uniAngleUp, uniLock, uniFacebookF, uniInstagram, uniWhatsapp, uniTwitter, uniYoutube, uniTimes, uniPlay, uniCheck, uniDumbbell, uniHeart, uniSnapchatGhost, uniClock, uniEnvelope, uniPaperclip, uniVideo, uniBoltAlt, uniUser, uniPathfinder]);
 Vue.use(Unicon);
 
 Vue.config.productionTip = false

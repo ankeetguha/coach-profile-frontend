@@ -131,6 +131,30 @@ class CoachService {
         })
     }
 
+    static GetOnlinePlanDetails(fields) {
+        return new Promise((resolve, reject) => {
+            resolve(
+                (async() => {
+                    try {
+                        return await axios.post(`${apiURL}/coach/get-online-plan`, {
+                                fields
+                            }, {
+                                withCredentials: true
+                            })
+                            .then((response) => {
+                                return response.data;
+                            }, (error) => {
+                                return error.response.data;
+                            });
+                    } catch (e) {
+                        console.log('err', e);
+                        reject(e);
+                    }
+                })()
+            );
+        })
+    }
+
     static SendMessage(fields) {
         return new Promise((resolve, reject) => {
             resolve(
@@ -162,6 +186,30 @@ class CoachService {
                 (async() => {
                     try {
                         return await axios.post(`${apiURL}/coach/get-downloads`, {
+                                fields
+                            }, {
+                                withCredentials: true
+                            })
+                            .then((response) => {
+                                return response.data;
+                            }, (error) => {
+                                return error.response.data;
+                            });
+                    } catch (e) {
+                        console.log('err', e);
+                        reject(e);
+                    }
+                })()
+            );
+        })
+    }
+
+    static GetOffering(fields) {
+        return new Promise((resolve, reject) => {
+            resolve(
+                (async() => {
+                    try {
+                        return await axios.post(`${apiURL}/coach/get-offering`, {
                                 fields
                             }, {
                                 withCredentials: true

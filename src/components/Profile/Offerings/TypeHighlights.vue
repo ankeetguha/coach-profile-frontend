@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="offering-type-highlights">
     <span class="title">{{ getOfferingType() }}</span>
     <div class="offering-highlights">
       <!--START: Online Plans-->
@@ -48,6 +48,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.offering-type-highlights {
+  padding: 0;
+  margin: 0;
+}
+
 .title {
   font-size: $smallestFontSize;
   font-weight: $mediumFontWeight;

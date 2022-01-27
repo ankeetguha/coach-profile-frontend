@@ -7,7 +7,7 @@
       v-for="offering in offerings"
       :key="offering.id"
       :to="`/${!$store.state.isSubDomain ? coachSlug + '/' : ''}offerings/${
-        offering._id
+        offering.slug
       }`"
     >
       <img

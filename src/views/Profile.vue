@@ -172,7 +172,7 @@ export default {
   box-shadow: 0 0 1.5rem 1.5rem rgba(0, 0, 0, 0.5);
   background-color: #272727;
   overflow-x: hidden;
-  min-height: 105vh;
+  height: 100vh;
 
   &::before {
     content: "";
