@@ -1,5 +1,5 @@
 <template>
-  <div class="price-box">
+  <div class="price-box" @click="showBookingForm"> 
     <div class="price-info-wrapper">
       <span class="price-icon">₹</span>
       <!--START: Offering Price-->
@@ -31,6 +31,12 @@ export default {
   name: "OfferingPriceBox",
   props: {
     price: Object,
+  },
+
+  methods: {
+    showBookingForm() {
+      this.$emit('showBookingForm');
+    }
   },
 
   computed: {

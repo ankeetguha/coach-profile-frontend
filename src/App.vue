@@ -28,7 +28,7 @@
     v-if="coach.fullName != undefined && coach.fullName != ''"
   >
     <!--START: App Router View-->
-    <keep-alive exclude="Plan">
+    <keep-alive exclude="Plan,Offering">
       <router-view :coach="coach" :key="$route.params.id" />
     </keep-alive>
     <!--END: App Router View-->

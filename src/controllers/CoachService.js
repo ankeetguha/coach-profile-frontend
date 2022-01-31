@@ -32,12 +32,12 @@ class CoachService {
         })
     }
 
-    static BookPlan(fields) {
+    static BookOffering(fields) {
         return new Promise((resolve, reject) => {
             resolve(
                 (async() => {
                     try {
-                        return await axios.post(`${apiURL}/coach/book-plan`, {
+                        return await axios.post(`${apiURL}/coach/book-offering`, {
                                 fields
                             }, {
                                 withCredentials: true

@@ -18,6 +18,19 @@
         </div>
       </div>
       <!--END: Online Plans-->
+
+      <!--START: E-Book-->
+      <div
+        v-show="offeringType == 'e-book'"
+        class="highlights-list"
+        :class="offeringType"
+      >
+        <div class="highlight">
+          <unicon name="import"></unicon>
+          <span>Digital E-Book Downloads</span>
+        </div>
+      </div>
+      <!--END: E-Book-->
     </div>
   </div>
 </template>
@@ -60,11 +73,10 @@ export default {
   opacity: 0.5;
   text-transform: uppercase;
   letter-spacing: 0.05rem;
-  margin: .25rem 0 0;
+  margin: 0.25rem 0 0;
 }
 
 .offering-highlights {
-  margin: 1rem 0 0;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -93,11 +105,13 @@ export default {
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-top: 1rem;
 
+    &.e-book,
     &.diy-plan {
-        /deep/ svg {
-            fill: $yellowColor;
-        }
+      /deep/ svg {
+        fill: $yellowColor;
+      }
     }
   }
 }

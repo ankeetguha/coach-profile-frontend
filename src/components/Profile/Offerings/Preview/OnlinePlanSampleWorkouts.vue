@@ -71,7 +71,7 @@ import CoachService from "@/controllers/CoachService";
 import VueSlickCarousel from "vue-slick-carousel";
 
 export default {
-  name: "OnlinePlanSampleWorkouts",
+  name: "OnlinePlanPreview",
   data() {
     return {
       showOnlinePlanLoader: false,

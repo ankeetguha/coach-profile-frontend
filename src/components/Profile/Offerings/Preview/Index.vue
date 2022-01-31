@@ -1,20 +1,33 @@
 <template>
   <div class="offering-type-preview">
-
     <!--START: Online Plan-->
     <OnlinePlanSampleWorkouts
-      v-show="offering.offeringType == 'diy-plan'"
+      v-if="offering.offeringType == 'diy-plan'"
       :onlinePlanID="offering.onlinePlan.onlinePlanID"
       :coachSlug="coachSlug"
     >
     </OnlinePlanSampleWorkouts>
     <!--END: Online Plan-->
+
+    <!--START: E-Book-->
+    <EBook v-if="offering.offeringType == 'e-book'"> </EBook>
+    <!--END: E-Book-->
+
+    <!--START: Personal Training-->
+    <PersonalTraining
+      v-if="offering.offeringType == 'personal-training'"
+      :personalTraining="offering.personalTraining"
+    >
+    </PersonalTraining>
+    <!--END: Personal Training-->
   </div>
 </template>
 
 <script>
 //Importing components
 import OnlinePlanSampleWorkouts from "./OnlinePlanSampleWorkouts";
+import EBook from "./EBook";
+import PersonalTraining from "./PersonalTraining";
 
 export default {
   name: "OfferingTypePreview",
@@ -24,7 +37,9 @@ export default {
   },
 
   components: {
-    OnlinePlanSampleWorkouts
+    OnlinePlanSampleWorkouts,
+    EBook,
+    PersonalTraining,
   },
 };
 </script>

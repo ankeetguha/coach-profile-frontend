@@ -96,7 +96,10 @@ export default {
         phone: urlParams.get("phone"),
       };
 
-      setTimeout(() => (this.loaderInfo.title = "Preparing Your Download"), 7500);
+      setTimeout(
+        () => (this.loaderInfo.title = "Preparing Your Download"),
+        7500
+      );
 
       const response = await CoachService.GetDownloads(fields);
 
@@ -106,19 +109,22 @@ export default {
         "We've also sent you an e-mail with the attachment";
 
       if (!response.hasError) {
-        // Create an invisible element
-        const a = document.createElement("a");
-        a.style.display = "none";
-        document.body.appendChild(a);
-        // Set the HREF to a Blob representation of the data to be downloaded
-        a.href = `data:application/pdf;base64,${response.data.blob}`;
-        // Use download attribute to set set desired file name
-        a.setAttribute("download", response.data.name);
-        // Trigger the download by simulating click
-        a.click();
-        // Cleanup
-        window.URL.revokeObjectURL(a.href);
-        document.body.removeChild(a);
+        const attachments = response.data;
+        for (let i = 0; i < attachments.length; i++) {
+          // Create an invisible element
+          const a = document.createElement("a");
+          a.style.display = "none";
+          document.body.appendChild(a);
+          // Set the HREF to a Blob representation of the data to be downloaded
+          a.href = `data:application/pdf;base64,${attachments[i].blob}`;
+          // Use download attribute to set set desired file name
+          a.setAttribute("download", attachments[i].name);
+          // Trigger the download by simulating click
+          a.click();
+          // Cleanup
+          window.URL.revokeObjectURL(a.href);
+          document.body.removeChild(a);
+        }
       }
     },
   },

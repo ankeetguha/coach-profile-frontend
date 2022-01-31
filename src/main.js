@@ -50,9 +50,14 @@ import {
     uniVideo,
     uniBoltAlt,
     uniUser,
-    uniPathfinder
+    uniPathfinder,
+    uniImport,
+    uniDesktop,
+    uniUsersAlt,
+    uniLocationArrow,
+    uniCalendarAlt
 } from 'vue-unicons/dist/icons';
-Unicon.add([uniTrashAlt, uniAngleRight, uniAngleLeft, uniAngleUp, uniLock, uniFacebookF, uniInstagram, uniWhatsapp, uniTwitter, uniYoutube, uniTimes, uniPlay, uniCheck, uniDumbbell, uniHeart, uniSnapchatGhost, uniClock, uniEnvelope, uniPaperclip, uniVideo, uniBoltAlt, uniUser, uniPathfinder]);
+Unicon.add([uniTrashAlt, uniAngleRight, uniAngleLeft, uniAngleUp, uniLock, uniFacebookF, uniInstagram, uniWhatsapp, uniTwitter, uniYoutube, uniTimes, uniPlay, uniCheck, uniDumbbell, uniHeart, uniSnapchatGhost, uniClock, uniEnvelope, uniPaperclip, uniVideo, uniBoltAlt, uniUser, uniPathfinder, uniImport, uniDesktop, uniUsersAlt, uniLocationArrow, uniCalendarAlt]);
 Vue.use(Unicon);
 
 Vue.config.productionTip = false

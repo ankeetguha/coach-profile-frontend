@@ -1,127 +1,154 @@
 <template>
-  <div class="offering" v-if="offering.title != null">
-    <!--START: Header-->
-    <div class="header-wrapper">
-      <router-link
-        class="go-back"
-        :to="`/${!$store.state.isSubDomain ? coach.slug + '/' : ''}`"
-      >
-        <unicon name="angle-left"></unicon>
-        <span>Back To Offerings</span>
-      </router-link>
-      <div class="filler"></div>
-      <a
-        class="btn btn-text btn-small"
-        href="https://coach.skipperfit.com/client/login"
-        target="_blank"
-      >
-        <unicon name="user"></unicon>
-        <span>Client Login</span>
-      </a>
-    </div>
-    <!--END: Header-->
-
-    <!--START: Hero-->
-    <div class="hero-wrapper">
-      <!--START: Cover-->
-      <div
-        class="cover-image-wrapper"
-        :class="{ extend: offering.coverVideoURL != undefined }"
-        @click="showVideoPlayer"
-      >
-        <img
-          :src="offering.coverImageURL"
-          class="cover-image"
-          alt="Cover Image"
-        />
-        <div
-          v-show="offering.coverVideoURL != undefined"
-          class="video-wrapper"
-          :class="{ float: offering.coverImageURL != undefined }"
+  <div>
+    <div class="offering" v-if="offering.title != null">
+      <!--START: Header-->
+      <div class="header-wrapper">
+        <router-link
+          class="go-back"
+          :to="`/${!$store.state.isSubDomain ? coach.slug + '/' : ''}`"
         >
-          <unicon name="play" class="play-btn"></unicon>
-          <div class="video-info">
-            <span>Watch the Video</span>
-            <h3>Plan Introduction</h3>
+          <unicon name="angle-left"></unicon>
+          <span>Back To Offerings</span>
+        </router-link>
+        <div class="filler"></div>
+        <a
+          class="btn btn-text btn-small"
+          href="https://coach.skipperfit.com/client/login"
+          target="_blank"
+        >
+          <unicon name="user"></unicon>
+          <span>Client Login</span>
+        </a>
+      </div>
+      <!--END: Header-->
+
+      <!--START: Hero-->
+      <div class="hero-wrapper">
+        <!--START: Cover-->
+        <div
+          class="cover-image-wrapper"
+          :class="{ extend: offering.coverVideoURL != undefined }"
+          @click="showVideoPlayer"
+        >
+          <img
+            :src="offering.coverImageURL"
+            class="cover-image"
+            alt="Cover Image"
+          />
+          <div
+            v-if="offering.coverVideoURL != undefined"
+            class="video-wrapper"
+            :class="{ float: offering.coverImageURL != undefined }"
+          >
+            <unicon name="play" class="play-btn"></unicon>
+            <div class="video-info">
+              <span>Watch the Video</span>
+              <h3>Plan Introduction</h3>
+            </div>
           </div>
         </div>
-      </div>
-      <!--END: Cover-->
+        <!--END: Cover-->
 
-      <div class="title-info-wrapper">
-        <!--START: Title-->
-        <h1 class="title">{{ offering.title }}</h1>
-        <!--END: Title-->
+        <div class="title-info-wrapper">
+          <!--START: Title-->
+          <h1 class="title">{{ offering.title }}</h1>
+          <!--END: Title-->
+        </div>
+        <!--END: Hero-->
+
+        <!--START: Highlights-->
+        <TypeHighlights :offeringType="offering.offeringType"></TypeHighlights>
+        <!--END: Highlights-->
+
+        <!--START: Variants-->
+        <Variants
+          v-if="offering.price.variants.length"
+          :variants="offering.price.variants"
+          @changeVariant="changeVariant"
+        ></Variants>
+        <!--END: Variants-->
       </div>
-      <!--END: Hero-->
+
+      <!--START: Preview Type-->
+      <TypePreview :offering="offering" :coachSlug="coach.slug"></TypePreview>
+      <!--END: Preview Type-->
+
+      <!--START: Description-->
+      <div class="description-wrapper">
+        <h3 class="sub-title">Description</h3>
+        <div class="description" v-html="offering.description"></div>
+        <span class="read-more-btn">Read More</span>
+      </div>
+      <!--END: Description-->
+
+      <!--START: Equipment-->
+      <Equipment
+        v-if="offering.equipment != undefined && offering.equipment != ''"
+        :equipment="offering.equipment"
+      ></Equipment>
+      <!--END: Equipment-->
+
+      <!--START: Features-->
+      <TypeFeatures :offering="offering" :coachSlug="coach.slug"></TypeFeatures>
+      <!--END: Features-->
+
+      <!--START: Inclusions-->
+      <Inclusions
+        v-if="offering.inclusions.length > 0"
+        :inclusions="offering.inclusions"
+      ></Inclusions>
+      <!--END: Inclusions-->
 
       <!--START: Highlights-->
-      <TypeHighlights :offeringType="offering.offeringType"></TypeHighlights>
+      <Highlights
+        v-if="offering.highlights.length > 0"
+        :highlights="offering.highlights"
+      ></Highlights>
       <!--END: Highlights-->
 
-      <!--START: Variants-->
-      <Variants
-        v-show="offering.price.variants.length"
-        :variants="offering.price.variants"
-        @changeVariant="changeVariant"
-      ></Variants>
-      <!--END: Variants-->
+      <!--START: Testimonials-->
+      <Testimonials
+        v-if="offering.testimonials.length > 0"
+        :testimonials="offering.testimonials"
+        :coachName="coach.fullName"
+      ></Testimonials>
+      <!--END: Testimonials-->
+
+      <!--START: FAQs-->
+      <FAQs
+        v-if="offering.faqs.length > 0"
+        :faqs="offering.faqs"
+        :coach="coach"
+      ></FAQs>
+      <!--END: FAQs-->
+
+      <!--START: Video Player-->
+      <VideoPlayer
+        v-if="offering.coverVideoURL != undefined"
+        :show="showOptions.videoPlayer"
+        :videoLink="offering.coverVideoURL"
+        @closePlayer="closeVideoPlayer"
+      ></VideoPlayer>
+      <!--END: Video Player-->
+
+      <!--START: Price CTA-->
+      <PriceBox
+        :price="selectedVariant"
+        @showBookingForm="showBookingForm"
+      ></PriceBox>
+      <!--END: Price CTA-->
+
+      <!--START: Booking Form-->
+      <BookingForm
+        :coach="coach"
+        :offering="offering"
+        :selectedVariant="selectedVariant"
+        :show="showOptions.bookingForm"
+        @closeForm="closeBookingForm"
+      ></BookingForm>
+      <!--END: Booking Form-->
     </div>
-
-    <!--START: Preview Type-->
-    <TypePreview :offering="offering" :coachSlug="coach.slug"></TypePreview>
-    <!--END: Preview Type-->
-
-    <!--START: Description-->
-    <div class="description-wrapper">
-      <h3 class="sub-title">Description</h3>
-      <div class="description" v-html="offering.description"></div>
-      <span class="read-more-btn">Read More</span>
-    </div>
-    <!--END: Description-->
-
-    <!--START: Features-->
-    <TypeFeatures :offering="offering" :coachSlug="coach.slug"></TypeFeatures>
-    <!--END: Features-->
-
-    <!--START: Inclusions-->
-    <Inclusions
-      v-show="offering.inclusions"
-      :inclusions="offering.inclusions"
-    ></Inclusions>
-    <!--END: Inclusions-->
-
-    <!--START: Highlights-->
-    <Highlights
-      v-show="offering.highlights"
-      :highlights="offering.highlights"
-    ></Highlights>
-    <!--END: Highlights-->
-
-    <!--START: Testimonials-->
-    <Testimonials
-      v-show="offering.testimonials"
-      :testimonials="offering.testimonials"
-      :coachName="coach.fullName"
-    ></Testimonials>
-    <!--END: Testimonials-->
-
-    <!--START: FAQs-->
-    <FAQs v-show="offering.faqs" :faqs="offering.faqs" :coach="coach"></FAQs>
-    <!--END: FAQs-->
-
-    <!--START: Video Player-->
-    <VideoPlayer
-      v-show="offering.coverVideoURL != undefined"
-      :show="showOptions.videoPlayer"
-      :videoLink="offering.coverVideoURL"
-      @closePlayer="closeVideoPlayer"
-    ></VideoPlayer>
-    <!--END: Video Player-->
-
-    <!--START: Price CTA-->
-    <PriceBox :price="selectedVariant"></PriceBox>
-    <!--END: Price CTA-->
+    <PageLoader class="page-loader" v-else></PageLoader>
   </div>
 </template>
 
@@ -133,6 +160,8 @@ import _ from "lodash";
 import CoachService from "@/controllers/CoachService";
 
 //Import components
+import PageLoader from "@/components/loaders/PageLoader";
+
 import TypeHighlights from "@/components/Profile/Offerings/TypeHighlights";
 import TypeFeatures from "@/components/Profile/Offerings/Features/Index";
 import TypePreview from "@/components/Profile/Offerings/Preview/Index";
@@ -140,10 +169,13 @@ import TypePreview from "@/components/Profile/Offerings/Preview/Index";
 import Variants from "@/components/Profile/Offerings/Variants";
 import Inclusions from "@/components/Profile/Offerings/Inclusions";
 import Highlights from "@/components/Profile/Offerings/Highlights";
+import Equipment from "@/components/Profile/Offerings/Equipment";
 import Testimonials from "@/components/Profile/Offerings/Testimonials";
 import FAQs from "@/components/Profile/Offerings/FAQs";
 import PriceBox from "@/components/Profile/Offerings/PriceBox";
 import VideoPlayer from "@/components/Profile/Offerings/VideoPlayer";
+
+import BookingForm from "@/components/Profile/Offerings/BookingForm/Index";
 
 export default {
   name: "Offering",
@@ -153,6 +185,7 @@ export default {
       selectedVariant: null,
       showOptions: {
         videoPlayer: false,
+        bookingForm: false,
       },
       meta: {
         title: null,
@@ -203,16 +236,19 @@ export default {
     };
   },
   components: {
+    PageLoader,
     TypeHighlights,
     TypeFeatures,
     TypePreview,
     Variants,
     Inclusions,
     Highlights,
+    Equipment,
     Testimonials,
     FAQs,
     PriceBox,
     VideoPlayer,
+    BookingForm,
   },
   async created() {
     //Get coach and change meta details
@@ -262,11 +298,27 @@ export default {
     closeVideoPlayer() {
       this.showOptions.videoPlayer = false;
     },
+
+    showBookingForm() {
+      this.showOptions.bookingForm = true;
+    },
+
+    closeBookingForm() {
+      this.showOptions.bookingForm = false;
+    },
   },
 };
 </script>
 
 <style scoped lang="scss">
+.page-loader /deep/ {
+  .buffer-hero {
+    padding: 2rem;
+  }
+  .buffer-page-image {
+    display: none;
+  }
+}
 .offering {
   padding-bottom: 6rem;
 }

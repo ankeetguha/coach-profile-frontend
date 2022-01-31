@@ -119,8 +119,6 @@ export default {
     background-color: #2c2c2c;
     border: 1px solid lighten($blackColor, 9%);
     border-top: none;
-    border-bottom-left-radius: 1rem;
-    border-bottom-right-radius: 1rem;
     box-shadow: 0 0 1.7rem -0.15rem rgba(46, 46, 46, 0.75);
 
     .title {
