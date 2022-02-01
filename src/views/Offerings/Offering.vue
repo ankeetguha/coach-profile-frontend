@@ -24,49 +24,53 @@
 
       <!--START: Hero-->
       <div class="hero-wrapper">
-        <!--START: Cover-->
-        <div
-          class="cover-image-wrapper"
-          :class="{ extend: offering.coverVideoURL != undefined }"
-          @click="showVideoPlayer"
-        >
-          <img
-            :src="offering.coverImageURL"
-            class="cover-image"
-            alt="Cover Image"
-          />
+        <div class="hero-wrapper-block">
+          <!--START: Cover-->
           <div
-            v-if="offering.coverVideoURL != undefined"
-            class="video-wrapper"
-            :class="{ float: offering.coverImageURL != undefined }"
+            class="cover-image-wrapper"
+            :class="{ extend: offering.coverVideoURL != undefined }"
+            @click="showVideoPlayer"
           >
-            <unicon name="play" class="play-btn"></unicon>
-            <div class="video-info">
-              <span>Watch the Video</span>
-              <h3>Plan Introduction</h3>
+            <img
+              :src="offering.coverImageURL"
+              class="cover-image"
+              alt="Cover Image"
+            />
+            <div
+              v-if="offering.coverVideoURL != undefined"
+              class="video-wrapper"
+              :class="{ float: offering.coverImageURL != undefined }"
+            >
+              <unicon name="play" class="play-btn"></unicon>
+              <div class="video-info">
+                <span>Watch the Video</span>
+                <h3>Plan Introduction</h3>
+              </div>
             </div>
           </div>
+          <!--END: Cover-->
+
+          <div class="title-info-wrapper">
+            <!--START: Title-->
+            <h1 class="title">{{ offering.title }}</h1>
+            <!--END: Title-->
+          </div>
+          <!--END: Hero-->
+
+          <!--START: Highlights-->
+          <TypeHighlights
+            :offeringType="offering.offeringType"
+          ></TypeHighlights>
+          <!--END: Highlights-->
+
+          <!--START: Variants-->
+          <Variants
+            v-if="offering.price.variants.length"
+            :variants="offering.price.variants"
+            @changeVariant="changeVariant"
+          ></Variants>
+          <!--END: Variants-->
         </div>
-        <!--END: Cover-->
-
-        <div class="title-info-wrapper">
-          <!--START: Title-->
-          <h1 class="title">{{ offering.title }}</h1>
-          <!--END: Title-->
-        </div>
-        <!--END: Hero-->
-
-        <!--START: Highlights-->
-        <TypeHighlights :offeringType="offering.offeringType"></TypeHighlights>
-        <!--END: Highlights-->
-
-        <!--START: Variants-->
-        <Variants
-          v-if="offering.price.variants.length"
-          :variants="offering.price.variants"
-          @changeVariant="changeVariant"
-        ></Variants>
-        <!--END: Variants-->
       </div>
 
       <!--START: Preview Type-->
@@ -143,6 +147,7 @@
         :coach="coach"
         :offering="offering"
         :selectedVariant="selectedVariant"
+        :selectedVariantIndex="selectedVariantIndex"
         :show="showOptions.bookingForm"
         @closeForm="closeBookingForm"
       ></BookingForm>
@@ -183,6 +188,7 @@ export default {
     return {
       offering: {},
       selectedVariant: null,
+      selectedVariantIndex: -1,
       showOptions: {
         videoPlayer: false,
         bookingForm: false,
@@ -277,6 +283,7 @@ export default {
 
     initVariant() {
       if (this.offering.price.variants.length) {
+        this.selectedVariantIndex = 0;
         this.selectedVariant = this.offering.price.variants[0];
       } else {
         this.selectedVariant = {
@@ -286,7 +293,8 @@ export default {
       }
     },
 
-    changeVariant(newVariant) {
+    changeVariant(newVariant, index) {
+      this.selectedVariantIndex = index;
       this.selectedVariant = newVariant;
     },
 
@@ -551,6 +559,40 @@ export default {
         }
       }
     }
+  }
+}
+
+//Desktop Styles
+@media screen and (min-width: $mobileWidth) {
+  .offering-info-column {
+    margin: 0;
+  }
+
+  .hero-wrapper {
+    padding: 1.5rem 0;
+
+    .cover-image-wrapper {
+      margin-left: 0;
+      width: 100%;
+    }
+  }
+
+  .hero-wrapper-block,
+  .offering-type-preview,
+  .description-wrapper,
+  .equipments-wrapper,
+  .offering-type-features,
+  .offering-inclusions,
+  .offering-highlights,
+  .transformations-wrapper,
+  .offering-faqs {
+    width: 45vw;
+    margin-left: 12.5vw;
+  }
+
+  .transformations-wrapper {
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 </style>

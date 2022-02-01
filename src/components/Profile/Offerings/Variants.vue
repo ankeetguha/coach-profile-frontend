@@ -103,7 +103,7 @@ export default {
       this.originalIndex = this.selectedIndex;
       this.selectedVariant = this.variants[this.selectedIndex];
       this.hideVariantsModal();
-      this.$emit("changeVariant", this.variants[this.selectedIndex]);
+      this.$emit("changeVariant", this.variants[this.selectedIndex], this.selectedIndex);
     },
   },
 };

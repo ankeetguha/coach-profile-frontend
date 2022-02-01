@@ -3,9 +3,9 @@ import VueRouter from 'vue-router';
 
 //Import the various views
 import Profile from '@/views/Profile';
-import Plans from '@/views/Plans/Plans';
-import Plan from '@/views/Plans/Plan';
-import Offering from '@/views/Plans/Offering';
+import Offerings from '@/views/Offerings/Offerings';
+import Plan from '@/views/Offerings/Plan';
+import Offering from '@/views/Offerings/Offering';
 import About from '@/views/About';
 import Links from '@/views/Links';
 import Download from '@/views/Download';
@@ -17,7 +17,7 @@ export default new VueRouter({
     base: process.env.BASE_URL,
     routes: [{
             path: '/:slug',
-            name: 'Plans',
+            name: 'Offerings',
             component: Profile,
             meta: {
                 hideHeader: true
@@ -25,7 +25,7 @@ export default new VueRouter({
 
             children: [{
                 path: '/:slug',
-                component: Plans,
+                component: Offerings,
                 props: true,
                 meta: {
                     showRouteModal: true

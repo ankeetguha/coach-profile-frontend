@@ -1,44 +1,51 @@
 <template>
   <div class="offerings-list-wrapper">
     <label class="block-title">Explore Offerings</label>
-    <router-link
-      tag="div"
-      class="offering"
-      v-for="offering in offerings"
-      :key="offering.id"
-      :to="`/${!$store.state.isSubDomain ? coachSlug + '/' : ''}offerings/${
-        offering.slug
-      }`"
-    >
-      <img
-        v-show="
-          offering.coverImageURL != undefined && offering.coverImageURL != null
-        "
-        :src="offering.coverImageURL"
-        class="cover-image"
-        alt="Cover Image"
-      />
+    <div class="offerings-list">
+      <router-link
+        tag="div"
+        class="offering"
+        v-for="offering in offerings"
+        :key="offering.id"
+        :to="`/${!$store.state.isSubDomain ? coachSlug + '/' : ''}offerings/${
+          offering.slug
+        }`"
+      >
+        <img
+          v-show="
+            offering.coverImageURL != undefined &&
+            offering.coverImageURL != null
+          "
+          :src="offering.coverImageURL"
+          class="cover-image"
+          alt="Cover Image"
+        />
 
-      <!--START: Is Popular-->
-      <div class="tag-popular" v-show="offering.isPopular">🔥 Most Popular</div>
-      <!--END: Is Popular-->
+        <div class="offering-info">
+          <!--START: Is Popular-->
+          <div class="tag-popular" v-show="offering.isPopular">
+            🔥 Most Popular
+          </div>
+          <!--END: Is Popular-->
 
-      <div class="offering-info">
-        <h3 class="title">{{ offering.title }}</h3>
+          <h3 class="title">{{ offering.title }}</h3>
 
-        <!--START: Highlights-->
-        <TypeHighlights :offeringType="offering.offeringType"></TypeHighlights>
-        <!--END: Highlights-->
-      </div>
-      <div class="offering-details">
-        <!--START: Price-->
-        <PriceDetails :price="offering.price"></PriceDetails>
-        <button class="btn">
-          View This <unicon name="angle-right"></unicon>
-        </button>
-        <!--END: Price-->
-      </div>
-    </router-link>
+          <!--START: Highlights-->
+          <TypeHighlights
+            :offeringType="offering.offeringType"
+          ></TypeHighlights>
+          <!--END: Highlights-->
+        </div>
+        <div class="offering-details">
+          <!--START: Price-->
+          <PriceDetails :price="offering.price"></PriceDetails>
+          <button class="btn">
+            View This <unicon name="angle-right"></unicon>
+          </button>
+          <!--END: Price-->
+        </div>
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -91,7 +98,7 @@ export default {
   overflow: hidden;
   background-color: #2c2c2c;
   border: 1px solid lighten($blackColor, 9%);
-  box-shadow: 0 .3rem 1.7rem 1.9rem rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.3rem 1.7rem 1.9rem rgba(0, 0, 0, 0.2);
 
   .cover-image {
     display: block;
@@ -104,7 +111,7 @@ export default {
   .tag-popular {
     position: relative;
     display: table;
-    margin: -1.25rem 1.25rem 0.5rem;
+    margin: -1.25rem 0 0.5rem;
     color: $whiteColor;
     font-size: $smallerFontSize;
     padding: 0.3rem 0.5rem 0.3rem 0.45rem;
@@ -165,6 +172,34 @@ export default {
         margin-left: -0.25rem;
         margin-right: -0.75rem;
       }
+    }
+  }
+}
+
+//Desktop Styles
+@media screen and (min-width: $mobileWidth) {
+  .offerings-list-wrapper {
+    margin: 0 3rem;
+  }
+
+  .offerings-list {
+    display: flex;
+    flex-wrap: wrap;
+
+    .offering {
+      list-style: none;
+      flex: 0 0 calc(33.333333% - 2rem - 2px);
+    }
+
+    .offering-highlights {
+      height: 2rem;
+    }
+
+    .tag-popular {
+      position: absolute;
+      margin: 0;
+      top: -1.5rem;
+      left: 1rem;
     }
   }
 }

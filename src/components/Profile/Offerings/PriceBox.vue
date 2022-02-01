@@ -141,4 +141,11 @@ export default {
     font-size: $smallestFontSize;
   }
 }
+
+//Desktop Styles
+@media screen and (min-width: $mobileWidth) {
+  .price-box {
+    display: none;
+  }
+}
 </style>

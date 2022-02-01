@@ -1,5 +1,5 @@
 <template>
-  <div v-if="show">
+  <div class="booking-wrapper" :class="{show: show}">
     <div class="booking-modal" :class="{ show: !showOptions.successMessage }">
       <div class="scroll-wrapper">
         <!--START: Title Wrapper-->
@@ -135,7 +135,7 @@ export default {
         successMessage: "🙌 I've got your booking!",
         errorMessage: "😕 Something's not right. Try again",
       },
-      attachmentsResponse: {}
+      attachmentsResponse: {},
     };
   },
 
@@ -152,6 +152,7 @@ export default {
     coach: Object,
     offering: Object,
     selectedVariant: Object,
+    selectedVariantIndex: Number,
     show: Boolean,
   },
 
@@ -204,8 +205,14 @@ export default {
         client: this.fields,
         coachSlug: this.coach.slug,
         offeringSlug: this.offering.slug,
-        selectedVariantIndex: 0,
+        selectedVariantIndex: this.selectedVariantIndex,
       };
+
+      //Show the payment loader
+      if (this.coach.paymentsActive && this.offering.activatePayment) {
+        this.showOptions.paymentLoader = true;
+        this.paymentCompleted = false;
+      }
 
       const bookingResult = await CoachService.BookOffering(formFields);
       if (this.coach.paymentsActive && this.offering.activatePayment) {
@@ -239,6 +246,11 @@ export default {
         },
         handler: function (response) {
           window.app.registerPayment(response, bookingResult.orderID);
+        },
+        modal: {
+          ondismiss: function () {
+            window.app.resetPaymentModal();
+          },
         },
         notes: {
           "Coach Name": this.coach.fullName,
@@ -288,6 +300,15 @@ export default {
       this.showOptions.lineLoader = false;
     },
 
+    //Payment modal closed event
+    resetPaymentModal() {
+      this.showOptions.successMessage = false;
+      this.showOptions.lineLoader = false;
+      this.showOptions.paymentLoader = false;
+      this.showOptions.status = false;
+      this.disableButton = false;
+    },
+
     //Handle a failed payment
     async failedPayment(response, orderID) {
       await CoachService.FailedPayment({
@@ -295,9 +316,9 @@ export default {
         orderID: orderID,
       });
 
-      this.successMessage.show = false;
+      this.showOptions.successMessage = false;
       this.disableButton = true;
-      this.showLoader = false;
+      this.showOptions.lineLoader = false;
     },
 
     closeSuccessMessage() {
@@ -315,6 +336,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.booking-wrapper,
 .bg-overlay {
   display: none;
   &.show {
@@ -418,6 +440,55 @@ export default {
   /deep/ &.status-message.show {
     z-index: 105;
     top: 6rem;
+  }
+}
+
+//Desktop Styles
+@media screen and (min-width: $mobileWidth) {
+  .booking-wrapper {
+    display: block;
+  }
+
+  .bg-overlay {
+    display: none !important;
+  }
+
+  .header-wrapper {
+    position: fixed;
+  }
+
+  .booking-modal {
+    top: 6rem;
+    bottom: auto;
+    left: auto;
+    right: 12.5vw;
+    width: 27.5vw;
+    height: auto;
+    border-radius: 1.5rem;
+    padding-bottom: 1.5rem;
+    
+    .client-form {
+      display: none;
+    }
+
+    .btn-wrapper {
+      position: relative;
+
+      .btn-border {
+        display: none;
+      }
+    }
+
+    .scroll-wrapper {
+      overflow: visible;
+      height: auto;
+    }
+
+    &::before {
+      height: auto;
+      border-radius: 1.5rem;
+    }
+
   }
 }
 </style>
