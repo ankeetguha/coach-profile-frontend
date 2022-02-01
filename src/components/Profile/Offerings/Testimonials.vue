@@ -311,4 +311,34 @@ export default {
     }
   }
 }
+
+//Desktop Styles
+@media screen and (min-width: $mobileWidth) {
+  .transformations-wrapper {
+    .title {
+      font-size: 1.05rem;
+      margin-left: 1rem;
+    }
+  }
+
+  .transformations-slider {
+    margin-left: -3rem;
+    width: calc(100% + 7rem);
+
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: 25%;
+      background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0) 0%,
+        rgb(39, 39, 39) 80%
+      );
+    }
+  }
+}
 </style>

@@ -135,4 +135,25 @@ export default {
   border-radius: 0.25rem;
   color: #7a7a7a;
 }
+
+//Desktop Styles
+@media screen and (min-width: $mobileWidth) {
+  .offering-highlights {
+    margin-top: 5rem;
+
+    .title {
+      font-size: 1.05rem;
+      margin-left: 0;
+    }
+  }
+
+  .info-wrapper {
+    h3 {
+      font-size: $normalFontSize;
+    }
+    p {
+      font-size: $smallFontSize;
+    }
+  }
+}
 </style>

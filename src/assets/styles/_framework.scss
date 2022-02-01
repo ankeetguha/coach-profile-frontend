@@ -13,10 +13,6 @@
     padding: .75rem 1rem;
     background: transparent;
     cursor: pointer;
-    &:hover {
-        background-color: lighten($purpleColor, 40%);
-        color: darken($purpleColor, 10%);
-    }
 }
 
 .btn-invert {
@@ -30,16 +26,13 @@
 
 .btn-border {
     @include transition;
+    color: $whiteColor;
     border: 1px solid $greyBorderColor;
-    &.btn-border-color,
     &:hover {
-        background-color: lighten($purpleColor, 38%);
-        color: $purpleColor;
-        border: 1px solid $purpleColor;
-        .unicon svg {
-            fill: lighten($purpleColor, 0%);
-        }
+        background-color: $whiteColor;
+        color: $blackColor
     }
+    &.btn-border-color,
     &.btn-border-color:hover.btn,
     &.btn-border-alt:hover {
         background-color: lighten($purpleColor, 0%);
@@ -128,9 +121,9 @@
 }
 
 .btn-primary:hover {
-    color: darken($greenColor, 45%);
-    background-color: lighten($darkGreenColor, 3%);
-    border-color: lighten($darkGreenColor, 5%);
+    color: darken(#0a4a1d, 45%);
+    background-color: darken($darkGreenColor, 8%);
+    border-color: lighten($darkGreenColor, 15%);
 }
 
 .btn-delete {

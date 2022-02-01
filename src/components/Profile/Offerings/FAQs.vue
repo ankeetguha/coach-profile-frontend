@@ -206,4 +206,53 @@ export default {
     display: block;
   }
 }
+
+//Desktop Styles
+@media screen and (min-width: $mobileWidth) {
+  .offering-faqs {
+    margin-top: 6rem;
+  }
+
+  .pattern {
+    top: -7rem;
+    left: 1rem;
+    width: calc(100% - 2rem);
+  }
+
+  .title-info {
+    h3 {
+      font-size: $normalFontSize;
+    }
+    p {
+      font-size: $smallFontSize;
+    }
+  }
+
+  .faq {
+    padding: 1rem;
+
+    &:hover {
+      cursor: pointer;
+      border-bottom: 1px solid $purpleColor;
+    }
+
+    .question {
+      font-size: 1rem;
+    }
+
+    .answer {
+      margin-top: 1rem;
+
+      /deep/ * {
+        font-size: $normalFontSize;
+      }
+    }
+
+    .control {
+      top: 1.5rem;
+      height: 15px;
+      width: 15px;
+    }
+  }
+}
 </style>

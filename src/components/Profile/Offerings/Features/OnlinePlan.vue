@@ -104,4 +104,34 @@ export default {
 .plan-sample-wrapper {
   padding: 0;
 }
+
+//Desktop Styles
+@media screen and (min-width: $mobileWidth) {
+  .plan-steps-wrapper {
+    margin-top: 3rem;
+    padding-top: 3rem;
+
+    .title {
+      font-size: 1.05rem;
+    }
+
+    .plan-step-item {
+      margin-bottom: 2.5rem;
+      
+      img {
+        width: 4.5rem;
+        margin-right: 1.5rem;
+      }
+    }
+
+    .plan-step-item-info {
+      h3 {
+        font-size: 1rem;
+      }
+      p {
+        font-size: $smallFontSize;
+      }
+    }
+  }
+}
 </style>

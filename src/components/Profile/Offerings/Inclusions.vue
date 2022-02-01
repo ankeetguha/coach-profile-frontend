@@ -91,4 +91,28 @@ export default {
     }
   }
 }
+
+//Desktop Styles
+@media screen and (min-width: $mobileWidth) {
+  .offering-inclusions {
+    margin-top: 3rem;
+
+    .title {
+      font-size: $smallFontSize;
+    }
+  }
+
+  .inclusions {
+    padding: 1.75rem 1rem 1rem;
+    .inclusion {
+      margin-bottom: 1.5rem;
+      h3 {
+        font-size: $normalFontSize;
+      }
+      p {
+        font-size: $smallFontSize;
+      }
+    }
+  }
+}
 </style>

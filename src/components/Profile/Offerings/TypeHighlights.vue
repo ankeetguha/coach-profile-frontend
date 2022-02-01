@@ -115,4 +115,11 @@ export default {
     }
   }
 }
+
+//Desktop Styles
+@media screen and (min-width: $mobileWidth) {
+  .offering-type-highlights {
+    height: 3rem;
+  }
+}
 </style>

@@ -103,7 +103,11 @@ export default {
       this.originalIndex = this.selectedIndex;
       this.selectedVariant = this.variants[this.selectedIndex];
       this.hideVariantsModal();
-      this.$emit("changeVariant", this.variants[this.selectedIndex], this.selectedIndex);
+      this.$emit(
+        "changeVariant",
+        this.variants[this.selectedIndex],
+        this.selectedIndex
+      );
     },
   },
 };
@@ -266,7 +270,7 @@ export default {
     }
 
     &.selected {
-      border-color: $darkGreenColor;
+      border-color: $darkGreenColor !important;
 
       .variant-check {
         background-color: $darkGreenColor;
@@ -293,10 +297,50 @@ export default {
     margin: 0 0.5rem;
     flex: 1;
   }
+}
 
-  .btn-border {
-    color: $whiteColor;
-    opacity: 0.65;
+//Desktop Styles
+@media screen and (min-width: $mobileWidth) {
+  .selected-variant {
+    padding: 1rem;
+    border: 1px solid transparent;
+
+    &:hover {
+      cursor: pointer;
+      border: 1px solid $purpleColor;
+    }
+
+    label {
+      font-size: 1rem;
+    }
+
+    .variant-length {
+    span {
+      font-size: $normalFontSize;
+    }
+  }
+  }
+
+  .variants-selector-modal {
+    width: 30rem;
+    right: 0;
+    margin: auto;
+    top: 50%;
+    bottom: auto;
+    border-radius: 2rem;
+    border: 1px solid lighten($blackColor, 10%);
+
+    &.show {
+      transform: translateY(-50%);
+    }
+
+    .variant {
+      cursor: pointer;
+
+      &:hover {
+        border: 1px solid lighten($blackColor, 45%);
+      }
+    }
   }
 }
 </style>

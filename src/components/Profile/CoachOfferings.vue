@@ -179,7 +179,11 @@ export default {
 //Desktop Styles
 @media screen and (min-width: $mobileWidth) {
   .offerings-list-wrapper {
-    margin: 0 3rem;
+    margin: 0 5rem 4rem;
+  }
+
+  .block-title {
+    font-size: $normalFontSize;
   }
 
   .offerings-list {
@@ -187,8 +191,14 @@ export default {
     flex-wrap: wrap;
 
     .offering {
+      cursor: pointer;
       list-style: none;
+      transition: all .3s;
       flex: 0 0 calc(33.333333% - 2rem - 2px);
+
+      &:hover {
+        box-shadow: 0 1.7rem 1.25rem 0.9rem rgba(0, 0, 0, .40);
+      }
     }
 
     .offering-highlights {

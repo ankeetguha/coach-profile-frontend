@@ -208,6 +208,7 @@ export default {
   left: 0;
   right: 0;
   margin: auto;
+  cursor: pointer;
 
   /deep/ svg {
     padding: 0.75rem;
@@ -289,6 +290,15 @@ export default {
       background-color: $yellowColor;
       color: darken($yellowColor, 45%);
     }
+  }
+}
+
+//Desktop Styles
+@media screen and (min-width: $mobileWidth) {
+  .success-message {
+    width: 35vw;
+    right: 0;
+    margin: auto;
   }
 }
 </style>

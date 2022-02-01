@@ -62,9 +62,9 @@ export default {
       this.player.playVideo();
     },
     closePlayer() {
-        this.player.stopVideo();
-        this.$emit('closePlayer');
-    }
+      this.player.stopVideo();
+      this.$emit("closePlayer");
+    },
   },
 };
 </script>
@@ -90,6 +90,7 @@ export default {
 
 .close-player {
   float: right;
+  cursor: pointer;
   margin-bottom: 0.5rem;
 
   /deep/ svg {
@@ -99,6 +100,16 @@ export default {
     background: var(--brand-color);
     padding: 0.25rem;
     border-radius: 0.25rem;
+  }
+}
+
+//Desktop Styles
+@media screen and (min-width: $mobileWidth) {
+  .youtube-player {
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 50%;
   }
 }
 </style>

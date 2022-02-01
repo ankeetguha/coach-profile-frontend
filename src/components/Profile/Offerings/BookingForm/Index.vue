@@ -1,5 +1,5 @@
 <template>
-  <div class="booking-wrapper" :class="{show: show}">
+  <div class="booking-wrapper" :class="{ show: show }">
     <div class="booking-modal" :class="{ show: !showOptions.successMessage }">
       <div class="scroll-wrapper">
         <!--START: Title Wrapper-->
@@ -445,50 +445,51 @@ export default {
 
 //Desktop Styles
 @media screen and (min-width: $mobileWidth) {
-  .booking-wrapper {
-    display: block;
-  }
-
-  .bg-overlay {
-    display: none !important;
-  }
-
   .header-wrapper {
     position: fixed;
   }
 
   .booking-modal {
-    top: 6rem;
+    top: 0;
     bottom: auto;
     left: auto;
-    right: 12.5vw;
-    width: 27.5vw;
-    height: auto;
+    right: 0;
+    border: 1px solid lighten($blackColor, 15%);
+    width: 35vw;
+    padding: 0 1.5rem;
+    height: 100%;
     border-radius: 1.5rem;
-    padding-bottom: 1.5rem;
-    
-    .client-form {
-      display: none;
+    padding-bottom: 0;
+
+    &.show {
+      transform: translateY(0);
+      z-index: 105;
     }
 
-    .btn-wrapper {
-      position: relative;
-
-      .btn-border {
-        display: none;
-      }
+    .btn-border {
+      width: 10rem;
     }
 
     .scroll-wrapper {
-      overflow: visible;
-      height: auto;
+      padding: 1rem 0;
+      overflow-y: scroll;
     }
 
     &::before {
       height: auto;
       border-radius: 1.5rem;
     }
+  }
 
+  .status-message.status-message.show {
+    position: fixed;
+    top: auto;
+    bottom: 4rem;
+    right: 1rem;
+    left: auto;
+    padding: 1rem;
+    width: calc(38vw - 4rem + 2px);
+    text-align: center;
   }
 }
 </style>

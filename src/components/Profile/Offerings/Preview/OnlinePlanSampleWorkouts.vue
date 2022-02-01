@@ -364,4 +364,25 @@ export default {
     }
   }
 }
+
+//Desktop Styles
+@media screen and (min-width: $mobileWidth) {
+  .week-title {
+    font-size: 1.05rem;
+
+    label {
+      font-size: $smallerFontSize;
+    }
+  }
+
+  .calendar-day {
+    width: auto;
+    padding: .35rem .75rem;
+    margin: .25rem;
+  }
+
+  .workout-day {
+    padding: 1.25rem 1.5rem;
+  }
+}
 </style>

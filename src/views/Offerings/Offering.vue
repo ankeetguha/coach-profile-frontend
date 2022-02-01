@@ -50,18 +50,20 @@
           </div>
           <!--END: Cover-->
 
-          <div class="title-info-wrapper">
-            <!--START: Title-->
-            <h1 class="title">{{ offering.title }}</h1>
-            <!--END: Title-->
-          </div>
-          <!--END: Hero-->
+          <div class="title-main-wrapper">
+            <div class="title-info-wrapper">
+              <!--START: Title-->
+              <h1 class="title">{{ offering.title }}</h1>
+              <!--END: Title-->
+            </div>
+            <!--END: Hero-->
 
-          <!--START: Highlights-->
-          <TypeHighlights
-            :offeringType="offering.offeringType"
-          ></TypeHighlights>
-          <!--END: Highlights-->
+            <!--START: Highlights-->
+            <TypeHighlights
+              :offeringType="offering.offeringType"
+            ></TypeHighlights>
+            <!--END: Highlights-->
+          </div>
 
           <!--START: Variants-->
           <Variants
@@ -80,8 +82,14 @@
       <!--START: Description-->
       <div class="description-wrapper">
         <h3 class="sub-title">Description</h3>
-        <div class="description" v-html="offering.description"></div>
-        <span class="read-more-btn">Read More</span>
+        <div
+          class="description"
+          :class="{ show: showOptions.description }"
+          v-html="offering.description"
+        ></div>
+        <span class="read-more-btn" @click="toggleDescription">{{
+          !showOptions.description ? "Read More" : "Read Less"
+        }}</span>
       </div>
       <!--END: Description-->
 
@@ -151,6 +159,13 @@
         :show="showOptions.bookingForm"
         @closeForm="closeBookingForm"
       ></BookingForm>
+      <BookingDesktopForm
+        :coach="coach"
+        :offering="offering"
+        :selectedVariant="selectedVariant"
+        :selectedVariantIndex="selectedVariantIndex"
+        @showBooking="showBookingForm"
+      ></BookingDesktopForm>
       <!--END: Booking Form-->
     </div>
     <PageLoader class="page-loader" v-else></PageLoader>
@@ -181,6 +196,7 @@ import PriceBox from "@/components/Profile/Offerings/PriceBox";
 import VideoPlayer from "@/components/Profile/Offerings/VideoPlayer";
 
 import BookingForm from "@/components/Profile/Offerings/BookingForm/Index";
+import BookingDesktopForm from "@/components/Profile/Offerings/BookingForm/DesktopForm";
 
 export default {
   name: "Offering",
@@ -192,6 +208,7 @@ export default {
       showOptions: {
         videoPlayer: false,
         bookingForm: false,
+        description: false,
       },
       meta: {
         title: null,
@@ -255,6 +272,7 @@ export default {
     PriceBox,
     VideoPlayer,
     BookingForm,
+    BookingDesktopForm,
   },
   async created() {
     //Get coach and change meta details
@@ -305,6 +323,10 @@ export default {
 
     closeVideoPlayer() {
       this.showOptions.videoPlayer = false;
+    },
+
+    toggleDescription() {
+      this.showOptions.description = !this.showOptions.description;
     },
 
     showBookingForm() {
@@ -515,6 +537,15 @@ export default {
         rgba(39, 39, 39, 1) 90%
       );
     }
+
+    &.show {
+      max-height: none;
+
+      &::before {
+        background: none;
+      }
+    }
+
     /deep/ {
       * {
         font-size: $smallFontSize;
@@ -568,12 +599,23 @@ export default {
     margin: 0;
   }
 
+  .header-wrapper {
+    position: fixed;
+    top: 0;
+    width: calc(100% - 2rem);
+
+    .btn-small {
+      font-size: $smallerFontSize;
+      padding: 0.75rem 1rem;
+    }
+  }
+
   .hero-wrapper {
-    padding: 1.5rem 0;
+    padding: 5.5rem 0 2rem;
 
     .cover-image-wrapper {
-      margin-left: 0;
-      width: 100%;
+      margin-left: 1rem;
+      width: calc(100% - 2rem);
     }
   }
 
@@ -586,13 +628,91 @@ export default {
   .offering-highlights,
   .transformations-wrapper,
   .offering-faqs {
-    width: 45vw;
-    margin-left: 12.5vw;
+    width: 42vw;
+    margin-left: 13.5vw;
   }
 
   .transformations-wrapper {
+    position: relative;
+    z-index: 2;
     padding-left: 0;
     padding-right: 0;
+  }
+
+  .video-wrapper {
+    &.float {
+      width: calc(100% - 3rem);
+      padding: 3rem 1.5rem 1rem;
+    }
+
+    .unicon {
+      margin-right: 1rem;
+      /deep/ svg {
+        width: 2rem;
+      }
+    }
+
+    .video-info {
+      h3 {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  .cover-image-wrapper.extend {
+    border: 1px solid lighten($blackColor, 0%);
+    overflow: hidden;
+    border-radius: 1.5rem;
+
+    &:hover {
+      cursor: pointer;
+      border: 1px solid lighten($blackColor, 15%);
+
+      .video-info {
+        h3 {
+          opacity: 1;
+          color: var(--brand-color);
+        }
+      }
+    }
+  }
+
+  .title-main-wrapper {
+    position: relative;
+  }
+
+  .title-info-wrapper {
+    .title {
+      font-size: $largerFontSize;
+      line-height: 1.2;
+    }
+  }
+}
+
+/deep/ {
+  .offering-type-highlights {
+    height: auto;
+
+    .title {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 0.5rem;
+      border: 1px solid lighten($blackColor, 50%);
+      border-radius: 0.5rem;
+    }
+
+    .highlights-list {
+      margin-top: 0.5rem;
+    }
+  }
+}
+
+.description-wrapper {
+  margin-top: 3rem;
+
+  .sub-title {
+    font-size: 1.05rem;
   }
 }
 </style>
