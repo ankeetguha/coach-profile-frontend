@@ -505,7 +505,7 @@ export default {
 
 .description-wrapper {
   position: relative;
-  margin: .5rem 1.5rem 3rem;
+  margin: 0.5rem 1.5rem 3rem;
 
   .read-more-btn {
     position: absolute;
@@ -533,8 +533,8 @@ export default {
       z-index: 1;
       background: linear-gradient(
         to bottom,
-        rgba(0, 0, 0, 0) 0%,
-        rgba(39, 39, 39, 1) 90%
+        rgba(39, 39, 39, 0) 0%,
+        #272727 90%
       );
     }
 
