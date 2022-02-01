@@ -72,7 +72,7 @@ export default {
     color: dakren($darkGreenColor, 30%);
     padding: 0.5rem;
     border-radius: 0.5rem;
-    width: $mediumFontSize;
+    width: 1.5rem;
     height: auto;
   }
 }
@@ -88,7 +88,7 @@ export default {
     text-transform: uppercase;
   }
   h3 {
-    font-size: $normalFontSize;
+    font-size: 1rem;
     font-weight: $mediumFontWeight;
     color: $whiteColor;
     margin-bottom: 0;

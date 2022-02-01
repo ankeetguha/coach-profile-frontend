@@ -92,10 +92,10 @@ export default {
     .amount {
       color: $whiteColor;
       font-weight: $mediumFontWeight;
-      font-size: $smallestFontSize;
+      font-size: $smallFontSize;
 
       em {
-        font-size: $normalFontSize;
+        font-size: 1.1rem;
       }
 
       &.slashed-amount {
@@ -124,7 +124,7 @@ export default {
     .amount {
       font-size: $normalFontSize;
       em {
-        font-size: $mediumFontSize;
+        font-size: $largeFontSize;
       }
     }
   }

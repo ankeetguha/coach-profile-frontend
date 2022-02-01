@@ -61,7 +61,7 @@ export default {
 <style scoped lang="scss">
 .booking-wrapper,
 .bg-overlay {
-  display: none;
+  display: none !important;
   &.show {
     display: block;
   }
@@ -147,7 +147,7 @@ export default {
 //Desktop Styles
 @media screen and (min-width: $mobileWidth) {
   .booking-wrapper {
-    display: block;
+    display: block !important;
   }
 
   .bg-overlay {

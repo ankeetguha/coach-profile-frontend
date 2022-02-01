@@ -117,15 +117,15 @@ export default {
 <style scoped lang="scss">
 .selected-variant-wrapper {
   position: relative;
-  margin-top: 1.5rem;
+  margin-top: 2em;
 
   .title {
     display: block;
     color: $whiteColor;
     opacity: 0.65;
-    font-size: $smallestFontSize;
+    font-size: $smallerFontSize;
     letter-spacing: 0.05rem;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
     text-transform: uppercase;
   }
 }
@@ -134,9 +134,10 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0.3rem 0.75rem;
+  padding: 0.65rem 0.75rem;
   border-radius: 0.5rem;
   background-color: lighten($blackColor, 8%);
+  border: 1px solid lighten($blackColor, 17%);
 
   .variant-icon {
     margin-right: 0.5rem;
@@ -149,7 +150,8 @@ export default {
   }
 
   label {
-    font-size: $smallFontSize;
+    font-size: 1rem;
+    font-weight: $mediumFontWeight;
     color: $whiteColor;
     margin-bottom: 0;
   }
@@ -161,7 +163,7 @@ export default {
     span {
       display: inline-block;
       vertical-align: middle;
-      font-size: $smallestFontSize;
+      font-size: $smallerFontSize;
       color: $whiteColor;
       margin-top: -0.15rem;
       opacity: 0.75;
@@ -212,7 +214,7 @@ export default {
     border: 1px solid lighten($blackColor, 9%);
     margin-bottom: 0.5rem;
     border-radius: 0.5rem;
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1rem;
 
     .variant-check {
       position: relative;
@@ -249,7 +251,7 @@ export default {
 
       .original-price,
       .discounted-price {
-        font-size: $smallFontSize;
+        font-size: 1rem;
         font-weight: $mediumFontWeight;
         color: $whiteColor;
       }
@@ -293,7 +295,6 @@ export default {
   width: calc(100% + 1rem);
 
   .btn {
-    font-size: $smallerFontSize;
     margin: 0 0.5rem;
     flex: 1;
   }

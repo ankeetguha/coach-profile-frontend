@@ -350,7 +350,7 @@ export default {
   bottom: 0;
   left: 0;
   width: calc(100%);
-  height: calc(100vh);
+  height: 100%;
   border-top-left-radius: 2rem;
   border-top-right-radius: 2rem;
   box-shadow: 0 -1rem 0.7rem -0.15rem rgba(41, 41, 41, 0.35);
@@ -406,6 +406,7 @@ export default {
 }
 
 .btn-wrapper {
+  background-color: $blackColor;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -413,7 +414,8 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 1rem;
+  margin: 0;
+  padding: 1rem;
   width: calc(100% - 2rem);
 
   .btn-border {

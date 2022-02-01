@@ -38,7 +38,7 @@ export default {
 .title {
   display: block;
   color: $whiteColor;
-  font-size: $normalFontSize;
+  font-size: $mediumFontSize;
   font-weight: $mediumFontWeight;
   margin: 0 1.5rem 1.5rem;
 }
@@ -67,7 +67,7 @@ export default {
   border: 1px solid #363636;
   background-color: #282828;
   border-radius: 0.75rem;
-  padding: 0.75rem 1rem 1rem;
+  padding: 0.75rem 1rem 1.75rem;
   margin: 0 1.5rem 1rem;
   width: calc(100% - 5rem - 2px) !important;
 
@@ -79,7 +79,8 @@ export default {
 
   .icon-wrapper {
     position: relative;
-    margin-right: 1.5rem;
+    margin-right: 1.15rem;
+    transform: translateY(-1rem);
 
     &::before {
       content: "";
@@ -112,12 +113,12 @@ export default {
 
 .info-wrapper {
   h3 {
-    font-size: $smallFontSize;
+    font-size: $mediumFontSize;
     color: $whiteColor;
   }
 
   p {
-    font-size: $smallerFontSize;
+    font-size: $normalFontSize;
     color: $whiteColor;
     opacity: 0.65;
     margin-bottom: 1.25rem;

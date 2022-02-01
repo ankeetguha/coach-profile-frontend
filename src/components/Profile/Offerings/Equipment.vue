@@ -48,7 +48,7 @@ export default {
   p {
     color: $whiteColor;
     opacity: $mediumOpacity;
-    font-size: $smallFontSize;
+    font-size: $normalFontSize;
   }
 }
 </style>

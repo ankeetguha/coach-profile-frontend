@@ -74,11 +74,10 @@ a {
     left: 0;
     width: 100%;
     height: 100%;
-
 }
 
 .bg-overlay.show {
-    opacity: .85;
+    opacity: .95;
     z-index: 100;
 }
 
@@ -130,7 +129,6 @@ a {
     top: 0;
     right: 0;
     z-index: 1;
-
     .unicon svg {
         @include transition;
         display: block;
@@ -141,7 +139,6 @@ a {
 
 .modal-close:hover {
     background-color: $purpleColor;
-
     .unicon svg {
         fill: lighten($purpleColor, 45%);
     }
@@ -149,12 +146,10 @@ a {
 
 .modal-block-info {
     margin-bottom: 1rem;
-
     h2 {
         font-size: $largeFontSize;
         margin-bottom: .3rem;
     }
-
     p {
         color: $greyColor;
         width: 80%;
@@ -176,7 +171,6 @@ a {
     letter-spacing: .1rem;
     margin-bottom: 1.5rem;
     text-transform: uppercase;
-
     em {
         display: inline-block;
         vertical-align: middle;

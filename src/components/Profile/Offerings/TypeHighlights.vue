@@ -67,7 +67,8 @@ export default {
 }
 
 .title {
-  font-size: $smallestFontSize;
+  display: block;
+  font-size: $smallFontSize;
   font-weight: $mediumFontWeight;
   color: $whiteColor;
   opacity: 0.5;
@@ -96,7 +97,7 @@ export default {
 
     span {
       color: $whiteColor;
-      font-size: $smallerFontSize;
+      font-size: $smallFontSize;
       opacity: 0.65;
     }
   }

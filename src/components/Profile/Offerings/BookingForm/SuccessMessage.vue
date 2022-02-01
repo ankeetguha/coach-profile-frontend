@@ -167,7 +167,7 @@ export default {
 
   h3 {
     color: $whiteColor;
-    font-size: $mediumFontSize;
+    font-size: 1.5rem;
     margin-top: 1rem;
   }
 

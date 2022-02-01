@@ -51,12 +51,7 @@
             </button>
           </div>
         </div>
-         <div
-          v-else
-          class="workout-day no-workout"
-        >
-        No Workouts
-        </div>
+        <div v-else class="workout-day no-workout">No Workouts</div>
       </div>
     </VueSlickCarousel>
     <!--END: Workout Days-->
@@ -150,10 +145,11 @@ export default {
     em {
       color: var(--brand-color);
       margin-right: 0.25rem;
+      font-size: $mediumFontSize;
     }
 
     label {
-      font-size: $smallestFontSize;
+      font-size: $smallFontSize;
       color: $whiteColor;
       opacity: 0.65;
     }
@@ -194,24 +190,23 @@ export default {
 
 .week-title {
   flex: 1;
-  font-size: $normalFontSize;
+  font-size: $mediumFontSize;
   font-weight: $mediumFontWeight;
   color: $whiteColor;
   margin-top: 0.5rem;
-  margin-bottom: -.15rem;
-
+  margin-bottom: -0.15rem;
 
   label {
     display: block;
     color: var(--brand-color);
-    font-size: $smallestFontSize;
+    font-size: $smallFontSize;
     letter-spacing: 0.05rem;
     text-transform: uppercase;
   }
 }
 
 .calendar-days {
-  margin-bottom: 1rem;
+  margin: 1rem 0 1rem;
 }
 
 .calendar-day {
@@ -230,9 +225,10 @@ export default {
     font-size: $normalFontSize;
     font-weight: $normalFontWeight;
     opacity: $lightOpacity;
+    margin-top: 0.15rem;
   }
   span {
-    font-size: 0.65rem;
+    font-size: $smallestFontSize;
     opacity: $lightOpacity;
     text-transform: uppercase;
     letter-spacing: 0.15rem;
@@ -254,14 +250,14 @@ export default {
   border: 1px solid #444444;
   background-color: #363636;
   border-radius: 0.75rem;
-  padding: 0.65rem 1rem 0.75rem;
+  padding: 1rem 1rem 1.15rem;
   margin: 0 1.5rem;
   display: flex;
   flex-direction: row;
   align-items: center;
   .btn-text {
     color: $whiteColor;
-    font-size: $smallerFontSize;
+    font-size: $smallFontSize;
     font-weight: $normalFontWeight;
     padding: 0;
     margin-top: 0.75rem;
@@ -278,7 +274,7 @@ export default {
     }
   }
   h3 {
-    font-size: 1rem;
+    font-size: 1.15rem;
     color: $whiteColor;
     margin-bottom: 0;
   }
@@ -307,9 +303,10 @@ export default {
 .no-workout {
   padding: 1.5rem;
   color: $whiteColor;
-  opacity: .65;
+  font-size: $mediumFontSize;
+  padding-bottom: 2rem;
+  opacity: 0.65;
 }
-
 
 //Light Theme styles
 .light-theme {
@@ -377,8 +374,8 @@ export default {
 
   .calendar-day {
     width: auto;
-    padding: .35rem .75rem;
-    margin: .25rem;
+    padding: 0.35rem 0.75rem;
+    margin: 0.25rem;
   }
 
   .workout-day {

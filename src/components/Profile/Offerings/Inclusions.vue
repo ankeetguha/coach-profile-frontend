@@ -25,7 +25,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .offering-inclusions {
-  margin: 0 1.5rem 1.5rem;
+  margin: 2rem 1.5rem 5rem;
 }
 
 .title {
@@ -35,7 +35,7 @@ export default {
   border-radius: 0.5rem;
   background-color: $darkGreenColor;
   color: darken($darkGreenColor, 40%);
-  font-size: $smallerFontSize;
+  font-size: $normalFontSize;
   font-weight: $mediumFontWeight;
   margin-bottom: -0.75rem;
   margin-left: 0.75rem;
@@ -49,14 +49,14 @@ export default {
   border: 1px solid $darkGreenColor;
   background-color: #363636;
   border-radius: 0.75rem;
-  padding: 1.5rem 0.75rem 0.75rem;
+  padding: 2rem 1.25rem 1.25rem;
   margin: 0;
 
   .inclusion {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 
     &:last-child {
       margin-bottom: 0.5rem;
@@ -64,13 +64,13 @@ export default {
 
     .unicon {
       margin-left: 0.5rem;
-      margin-right: 0.75rem;
+      margin-right: 1.25rem;
       /deep/ svg {
         fill: darken($darkGreenColor, 40%);
         background-color: $darkGreenColor;
         padding: 0.05rem;
         border-radius: 0.25rem;
-        height: 1.05rem;
+        height: 1.5rem;
         width: auto;
         margin-top: 0.25rem;
         width: auto;
@@ -79,14 +79,14 @@ export default {
 
     h3 {
       color: $whiteColor;
-      font-size: $smallFontSize;
+      font-size: 1.1rem;
       font-weight: $mediumFontWeight;
       margin-bottom: 0.15rem;
     }
 
     p {
       color: $whiteColor;
-      font-size: $smallerFontSize;
+      font-size: $normalFontSize;
       opacity: 0.65;
     }
   }

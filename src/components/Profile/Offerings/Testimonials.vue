@@ -80,7 +80,7 @@ export default {
 .title {
   display: block;
   color: $whiteColor;
-  font-size: $normalFontSize;
+  font-size: $mediumFontSize;
   font-weight: $mediumFontWeight;
   margin: 0 0 1.5rem;
 }
@@ -88,7 +88,7 @@ export default {
 .transformations-wrapper {
   position: relative;
   background: $blackColor;
-  padding: 0 2rem 3rem;
+  padding: 1.5rem 2rem 3rem;
   border-bottom-left-radius: 2rem;
   border-bottom-right-radius: 2rem;
   width: calc(100% - 4rem);

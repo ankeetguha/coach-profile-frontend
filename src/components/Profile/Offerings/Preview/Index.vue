@@ -47,6 +47,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .offering-type-preview {
-  margin: 0 1.5rem;
+  margin: 2rem 1.5rem 3rem;
 }
 </style>

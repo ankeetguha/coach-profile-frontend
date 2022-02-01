@@ -1,22 +1,22 @@
 <template>
-  <div class="price-box" @click="showBookingForm"> 
+  <div class="price-box" @click="showBookingForm">
     <div class="price-info-wrapper">
       <span class="price-icon">₹</span>
       <!--START: Offering Price-->
       <div class="price-wrapper">
         <label>Get this for </label>
-        <span
-          class="slashed-price"
-          v-show="getOfferingPrice.discountedPrice != null"
-        >
-          <em>₹</em>{{ getOfferingPrice.originalPrice }}
-        </span>
         <span class="offering-price">
           ₹<em>{{
             getOfferingPrice.discountedPrice != null
               ? getOfferingPrice.discountedPrice
               : getOfferingPrice.originalPrice
           }}</em>
+        </span>
+        <span
+          class="slashed-price"
+          v-show="getOfferingPrice.discountedPrice != null"
+        >
+          <em>₹</em>{{ getOfferingPrice.originalPrice }}
         </span>
       </div>
       <!--START: Offering Price-->
@@ -35,8 +35,8 @@ export default {
 
   methods: {
     showBookingForm() {
-      this.$emit('showBookingForm');
-    }
+      this.$emit("showBookingForm");
+    },
   },
 
   computed: {
@@ -76,7 +76,7 @@ export default {
 }
 
 .filler {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 
 .price-info-wrapper {
@@ -86,7 +86,7 @@ export default {
   .angle-icon {
     display: inline-block;
     vertical-align: middle;
-    margin-left: .5rem;
+    margin-left: 0.5rem;
 
     /deep/ svg {
       width: 1.25rem;
@@ -98,13 +98,13 @@ export default {
 }
 
 .price-icon {
-  font-size: $normalFontSize;
+  font-size: $mediumFontSize;
   display: inline-block;
   vertical-align: middle;
-  margin-right: 0.5rem;
+  margin-right: 0.75rem;
   color: darken($darkGreenColor, 30%);
   background-color: $darkGreenColor;
-  padding: 0.2rem 0.4rem;
+  padding: 0.2rem 0.5rem;
   border-radius: 0.25rem;
 }
 
@@ -114,19 +114,19 @@ export default {
 
   label {
     display: block;
-    font-size: $smallestFontSize;
+    font-size: $smallerFontSize;
     color: $whiteColor;
     opacity: 0.65;
     margin-bottom: 0.15rem;
   }
   .offering-price {
     color: $whiteColor;
-    font-size: $smallestFontSize;
+    font-size: $smallerFontSize;
     font-weight: $mediumFontWeight;
     opacity: 0.85;
 
     em {
-      font-size: 1rem;
+      font-size: 1.15rem;
     }
   }
 }
@@ -135,7 +135,7 @@ export default {
   color: $whiteColor;
   opacity: 0.65;
   text-decoration: line-through;
-  margin-right: 0.25rem;
+  margin-left: 0.5rem;
 
   em {
     font-size: $smallestFontSize;

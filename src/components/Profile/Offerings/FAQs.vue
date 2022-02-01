@@ -50,13 +50,13 @@ export default {
 <style scoped lang="scss">
 .offering-faqs {
   position: relative;
-  margin: 3rem 1.5rem 0;
+  margin: 5rem 1.5rem 0;
 }
 
 .pattern {
   position: absolute;
   left: -1.5rem;
-  top: -3rem;
+  top: -5rem;
   width: calc(100% + 3rem);
   z-index: 1;
   display: flex;
@@ -79,7 +79,7 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 1rem;
+  padding: 1rem 1rem 1.5rem;
   margin-left: -0.5rem;
   width: calc(100% - 1rem);
   margin-bottom: 1rem;
@@ -92,13 +92,13 @@ export default {
   display: block;
   h3 {
     color: $whiteColor;
-    font-size: $normalFontSize;
+    font-size: $mediumFontSize;
     font-weight: $mediumFontWeight;
   }
 
   p {
     color: $whiteColor;
-    font-size: $smallerFontSize;
+    font-size: $normalFontSize;
     opacity: 0.65;
   }
 }
@@ -112,16 +112,16 @@ export default {
 
 .faq {
   position: relative;
-  padding: 0.75rem 0;
+  padding: 1.15rem 0;
   border-bottom: 1px solid lighten($blackColor, 10%);
 
   .control {
     display: block;
     position: absolute;
-    top: 1rem;
+    top: 1.75rem;
     right: 0.5rem;
-    height: 10px;
-    width: 10px;
+    height: 13px;
+    width: 13px;
 
     &::before,
     &::after {
@@ -144,7 +144,7 @@ export default {
 
 .question {
   width: 80%;
-  font-size: $normalFontSize;
+  font-size: 1.05rem;
   color: $whiteColor;
   font-weight: $normalFontWeight;
 }
@@ -153,10 +153,11 @@ export default {
   display: none;
   font-size: $smallFontSize;
   color: $whiteColor;
+  margin-top: 1rem;
 
   /deep/ {
     * {
-      font-size: $smallerFontSize;
+      font-size: $smallFontSize;
       color: darken($whiteColor, 30%) !important;
     }
 

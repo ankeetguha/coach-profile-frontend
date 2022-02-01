@@ -31,7 +31,6 @@ export default {
   padding: 1rem;
   border-radius: 0.75rem;
   padding: 0.75rem;
-  margin-bottom: 2rem;
   overflow: hidden;
 
   .info-wrapper {

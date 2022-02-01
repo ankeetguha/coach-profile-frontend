@@ -414,11 +414,11 @@ export default {
 
 .hero-wrapper {
   background-color: $blackColor;
-  padding: 0.75rem 1.5rem 1.5rem;
+  padding: 0.75rem 1.5rem 2rem;
   margin-bottom: 1.5rem;
   border-bottom-left-radius: 2rem;
   border-bottom-right-radius: 2rem;
-  box-shadow: 0 0 2.7rem -0.15rem rgb(20, 20, 20);
+  // box-shadow: 0 0 2.7rem -0.15rem rgb(20, 20, 20);
 }
 
 .sub-title {
@@ -455,7 +455,7 @@ export default {
       fill: var(--brand-color);
       background-color: rgba(39, 39, 39, 1);
       height: auto;
-      width: 1.25rem;
+      width: 1.75rem;
       padding: 0.5rem;
       border-radius: 50%;
     }
@@ -473,7 +473,7 @@ export default {
 
     h3 {
       color: $whiteColor;
-      font-size: $normalFontSize;
+      font-size: 1rem;
       font-weight: $mediumFontWeight;
       opacity: 0.85;
     }
@@ -496,7 +496,7 @@ export default {
   margin: 1rem 0 0;
 
   .title {
-    font-size: $mediumFontSize;
+    font-size: 1.25rem;
     font-weight: $mediumFontWeight;
     color: $whiteColor;
     margin-bottom: 0;
@@ -505,12 +505,12 @@ export default {
 
 .description-wrapper {
   position: relative;
-  margin: 1.5rem 1.5rem 0;
+  margin: .5rem 1.5rem 3rem;
 
   .read-more-btn {
     position: absolute;
     cursor: pointer;
-    font-size: $smallerFontSize;
+    font-size: $smallFontSize;
     color: var(--brand-color);
     bottom: 0;
     left: 0;
@@ -548,7 +548,7 @@ export default {
 
     /deep/ {
       * {
-        font-size: $smallFontSize;
+        font-size: $normalFontSize;
         color: darken($whiteColor, 18%) !important;
       }
 
@@ -583,12 +583,20 @@ export default {
       h5,
       h6 {
         color: $whiteColor !important;
-        font-size: $normalFontSize;
+        font-size: $mediumFontSize;
         * {
           color: $whiteColor !important;
-          font-size: $normalFontSize;
+          font-size: $mediumFontSize;
         }
       }
+    }
+  }
+}
+
+/deep/ {
+  .offering-type-highlights {
+    .highlights-list {
+      display: none;
     }
   }
 }
@@ -605,7 +613,7 @@ export default {
     width: calc(100% - 2rem);
 
     .btn-small {
-      font-size: $smallerFontSize;
+      font-size: $smallFontSize;
       padding: 0.75rem 1rem;
     }
   }
@@ -687,32 +695,32 @@ export default {
       line-height: 1.2;
     }
   }
-}
 
-/deep/ {
-  .offering-type-highlights {
-    height: auto;
+  /deep/ {
+    .offering-type-highlights {
+      height: auto;
 
-    .title {
-      position: absolute;
-      top: 0;
-      right: 0;
-      padding: 0.5rem;
-      border: 1px solid lighten($blackColor, 50%);
-      border-radius: 0.5rem;
-    }
+      .title {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0.5rem;
+        border: 1px solid lighten($blackColor, 50%);
+        border-radius: 0.5rem;
+      }
 
-    .highlights-list {
-      margin-top: 0.5rem;
+      .highlights-list {
+        margin-top: 0.5rem;
+      }
     }
   }
-}
 
-.description-wrapper {
-  margin-top: 3rem;
+  .description-wrapper {
+    margin-top: 3rem;
 
-  .sub-title {
-    font-size: 1.05rem;
+    .sub-title {
+      font-size: 1.05rem;
+    }
   }
 }
 </style>

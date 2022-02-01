@@ -60,14 +60,14 @@ export default {
 <style scoped lang="scss">
 .plan-steps-wrapper {
   border-top: 1px solid #404040;
-  margin-top: 2rem;
-  padding-top: 1.5rem;
+  margin-top: 3rem;
+  padding-top: 2.5rem;
   padding-bottom: 0.5rem;
 
   .title {
     color: $whiteColor;
     font-weight: $mediumFontWeight;
-    font-size: $normalFontSize;
+    font-size: $mediumFontSize;
     margin: 0 0 1.5rem;
   }
 
@@ -80,21 +80,21 @@ export default {
 
   .plan-step-item img {
     display: block;
-    width: 2.5rem;
-    margin: 0 0.75rem 0 0;
+    width: 3.5rem;
+    margin: 0 1.25rem 0 0;
   }
 
   .plan-step-item {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     h3 {
-      font-size: $smallFontSize;
+      font-size: $mediumFontSize;
       font-weight: $mediumFontWeight;
       color: $whiteColor;
     }
 
     p {
       color: $whiteColor;
-      font-size: $smallerFontSize;
+      font-size: $normalFontSize;
       opacity: $lightOpacity;
       font-weight: $normalFontWeight;
     }

@@ -110,9 +110,9 @@
 }
 
 .btn-primary {
-    font-size: $normalFontSize;
+    font-size: 1rem;
     transition: all $transitionSpeed;
-    color: #0a4a1d;
+    color: darken(#0a4a1d, 10%);
     background-color: $darkGreenColor;
     border: 1px solid #5df1b1;
     .unicon svg {
