@@ -92,6 +92,24 @@ export default {
   }
 }
 
+//Light Theme
+.light-theme {
+  .inclusions {
+    border: 1px solid #e9e9e9;
+    background-color: #ffffff;
+  }
+
+  .info-wrapper {
+    h3 {
+      color: lighten($blackColor, 20%);
+    }
+
+    p {
+      color: lighten($blackColor, 35%);
+    }
+  }
+}
+
 //Desktop Styles
 @media screen and (min-width: $mobileWidth) {
   .offering-inclusions {

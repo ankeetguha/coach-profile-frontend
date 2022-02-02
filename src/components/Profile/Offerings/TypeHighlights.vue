@@ -117,6 +117,16 @@ export default {
   }
 }
 
+//Light Theme styles
+.light-theme {
+  .offering-type-highlights {
+    .title {
+      color: lighten($blackColor, 45%);
+      opacity: 1;
+    }
+  }
+}
+
 //Desktop Styles
 @media screen and (min-width: $mobileWidth) {
   .offering-type-highlights {

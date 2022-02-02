@@ -601,6 +601,78 @@ export default {
   }
 }
 
+//Light Theme styles
+.light-theme {
+  .header-wrapper {
+    position: absolute;
+    background: #eee;
+    left: .5rem;
+    top: .5rem;
+    border-radius: 0.5rem;
+    width: calc(100% - 3rem);
+    border: 1px solid #e3e3e3;
+
+    .btn {
+      border-color: #cecece;
+    }
+
+    .go-back span {
+      color: lighten($blackColor, 5%);
+    }
+  }
+
+  .hero-wrapper {
+    position: relative;
+    background-color: $lightWhiteColor;
+    padding-top: 4.25rem;
+    box-shadow: 0 0 1rem 0.4rem rgba(0, 0, 0, 0.05);
+
+    &::before {
+      content: '';
+      background-color: #C1C1C1;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 11.5rem;
+    }
+  }
+
+  .title {
+    color: $blackColor;
+  }
+
+  .sub-title {
+    color: lighten($blackColor, 45%);
+  }
+
+  .description {
+    &::before {
+      background: linear-gradient(
+        to bottom,
+        rgba(247, 247, 247, 0) 0%,
+        #f7f7f7 90%
+      );
+    }
+
+    /deep/ {
+      * {
+        color: lighten($blackColor, 20%) !important;
+      }
+
+      h3,
+      h4,
+      h5,
+      h6 {
+        color: $blackColor !important;
+        * {
+          color: $blackColor !important;
+        }
+      }
+    }
+  }
+}
+
 //Desktop Styles
 @media screen and (min-width: $mobileWidth) {
   .offering-info-column {

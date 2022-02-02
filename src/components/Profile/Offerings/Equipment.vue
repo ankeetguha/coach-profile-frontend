@@ -51,4 +51,20 @@ export default {
     font-size: $normalFontSize;
   }
 }
+
+//Light Theme Styles
+.light-theme {
+  .label-small {
+    color: lighten($blackColor, 45%);
+  }
+
+  p {
+    color: lighten($blackColor, 20%);
+  }
+
+  .unicon /deep/ svg {
+    background-color: var(--brand-color);
+    fill: $whiteColor;
+  }
+}
 </style>

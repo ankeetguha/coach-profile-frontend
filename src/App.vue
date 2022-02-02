@@ -14,6 +14,7 @@
     --brand-color-dark-50: hsl(var(--h), var(--s), calc(var(--l) - 50%));
     
     --brand-color-light-10: hsl(var(--h), var(--s), calc(var(--l) + 10%));
+    --brand-color-light-25: hsl(var(--h), var(--s), calc(var(--l) + 25%));
     --brand-color-light-45: hsl(var(--h), var(--s), calc(var(--l) + 45%));
     --brand-color-light-85: hsl(var(--h), var(--s), calc(var(--l) + 45%));
 

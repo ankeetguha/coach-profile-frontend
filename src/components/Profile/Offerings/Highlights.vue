@@ -74,13 +74,13 @@ export default {
   .highlight-wrapper {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
   }
 
   .icon-wrapper {
     position: relative;
     margin-right: 1.15rem;
-    transform: translateY(-1rem);
+    transform: translateY(0.5rem);
 
     &::before {
       content: "";
@@ -135,6 +135,42 @@ export default {
   padding: 0.35rem;
   border-radius: 0.25rem;
   color: #7a7a7a;
+}
+
+//Light Theme
+.light-theme {
+  .title {
+    color: $blackColor;
+  }
+
+  .offering-highlights {
+    &::before {
+      background-color: var(--brand-color);
+      border-top-left-radius: 1.5rem;
+      border-top-right-radius: 1.5rem;
+    }
+  }
+
+  .highlight {
+    background-color: $whiteColor;
+    border-color: darken($whiteColor, 10%);
+
+    h3 {
+      color: $blackColor;
+    }
+
+    p {
+      color: lighten($blackColor, 15%);
+    }
+
+    .label {
+      background-color: darken($whiteColor, 10%);
+    }
+
+    .icon-wrapper::before {
+      border-color: darken($whiteColor, 15%);
+    }
+  }
 }
 
 //Desktop Styles

@@ -300,6 +300,32 @@ export default {
   }
 }
 
+//Light Theme styles
+.light-theme {
+  .selected-variant-wrapper {
+    .title {
+      color: lighten($blackColor, 45%);
+      opacity: 1;
+    }
+  }
+
+  .selected-variant {
+    background-color: darken($whiteColor, 7%);
+    border-color: darken($whiteColor, 10%);
+
+    .variant-length span,
+    label {
+      color: lighten($blackColor, 10%);
+    }
+
+    .variant-length {
+      .unicon /deep/ svg {
+        fill: var(--brand-color);
+      }
+    }
+  }
+}
+
 //Desktop Styles
 @media screen and (min-width: $mobileWidth) {
   .selected-variant {
@@ -316,10 +342,10 @@ export default {
     }
 
     .variant-length {
-    span {
-      font-size: $normalFontSize;
+      span {
+        font-size: $normalFontSize;
+      }
     }
-  }
   }
 
   .variants-selector-modal {

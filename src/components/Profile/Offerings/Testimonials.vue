@@ -222,12 +222,19 @@ export default {
     z-index: 2;
   }
 
+  .title {
+    position: relative;
+    color: $blackColor;
+    z-index: 1;
+  }
+
   .transformations-wrapper {
     position: relative;
     background-color: $lightWhiteColor;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     padding-bottom: 0;
+    padding-top: 3rem;
 
     &::before {
       z-index: 1;

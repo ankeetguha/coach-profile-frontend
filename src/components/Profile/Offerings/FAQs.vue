@@ -208,6 +208,45 @@ export default {
   }
 }
 
+//Light theme
+.light-theme {
+  .pattern {
+    /deep/ g {
+      fill: darken($whiteColor, 15%);
+    }
+  }
+
+  .title-wrapper {
+    background-color: $whiteColor;
+    border: 1px solid darken($whiteColor, 8%);
+  }
+
+  .title-info {
+    h3 {
+      color: $blackColor;
+    }
+
+    p {
+      color: lighten($blackColor, 25%);
+    }
+  }
+
+  .faq {
+    border-bottom-color: darken($whiteColor, 15%);
+  }
+
+  .question {
+    color: $blackColor;
+  }
+
+  .answer {
+    /deep/ * {
+      opacity: 1;
+      color: lighten($blackColor, 45%) !important;
+    }
+  }
+}
+
 //Desktop Styles
 @media screen and (min-width: $mobileWidth) {
   .offering-faqs {

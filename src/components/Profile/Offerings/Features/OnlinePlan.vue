@@ -105,6 +105,27 @@ export default {
   padding: 0;
 }
 
+//Light Theme
+.light-theme {
+  .plan-steps-wrapper {
+    border-top: 1px solid #DFDFDF;
+  }
+
+  .title {
+    color: lighten($blackColor, 0%);
+  }
+
+  .plan-steps-wrapper .plan-step-item {
+    h3 {
+      color: lighten($blackColor, 15%);
+    }
+
+    p {
+      color: lighten($blackColor, 20%);
+    }
+  }
+}
+
 //Desktop Styles
 @media screen and (min-width: $mobileWidth) {
   .plan-steps-wrapper {
@@ -117,7 +138,7 @@ export default {
 
     .plan-step-item {
       margin-bottom: 2.5rem;
-      
+
       img {
         width: 4.5rem;
         margin-right: 1.5rem;

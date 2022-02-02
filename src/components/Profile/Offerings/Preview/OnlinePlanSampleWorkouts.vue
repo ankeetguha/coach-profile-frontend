@@ -329,7 +329,8 @@ export default {
       background-color: var(--brand-color);
       span,
       b {
-        color: var(--brand-color-dark-50);
+        font-weight: bold;
+        color: $whiteColor;
       }
     }
   }
@@ -341,7 +342,7 @@ export default {
       opacity: 0.75;
     }
     .btn-text {
-      color: $greyColor;
+      color: lighten($blackColor, 30%);
       opacity: 1;
     }
     &.locked-workout {
@@ -358,6 +359,12 @@ export default {
         fill: $blackColor;
         opacity: 0.5;
       }
+    }
+  }
+  .online-plan-summary {
+    em,
+    label {
+      color: lighten($blackColor, 15%);
     }
   }
 }

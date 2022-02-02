@@ -809,4 +809,9 @@ input:checked~.checkmark:after {
         background-color: #f4f4f5;
         border: 1px solid #e2e2e2;
     }
+    .btn-primary {
+        border-color: var(--brand-color-dark-10);
+        background-color: var(--brand-color);
+        color: $whiteColor
+    }
 }

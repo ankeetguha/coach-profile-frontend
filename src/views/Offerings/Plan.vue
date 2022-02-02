@@ -158,49 +158,6 @@
       </div>
     </div>
 
-    <!--START: CTA Plan-->
-    <div v-if="this.isMobile()" class="cta-sticky-wrapper">
-      <div class="cta-sticky-info">
-        <div class="price-wrapper">
-          <div
-            v-if="
-              plan.isDiscountedPlan != undefined &&
-              plan.isDiscountedPlan == true
-            "
-          >
-            <span class="plan-price">
-              ₹<em>{{ convertToIndianNumber(plan.discountedPrice) }}</em>
-            </span>
-            <span class="plan-price slashed-price">
-              ₹<em>{{ convertToIndianNumber(plan.planPrice) }}</em>
-            </span>
-          </div>
-          <div v-else>
-            <span class="plan-price">
-              ₹<em>{{ convertToIndianNumber(plan.planPrice) }}</em>
-            </span>
-          </div>
-        </div>
-        <span class="plan-date" v-if="plan.hasDates == true"
-          >Starts {{ convertToMonthDate(plan.startDate) }}</span
-        >
-        <span
-          class="plan-date"
-          v-else-if="
-            plan.isMonthlyPlan != null &&
-            plan.planDuration != null &&
-            plan.isMonthlyPlan == false
-          "
-          >{{ plan.planDuration }}</span
-        >
-        <span class="plan-date" v-else>Per Month</span>
-      </div>
-      <button class="btn btn-primary btn-book" @click="showBookingModal">
-        Book Now
-      </button>
-    </div>
-    <!--END: CTA Plan-->
-
     <!--START: Workout Exercises-->
     <WorkoutExercises
       :show="showWorkoutModal"
@@ -210,18 +167,6 @@
     ></WorkoutExercises>
     <!--START: Workout Exercises-->
 
-    <!--START: Booking Modal-->
-    <BookingModal
-      :plan="plan"
-      :coach="coach"
-      :show="isMobile() ? showModal : true"
-    ></BookingModal>
-    <div
-      class="bg-overlay"
-      :class="{ show: showModal }"
-      @click="closeModal"
-    ></div>
-    <!--END: Booking Modal-->
   </div>
 </template>
 
@@ -231,7 +176,6 @@ import CoachService from "@/controllers/CoachService";
 
 //Import components
 import PageLoader from "@/components/loaders/PageLoader";
-import BookingModal from "@/components/Profile/CoachBookingModal";
 import OnlinePlanFeatures from "@/components/Plan/OnlinePlanFeatures";
 import PlanSampleWorkouts from "@/components/Plan/PlanSampleWorkouts";
 import WorkoutExercises from "@/components/Plan/WorkoutExercises";
@@ -299,7 +243,6 @@ export default {
   },
   components: {
     PageLoader,
-    BookingModal,
     OnlinePlanFeatures,
     PlanSampleWorkouts,
     WorkoutExercises,
@@ -912,12 +855,12 @@ export default {
 
 @media screen and (min-width: $mobileWidth) {
   .plan-intro-wrapper {
-    padding-left: 15%;
-    padding-right: 45%;
+    padding-left: 30%;
+    padding-right: 30%;
   }
 
   .details-wrapper {
-    margin-left: 16%;
+    margin: 2rem auto 0;
     width: 39%;
 
     .plan-description,
