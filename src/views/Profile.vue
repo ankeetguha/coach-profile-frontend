@@ -211,5 +211,11 @@ export default {
   .modal-route {
     padding: 3rem 0 0;
   }
+
+  //Light Theme Styles
+  .light-theme {
+    position: relative;
+    background-color: $lightWhiteColor;
+  }
 }
 </style>

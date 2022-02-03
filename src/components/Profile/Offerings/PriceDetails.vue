@@ -8,13 +8,13 @@
         class="slashed-price"
         v-show="getOfferingPrice.discountedPrice != null"
       >
-        <em>₹</em>{{ getOfferingPrice.originalPrice }}
+        <em>₹</em>{{ convertToIndianNumber(getOfferingPrice.originalPrice) }}
       </span>
       <span class="offering-price">
         ₹<em>{{
           getOfferingPrice.discountedPrice != null
-            ? getOfferingPrice.discountedPrice
-            : getOfferingPrice.originalPrice
+            ? convertToIndianNumber(getOfferingPrice.discountedPrice)
+            : convertToIndianNumber(getOfferingPrice.originalPrice)
         }}</em>
       </span>
     </div>

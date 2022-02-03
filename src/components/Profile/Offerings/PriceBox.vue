@@ -8,15 +8,15 @@
         <span class="offering-price">
           ₹<em>{{
             getOfferingPrice.discountedPrice != null
-              ? getOfferingPrice.discountedPrice
-              : getOfferingPrice.originalPrice
+              ? convertToIndianNumber(getOfferingPrice.discountedPrice)
+              : convertToIndianNumber(getOfferingPrice.originalPrice)
           }}</em>
         </span>
         <span
           class="slashed-price"
           v-show="getOfferingPrice.discountedPrice != null"
         >
-          <em>₹</em>{{ getOfferingPrice.originalPrice }}
+          <em>₹</em>{{ convertToIndianNumber(getOfferingPrice.originalPrice) }}
         </span>
       </div>
       <!--START: Offering Price-->
@@ -171,7 +171,7 @@ export default {
 //Desktop Styles
 @media screen and (min-width: $mobileWidth) {
   .price-box {
-    display: none;
+     display: none !important;
   }
 }
 </style>

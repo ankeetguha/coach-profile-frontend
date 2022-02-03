@@ -216,12 +216,12 @@ export default {
 
     .cover-image {
       border-radius: 0.75rem;
-      margin: .5rem;
+      margin: 0.5rem;
       width: calc(100% - 1rem);
     }
 
     .tag-popular {
-      position:absolute;
+      position: absolute;
       margin: 0;
       left: 1rem;
       top: -2.5rem;
@@ -248,6 +248,7 @@ export default {
     .btn {
       color: $whiteColor;
       background-color: var(--brand-color);
+      padding: 0.4rem 0.85rem;
 
       .unicon /deep/ svg {
         fill: $whiteColor;
@@ -290,6 +291,19 @@ export default {
       margin: 0;
       top: -1.5rem;
       left: 1rem;
+    }
+  }
+
+  //Light theme
+  .light-theme {
+    .block-title {
+      background-color: $lightWhiteColor;
+    }
+
+    .offering {
+      &:hover {
+        box-shadow: 0 0.75rem 0.7rem 0.15rem rgba(0, 0, 0, 0.15);
+      }
     }
   }
 }

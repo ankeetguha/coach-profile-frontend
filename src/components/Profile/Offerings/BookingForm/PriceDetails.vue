@@ -7,10 +7,10 @@
           <span
             class="amount"
             :class="{ 'slashed-amount': variant.discountedPrice != undefined }"
-            >₹<em>{{ variant.originalPrice }}</em>
+            >₹<em>{{ convertToIndianNumber(variant.originalPrice) }}</em>
           </span>
           <span v-if="variant.discountedPrice != undefined" class="amount"
-            >₹<em>{{ variant.discountedPrice }}</em></span
+            >₹<em>{{ convertToIndianNumber(variant.discountedPrice) }}</em></span
           >
         </div>
       </div>
@@ -19,7 +19,7 @@
         <label>Internet Handling Fees</label>
         <div class="price-item">
           <span class="amount"
-            >+ ₹<em>{{ getTaxes }}</em>
+            >+ ₹<em>{{ convertToIndianNumber(getTaxes) }}</em>
           </span>
         </div>
       </div>
@@ -28,7 +28,7 @@
         <label>Total</label>
         <div class="price-item">
           <span class="amount"
-            >₹<em>{{ getPaymentPrice + getTaxes }}</em>
+            >₹<em>{{ convertToIndianNumber(getPaymentPrice + getTaxes) }}</em>
           </span>
         </div>
       </div>
@@ -166,13 +166,23 @@ export default {
   .line-item {
     label,
     .amount {
-      color: lighten($blackColor, 35%);
+      color: lighten($blackColor, 15%);
     }
 
     &.total-price {
       .amount {
         color: lighten($blackColor, 0%);
       }
+    }
+  }
+
+  .secure-wrapper {
+    span {
+      color: lighten($blackColor, 20%);
+    }
+
+    .unicon /deep/ svg {
+      fill: var(--brand-color);
     }
   }
 }

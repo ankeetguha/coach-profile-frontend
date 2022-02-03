@@ -299,6 +299,7 @@ export default {
     }
   }
 
+//Light Theme
   .light-theme {
     .label-small {
       font-family: $bodyFont;

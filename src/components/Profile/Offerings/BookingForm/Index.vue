@@ -309,7 +309,7 @@ export default {
       this.showOptions.lineLoader = false;
       this.showOptions.paymentLoader = false;
       this.showOptions.status = false;
-      this.$emit('updateBookingStatus', false);
+      this.$emit("updateBookingStatus", false);
       this.disableButton = false;
     },
 
@@ -321,13 +321,13 @@ export default {
       });
 
       this.showOptions.successMessage = false;
-      this.$emit('updateBookingStatus', true);
+      this.$emit("updateBookingStatus", true);
       this.disableButton = true;
       this.showOptions.lineLoader = false;
     },
 
     closeSuccessMessage() {
-      this.$emit('updateBookingStatus', false);
+      this.$emit("updateBookingStatus", false);
       this.disableButton = false;
       this.showOptions.successMessage = false;
       this.closeForm();
@@ -454,7 +454,7 @@ export default {
 //Light Theme
 .light-theme {
   .booking-modal {
-    background-color: darken($whiteColor, 2%);
+    background-color: #e9e9e9;
   }
 
   .hero-wrapper {
@@ -468,7 +468,8 @@ export default {
     background-color: darken($whiteColor, 3%);
 
     .btn-border {
-      color: lighten($blackColor, 30%);
+      color: lighten($blackColor, 10%);
+      border-color: lighten($blackColor, 40%);
     }
   }
 }
@@ -520,6 +521,14 @@ export default {
     padding: 1rem;
     width: calc(38vw - 4rem + 2px);
     text-align: center;
+  }
+
+  //Light Theme
+  .light-theme {
+    .hero-wrapper {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
   }
 }
 </style>

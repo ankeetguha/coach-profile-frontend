@@ -36,13 +36,13 @@
           >
             <span class="original-price"
               ><span class="currency-icon">₹</span
-              >{{ variant.originalPrice }}</span
+              >{{ convertToIndianNumber(variant.originalPrice) }}</span
             >
             <span
               v-if="variant.discountedPrice != undefined"
               class="discounted-price"
               ><span class="currency-icon">₹</span
-              >{{ variant.discountedPrice }}</span
+              >{{ convertToIndianNumber(variant.discountedPrice) }}</span
             >
           </div>
         </li>
@@ -388,7 +388,7 @@ export default {
 
     &:hover {
       cursor: pointer;
-      border: 1px solid $purpleColor;
+      border: 1px solid var(--brand-color);
     }
 
     label {

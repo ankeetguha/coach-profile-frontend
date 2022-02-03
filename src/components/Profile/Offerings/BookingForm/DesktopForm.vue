@@ -18,17 +18,12 @@
 
       <!--START: Button Actions-->
       <div class="btn-wrapper">
-        <button
-          type="button"
-          class="btn btn-primary"
-          @click="showBooking"
-        >
+        <button type="button" class="btn btn-primary" @click="showBooking">
           Make Payment
         </button>
       </div>
       <!--END: Button Actions-->
     </div>
-
   </div>
 </template>
 
@@ -117,7 +112,7 @@ export default {
     padding: 0.5rem 0.75rem;
     border-radius: 0.5rem;
     font-weight: $mediumFontWeight;
-    color: var(--brand-color-dark-45);
+    color: $whiteColor;
     background-color: var(--brand-color);
   }
 }
@@ -141,6 +136,17 @@ export default {
       background-color: transparent !important;
       opacity: 0.25;
     }
+  }
+}
+
+//Light theme
+.light-theme {
+  .booking-modal {
+    box-shadow: 0 0 0.7rem -0.15rem rgba(41, 41, 41, 0.35);
+  }
+
+  /deep/ .secure-wrapper span {
+    color: $whiteColor;
   }
 }
 
@@ -191,6 +197,13 @@ export default {
     &::before {
       height: auto;
       border-radius: 1.5rem;
+    }
+  }
+
+  //Light theme
+  .light-theme {
+    /deep/ .secure-wrapper span {
+      color: $whiteColor;
     }
   }
 }

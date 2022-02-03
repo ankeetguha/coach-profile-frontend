@@ -370,6 +370,8 @@ svg.coach-qualification-badge-text {
     }
 
     .coach-qualifications-wrapper {
+      background-color: $lightWhiteColor;
+      
       &.multiple {
         padding-bottom: 1rem;
       }

@@ -21,7 +21,7 @@
   <li v-else class="superset-item">
     <div class="superset-item-wrapper">
       <div class="superset-item-info">
-        <label>Superset</label>
+        <label>Exercise Group</label>
       </div>
       <h3 class="excercise-description">{{ excercise.description }}</h3>
     </div>

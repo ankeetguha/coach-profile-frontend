@@ -79,7 +79,12 @@
       </div>
 
       <!--START: Preview Type-->
-      <TypePreview :offering="offering" :coachSlug="coach.slug"></TypePreview>
+      <TypePreview
+        :offering="offering"
+        :coachSlug="coach.slug"
+        :showSampleWorkouts="showOptions.sampleWorkouts"
+        @toggleSampleWorkouts="toggleSampleWorkouts"
+      ></TypePreview>
       <!--END: Preview Type-->
 
       <!--START: Description-->
@@ -155,6 +160,10 @@
       ></PriceBox>
       <!--END: Price CTA-->
 
+      <!--START: Internal Menu-->
+      <InternalMenu :offering="offering"></InternalMenu>
+      <!--END: Internal Menu-->
+
       <!--START: Booking Form-->
       <BookingForm
         :coach="coach"
@@ -201,6 +210,8 @@ import FAQs from "@/components/Profile/Offerings/FAQs";
 import PriceBox from "@/components/Profile/Offerings/PriceBox";
 import VideoPlayer from "@/components/Profile/Offerings/VideoPlayer";
 
+import InternalMenu from "@/components/Profile/Offerings/InternalMenu";
+
 import BookingForm from "@/components/Profile/Offerings/BookingForm/Index";
 import BookingDesktopForm from "@/components/Profile/Offerings/BookingForm/DesktopForm";
 
@@ -218,6 +229,7 @@ export default {
         variantsModal: false,
         priceBox: true,
         description: false,
+        sampleWorkouts: false,
       },
       meta: {
         title: null,
@@ -282,6 +294,26 @@ export default {
     VideoPlayer,
     BookingForm,
     BookingDesktopForm,
+    InternalMenu
+  },
+  //Check for changes
+  beforeRouteLeave(to, from, next) {
+    if (
+      this.showOptions.videoPlayer ||
+      this.showOptions.variantsModal ||
+      this.showOptions.sampleWorkouts ||
+      (!this.bookingInProgress && this.showOptions.bookingForm)
+    ) {
+      this.toggleSampleWorkouts(false);
+      this.closeBookingForm();
+      this.closeVariantsModal();
+      this.showOptions.videoPlayer = false;
+      next(false);
+    } else if (this.bookingInProgress) {
+      next(false);
+    } else {
+      next();
+    }
   },
   async created() {
     //Get coach and change meta details
@@ -326,7 +358,6 @@ export default {
     },
 
     showVariantsModal() {
-      console.log("Hee");
       this.showOptions.variantsModal = true;
       this.showOptions.priceBox = false;
     },
@@ -357,27 +388,13 @@ export default {
       this.showOptions.bookingForm = false;
     },
 
+    toggleSampleWorkouts(value) {
+      this.showOptions.sampleWorkouts = value;
+    },
+
     updateBookingStatus(status) {
       this.bookingInProgress = status;
     },
-  },
-
-  //Check for changes
-  beforeRouteLeave(to, from, next) {
-    if (
-      this.showOptions.videoPlayer ||
-      this.showOptions.variantsModal ||
-      (!this.bookingInProgress && this.showOptions.bookingForm)
-    ) {
-      this.closeBookingForm();
-      this.closeVariantsModal();
-      this.showOptions.videoPlayer = false;
-      next(false);
-    } else if (this.bookingInProgress) {
-      next(false);
-    } else {
-      next();
-    }
   },
 };
 </script>
@@ -897,6 +914,67 @@ export default {
 
     .sub-title {
       font-size: 1.05rem;
+    }
+  }
+
+  //Light theme
+  .light-theme {
+    .offering {
+      &::before {
+        display: none;
+      }
+    }
+
+    .header-wrapper {
+      left: 0;
+      top: 0;
+      width: calc(100% - 2rem);
+      margin: 0;
+      border-radius: 0;
+    }
+
+    .hero-wrapper {
+      z-index: 2;
+      padding: 2.5rem 0 3rem;
+      background: #fff;
+      border-bottom-left-radius: 2rem;
+      border-bottom-right-radius: 2rem;
+      box-shadow: 0 0 1.7rem -0.15rem #b4b4b4;
+
+      .cover-image-wrapper {
+        box-shadow: 0 -1rem 0.7rem -0.15rem rgba(41, 41, 41,.35);
+        margin-left: 0;
+        width: 100%;
+      }
+
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 15rem;
+        background-color: var(--brand-color);
+        background-image: url("/assets/images/light-theme/cover-bg.jpg");
+        background-repeat: no-repeat;
+        background-size: 100%;
+        background-blend-mode: darken;
+        margin-top: -1.5rem;
+      }
+
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 12rem;
+        left: 0;
+        width: 100%;
+        height: 3rem;
+        background-color: $whiteColor;
+        border-top-left-radius: 2rem;
+        border-top-right-radius: 2rem;
+      }
     }
   }
 }

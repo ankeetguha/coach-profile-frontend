@@ -312,5 +312,12 @@ export default {
     vertical-align: top;
     width: calc(50% - 2.7rem);
   }
+
+  //Light theme
+  .light-theme {
+    .plans-list-title {
+      background-color: $lightWhiteColor;
+    }
+  }
 }
 </style>

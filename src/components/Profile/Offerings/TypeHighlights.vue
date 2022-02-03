@@ -150,5 +150,14 @@ export default {
   .offering-type-highlights {
     height: 3rem;
   }
+
+  //Light theme
+  .light-theme {
+    .offering-type-highlights .title {
+      background-color: var(--brand-color);
+      border-color: var(--brand-color-light-10);
+      color: $whiteColor;
+    }
+  }
 }
 </style>

@@ -241,7 +241,7 @@ export default {
       content: "";
       display: block;
       position: absolute;
-      background: #F7F7F7;
+      background: #f7f7f7;
       top: 0;
       left: 0;
       width: 100%;
@@ -256,7 +256,7 @@ export default {
       content: "";
       display: block;
       position: absolute;
-      background: #F7F7F7;
+      background: #f7f7f7;
       bottom: 0;
       left: 0;
       width: 100%;
@@ -345,6 +345,15 @@ export default {
         rgba(0, 0, 0, 0) 0%,
         rgb(39, 39, 39) 80%
       );
+    }
+  }
+
+  //Light theme
+  .light-theme {
+    .transformations-slider {
+      &::after {
+        background: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, #f7f7f7 80%);
+      }
     }
   }
 }

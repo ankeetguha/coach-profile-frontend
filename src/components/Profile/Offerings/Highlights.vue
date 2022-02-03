@@ -15,7 +15,6 @@
           <div class="info-wrapper">
             <h3>{{ highlight.title }}</h3>
             <p>{{ highlight.description }}</p>
-            <span class="label">Highlight</span>
           </div>
         </div>
       </div>
@@ -36,10 +35,12 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .title {
+  position: relative;
   display: block;
   color: $whiteColor;
   font-size: $mediumFontSize;
   font-weight: $mediumFontWeight;
+  z-index: 5;
   margin: 0 1.5rem 1.5rem;
 }
 
@@ -64,23 +65,22 @@ export default {
 
 .highlight {
   position: relative;
-  border: 1px solid #363636;
-  background-color: #282828;
+  background-color: #f4d03f;
+  border-color: #e0bc2f;
   border-radius: 0.75rem;
-  padding: 0.75rem 1rem 1.75rem;
+  padding: 1.05rem 1.25rem 1.25rem;
   margin: 0 1.5rem 1rem;
   width: calc(100% - 5rem - 2px) !important;
 
   .highlight-wrapper {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
   }
 
   .icon-wrapper {
     position: relative;
     margin-right: 1.15rem;
-    transform: translateY(0.5rem);
 
     &::before {
       content: "";
@@ -90,8 +90,8 @@ export default {
       width: 100%;
       top: 0;
       left: 0;
-      border-radius: 50%;
-      border: 1px dashed lighten($blackColor, 20%);
+      border-radius: 0.5rem;
+      background: #e4be22;
     }
 
     /deep/ {
@@ -104,7 +104,7 @@ export default {
         height: auto;
 
         g {
-          fill: $yellowColor;
+          fill: #675404;
         }
       }
     }
@@ -114,14 +114,12 @@ export default {
 .info-wrapper {
   h3 {
     font-size: $mediumFontSize;
-    color: $whiteColor;
+    color: #372c00;
   }
 
   p {
     font-size: $normalFontSize;
-    color: $whiteColor;
-    opacity: 0.65;
-    margin-bottom: 1.25rem;
+    color: #574700;
   }
 }
 
@@ -145,32 +143,12 @@ export default {
 
   .offering-highlights {
     &::before {
-      background-color: var(--brand-color);
+      background-color: $whiteColor;
       border-top-left-radius: 1.5rem;
       border-top-right-radius: 1.5rem;
     }
   }
 
-  .highlight {
-    background-color: $whiteColor;
-    border-color: darken($whiteColor, 10%);
-
-    h3 {
-      color: $blackColor;
-    }
-
-    p {
-      color: lighten($blackColor, 15%);
-    }
-
-    .label {
-      background-color: darken($whiteColor, 10%);
-    }
-
-    .icon-wrapper::before {
-      border-color: darken($whiteColor, 15%);
-    }
-  }
 }
 
 //Desktop Styles
@@ -178,9 +156,23 @@ export default {
   .offering-highlights {
     margin-top: 5rem;
 
+    &::before {
+      left: -13.5vw;
+      width: 100vw;
+      height: calc(100% + 3rem);
+      top: -2rem;
+      border-radius: 0;
+    }
+
     .title {
       font-size: 1.05rem;
       margin-left: 0;
+    }
+
+    .highlight {
+      margin: 0 0 1rem;
+      padding: 1.5rem;
+      width: calc(100% - 2rem - 2px) !important
     }
   }
 
