@@ -62,7 +62,7 @@ export default {
 .price-box {
   background-color: $blackColor;
   position: fixed;
-  z-index: 10;
+  z-index: 11;
   bottom: 0;
   left: 0;
   padding: 1rem 1.5rem;

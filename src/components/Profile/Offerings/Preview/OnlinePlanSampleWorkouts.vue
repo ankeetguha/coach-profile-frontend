@@ -361,6 +361,12 @@ export default {
       }
     }
   }
+
+  .no-workout {
+    color: lighten($blackColor, 20%);
+    font-weight: $mediumFontWeight;
+  }
+
   .online-plan-summary {
     em,
     label {

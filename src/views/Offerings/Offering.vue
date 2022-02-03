@@ -69,7 +69,10 @@
           <Variants
             v-if="offering.price.variants.length"
             :variants="offering.price.variants"
+            :showModal="showOptions.variantsModal"
+            @showVariantsModal="showVariantsModal"
             @changeVariant="changeVariant"
+            @closeVariantsModal="closeVariantsModal"
           ></Variants>
           <!--END: Variants-->
         </div>
@@ -145,6 +148,8 @@
 
       <!--START: Price CTA-->
       <PriceBox
+        class="price-box"
+        :class="{ show: showOptions.priceBox }"
         :price="selectedVariant"
         @showBookingForm="showBookingForm"
       ></PriceBox>
@@ -157,6 +162,7 @@
         :selectedVariant="selectedVariant"
         :selectedVariantIndex="selectedVariantIndex"
         :show="showOptions.bookingForm"
+        @updateBookingStatus="updateBookingStatus"
         @closeForm="closeBookingForm"
       ></BookingForm>
       <BookingDesktopForm
@@ -205,9 +211,12 @@ export default {
       offering: {},
       selectedVariant: null,
       selectedVariantIndex: -1,
+      bookingInProgress: false,
       showOptions: {
         videoPlayer: false,
         bookingForm: false,
+        variantsModal: false,
+        priceBox: true,
         description: false,
       },
       meta: {
@@ -316,6 +325,17 @@ export default {
       this.selectedVariant = newVariant;
     },
 
+    showVariantsModal() {
+      console.log("Hee");
+      this.showOptions.variantsModal = true;
+      this.showOptions.priceBox = false;
+    },
+
+    closeVariantsModal() {
+      this.showOptions.variantsModal = false;
+      this.showOptions.priceBox = true;
+    },
+
     showVideoPlayer() {
       if (this.offering.coverVideoURL != undefined)
         this.showOptions.videoPlayer = true;
@@ -336,6 +356,28 @@ export default {
     closeBookingForm() {
       this.showOptions.bookingForm = false;
     },
+
+    updateBookingStatus(status) {
+      this.bookingInProgress = status;
+    },
+  },
+
+  //Check for changes
+  beforeRouteLeave(to, from, next) {
+    if (
+      this.showOptions.videoPlayer ||
+      this.showOptions.variantsModal ||
+      (!this.bookingInProgress && this.showOptions.bookingForm)
+    ) {
+      this.closeBookingForm();
+      this.closeVariantsModal();
+      this.showOptions.videoPlayer = false;
+      next(false);
+    } else if (this.bookingInProgress) {
+      next(false);
+    } else {
+      next();
+    }
   },
 };
 </script>
@@ -351,6 +393,14 @@ export default {
 }
 .offering {
   padding-bottom: 6rem;
+}
+
+.price-box {
+  display: none;
+
+  &.show {
+    display: flex;
+  }
 }
 
 .header-wrapper {
@@ -601,15 +651,14 @@ export default {
   }
 }
 
-.page-loader /deep/{
-.buffer-hero {
-  .buffer-line {
-    height: 3rem;
-    margin-bottom: .75rem;
+.page-loader /deep/ {
+  .buffer-hero {
+    .buffer-line {
+      height: 3rem;
+      margin-bottom: 0.75rem;
+    }
   }
 }
-}
-
 
 //Light Theme styles
 .light-theme {
@@ -670,8 +719,10 @@ export default {
 
   .hero-wrapper {
     position: relative;
+    z-index: 11;
     background-color: $lightWhiteColor;
     box-shadow: none;
+    padding-bottom: 1rem;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     background-color: transparent;

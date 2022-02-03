@@ -3,7 +3,7 @@
     <!--START: Selected Variant-->
     <div class="selected-variant-wrapper">
       <span class="title">Selected Variant</span>
-      <div class="selected-variant" @click="showVariantsSelector">
+      <div class="selected-variant" @click="showVariantsModal">
         <unicon name="pathfinder" class="variant-icon"></unicon>
         <label>{{ selectedVariant.title }}</label>
         <div class="variant-length">
@@ -15,7 +15,7 @@
     <!--END: Selected Variant-->
 
     <!--START: Variants Modal-->
-    <div class="variants-selector-modal" :class="{ show: showVariantsModal }">
+    <div class="variants-selector-modal" :class="{ show: showModal }">
       <label class="label-small">Select Variant</label>
 
       <ul class="variants">
@@ -61,7 +61,7 @@
 
     <div
       class="bg-overlay"
-      :class="{ show: showVariantsModal }"
+      :class="{ show: showModal }"
       @click="hideVariantsModal"
     ></div>
   </div>
@@ -75,26 +75,27 @@ export default {
       selectedVariant: {},
       selectedIndex: 0,
       originalIndex: 0,
-      showVariantsModal: false,
     };
   },
   watch: {
-    showVariantsModal: function () {
+    showModal: function () {
       this.selectedIndex = this.originalIndex;
     },
   },
   props: {
     variants: Array,
+    showModal: Boolean,
   },
   created() {
     this.selectedVariant = this.variants[0];
   },
   methods: {
-    showVariantsSelector() {
-      this.showVariantsModal = true;
+    showVariantsModal() {
+      this.$emit("showVariantsModal");
     },
+
     hideVariantsModal() {
-      this.showVariantsModal = false;
+      this.$emit("closeVariantsModal");
     },
     selectVariant(index) {
       this.selectedIndex = index;
@@ -102,7 +103,7 @@ export default {
     changeVariant() {
       this.originalIndex = this.selectedIndex;
       this.selectedVariant = this.variants[this.selectedIndex];
-      this.hideVariantsModal();
+      this.$emit("closeVariantsModal");
       this.$emit(
         "changeVariant",
         this.variants[this.selectedIndex],
@@ -115,6 +116,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+.bg-overlay {
+  display: none;
+
+  &.show {
+    display: block;
+  }
+}
+
 .selected-variant-wrapper {
   position: relative;
   margin-top: 2em;
@@ -303,6 +312,8 @@ export default {
 //Light Theme styles
 .light-theme {
   .selected-variant-wrapper {
+    margin-top: 1.5rem;
+
     .title {
       color: lighten($blackColor, 45%);
       opacity: 1;
@@ -354,10 +365,10 @@ export default {
         background-color: $darkGreenColor;
 
         .original-price,
-      .discounted-price,
-      .currency-icon {
-        color: lighten($blackColor, 5%);
-      }
+        .discounted-price,
+        .currency-icon {
+          color: lighten($blackColor, 5%);
+        }
       }
     }
 

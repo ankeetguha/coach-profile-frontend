@@ -211,6 +211,8 @@ export default {
 //Light theme
 .light-theme {
   .pattern {
+    top: -3rem;
+
     /deep/ g {
       fill: darken($whiteColor, 15%);
     }
@@ -236,6 +238,7 @@ export default {
   }
 
   .question {
+    font-weight: $mediumFontWeight;
     color: $blackColor;
   }
 

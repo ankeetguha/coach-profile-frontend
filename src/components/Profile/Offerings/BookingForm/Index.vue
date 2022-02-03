@@ -175,6 +175,7 @@ export default {
         var timeoutHandler = null;
         clearTimeout(timeoutHandler);
 
+        this.$emit("updateBookingStatus", true);
         this.disableButton = true;
         this.showOptions.lineLoader = true;
         this.showOptions.status = false;
@@ -182,6 +183,7 @@ export default {
 
         var formValidation = this.validateForm(this.fields);
         if (formValidation.hasErrors) {
+          this.$emit("updateBookingStatus", false);
           this.disableButton = false;
           this.status.isSuccess = false;
 
@@ -295,6 +297,7 @@ export default {
         this.showOptions.successMessage = false;
       }
 
+      this.$emit("updateBookingStatus", true);
       this.disableButton = true;
       this.showOptions.paymentLoader = false;
       this.showOptions.lineLoader = false;
@@ -306,6 +309,7 @@ export default {
       this.showOptions.lineLoader = false;
       this.showOptions.paymentLoader = false;
       this.showOptions.status = false;
+      this.$emit('updateBookingStatus', false);
       this.disableButton = false;
     },
 
@@ -317,11 +321,13 @@ export default {
       });
 
       this.showOptions.successMessage = false;
+      this.$emit('updateBookingStatus', true);
       this.disableButton = true;
       this.showOptions.lineLoader = false;
     },
 
     closeSuccessMessage() {
+      this.$emit('updateBookingStatus', false);
       this.disableButton = false;
       this.showOptions.successMessage = false;
       this.closeForm();

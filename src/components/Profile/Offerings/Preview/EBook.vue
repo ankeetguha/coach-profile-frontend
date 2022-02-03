@@ -80,4 +80,27 @@ export default {
     opacity: 0.5;
   }
 }
+
+//Light theme
+.light-theme {
+  .ebook-preview-wrapper {
+    background-color: $whiteColor;
+    border-color: darken($whiteColor, 10%);
+
+     h3 {
+       color: $blackColor;
+     }
+
+     p {
+       color: lighten($blackColor, 10%);
+     }
+  }
+
+  .pattern {
+    /deep/ svg,
+    /deep/ g {
+      fill: darken($whiteColor, 5%);
+    }
+  }
+}
 </style>

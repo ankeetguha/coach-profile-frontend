@@ -147,4 +147,43 @@ export default {
     font-size: $smallerFontSize;
   }
 }
+
+//Light theme
+.light-theme {
+  .delivery-mode-wrapper {
+    background-color: $whiteColor;
+    border-color: darken($whiteColor, 10%);
+
+    h3 {
+      color: $blackColor;
+    }
+
+    label{
+      color: lighten($blackColor, 20%);
+    }
+
+    .location-details {
+      /deep/ .unicon svg {
+        fill: var(--brand-color);
+      }
+
+      span {
+        color: $blackColor;
+      }
+    }
+  }
+
+  .duration-wrapper {
+    border-color: darken($whiteColor, 15%);
+
+    label {
+      color: $whiteColor;
+      background-color: var(--brand-color);
+    }
+
+    h3 {
+      color: $blackColor;
+    }
+  }
+}
 </style>
