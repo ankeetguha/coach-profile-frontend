@@ -324,6 +324,49 @@ export default {
       }
     }
   }
+
+  .variants-selector-modal {
+    background-color: darken($whiteColor, 5%);
+
+    .variant {
+      background-color: darken($whiteColor, 9%);
+      border-color: darken($whiteColor, 15%);
+
+      h3 {
+        color: $blackColor;
+      }
+
+      .variant-check {
+        background-color: lighten($blackColor, 10%);
+
+        &::before {
+          border-color: lighten($blackColor, 10%);
+        }
+      }
+
+      .original-price,
+      .discounted-price,
+      .currency-icon {
+        color: lighten($blackColor, 25%);
+      }
+
+      &.selected {
+        background-color: $darkGreenColor;
+
+        .original-price,
+      .discounted-price,
+      .currency-icon {
+        color: lighten($blackColor, 5%);
+      }
+      }
+    }
+
+    .buttons-wrapper {
+      .btn-border {
+        color: lighten($blackColor, 30%);
+      }
+    }
+  }
 }
 
 //Desktop Styles

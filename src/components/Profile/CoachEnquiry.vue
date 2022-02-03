@@ -25,7 +25,7 @@
           <FormBuilder :fields="fields"></FormBuilder>
 
           <button class="btn btn-primary" type="submit">
-            Send Message <unicon name="angle-right"></unicon>
+            Send Message
           </button>
         </form>
         <!--END: Message Form-->
@@ -254,7 +254,7 @@ export default {
   border-top-left-radius: 3rem;
   border-top-right-radius: 3rem;
   box-shadow: 0 -1rem 0.7rem -0.15rem rgba(41, 41, 41, 0.35);
-  transform: translateY(calc(100vh + 3rem));
+  transform: translateY(calc(100vh + 7rem));
   z-index: 101;
 
   &::before {
@@ -264,7 +264,7 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
-    height: 100vh;
+    height: 100%;
     box-shadow: inset 0 0 2000px rgba(183, 183, 183, 0.5);
     opacity: 0.45;
     z-index: -1;
@@ -274,6 +274,12 @@ export default {
 
   &.show {
     transform: translateY(0);
+  }
+
+  /deep/ {
+    .field-title {
+      display: none;
+    }
   }
 }
 
@@ -312,6 +318,26 @@ form {
   .unicon /deep/ svg {
     width: 1.65rem;
     padding: 0.5rem;
+  }
+
+  .enquiry-modal-wrapper {
+    background-color: $whiteColor;
+    
+    .modal-wrapper {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 1rem;
+    }
+
+    .intro-wrapper {
+      h3 {
+        color: $blackColor;
+      }
+
+      p {
+        color: lighten($blackColor, 20%);
+      }
+    }
   }
 
   .message-floating-wrapper {

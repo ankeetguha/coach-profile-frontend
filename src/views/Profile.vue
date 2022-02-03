@@ -191,7 +191,7 @@ export default {
 //Light Theme Styles
 .light-theme {
   position: relative;
-  background-color: #f7f7f7;
+  background-color: #e8e8e8;
 
   body::before {
     content: "";

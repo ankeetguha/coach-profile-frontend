@@ -229,6 +229,7 @@ export default {
 
   .header-wrapper {
     box-shadow: none;
+    padding-bottom: 1.5rem;
   }
 
   .hero-title {

@@ -231,7 +231,7 @@ svg.coach-qualification-badge-text {
     border: 1px solid #e2e2e2;
   }
   .coach-qualifications-wrapper {
-    background-color: #f7f7f7;
+    background-color: #E8E8E8;
     padding-bottom: 1rem;
     border-radius: 0;
     overflow: visible;

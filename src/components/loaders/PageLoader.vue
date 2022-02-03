@@ -151,4 +151,15 @@ export default {
   }
 }
 
+
+//Light theme
+.light-theme {
+  .buffer-hero {
+    background-color: $whiteColor;
+  }
+
+  .buffer-background {
+    background: linear-gradient(to right, #d4d4d4 8%, #cdcdcd 18%, #eaeaea 74%)
+  }
+}
 </style>

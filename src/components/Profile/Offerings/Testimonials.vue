@@ -241,7 +241,7 @@ export default {
       content: "";
       display: block;
       position: absolute;
-      background: $lightWhiteColor;
+      background: #F7F7F7;
       top: 0;
       left: 0;
       width: 100%;
@@ -256,7 +256,7 @@ export default {
       content: "";
       display: block;
       position: absolute;
-      background: #efefef;
+      background: #F7F7F7;
       bottom: 0;
       left: 0;
       width: 100%;

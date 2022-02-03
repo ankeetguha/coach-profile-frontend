@@ -176,6 +176,86 @@ export default {
   }
 }
 
+//Light them
+.light-theme {
+  .block-title {
+    display: table;
+    position: relative;
+    text-align: center;
+    color: #333;
+    background-color: #e8e8e8;
+    opacity: 1;
+    padding: 0 1.5rem;
+    margin: 0 auto 2rem;
+
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      height: 1px;
+      width: 80vw;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      left: 50%;
+      background-color: #c7c7c7;
+      z-index: -1;
+    }
+  }
+
+  .offering-info,
+  .offering {
+    box-shadow: none;
+    background-color: $whiteColor;
+    border-color: #d6d6d6;
+  }
+
+  .offering {
+    border-radius: 1rem;
+    box-shadow: 0 1rem 1.5rem -0.5rem #dedede;
+    border: none;
+
+    .cover-image {
+      border-radius: 0.75rem;
+      margin: .5rem;
+      width: calc(100% - 1rem);
+    }
+
+    .tag-popular {
+      position:absolute;
+      margin: 0;
+      left: 1rem;
+      top: -2.5rem;
+    }
+  }
+
+  .offering-info {
+    border: none;
+
+    .title {
+      color: $blackColor;
+    }
+  }
+
+  .offering-details {
+    background-color: transparent;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    border-top: 1px solid #e2e2e2;
+    padding: 1rem 0;
+    margin: 0 1rem 0;
+    position: relative;
+
+    .btn {
+      color: $whiteColor;
+      background-color: var(--brand-color);
+
+      .unicon /deep/ svg {
+        fill: $whiteColor;
+      }
+    }
+  }
+}
+
 //Desktop Styles
 @media screen and (min-width: $mobileWidth) {
   .offerings-list-wrapper {
@@ -193,11 +273,11 @@ export default {
     .offering {
       cursor: pointer;
       list-style: none;
-      transition: all .3s;
+      transition: all 0.3s;
       flex: 0 0 calc(33.333333% - 2rem - 2px);
 
       &:hover {
-        box-shadow: 0 1.7rem 1.25rem 0.9rem rgba(0, 0, 0, .40);
+        box-shadow: 0 1.7rem 1.25rem 0.9rem rgba(0, 0, 0, 0.4);
       }
     }
 

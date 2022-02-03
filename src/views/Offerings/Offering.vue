@@ -601,15 +601,62 @@ export default {
   }
 }
 
+.page-loader /deep/{
+.buffer-hero {
+  .buffer-line {
+    height: 3rem;
+    margin-bottom: .75rem;
+  }
+}
+}
+
+
 //Light Theme styles
 .light-theme {
+  .offering {
+    background: #f7f7f7;
+
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 40vh;
+      background-color: var(--brand-color);
+      background-image: url("/assets/images/light-theme/cover-bg.jpg");
+      background-repeat: no-repeat;
+      background-size: 100% 110%;
+      background-blend-mode: darken;
+      margin-top: -1.5rem;
+    }
+
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: calc(40vh - 4rem);
+      left: 0;
+      width: 100%;
+      height: 3rem;
+      border-top-left-radius: 2rem;
+      border-top-right-radius: 2rem;
+      background: #f7f7f7;
+    }
+  }
+
+  .hero-wrapper-block {
+    position: relative;
+    z-index: 1;
+  }
+
   .header-wrapper {
-    position: absolute;
+    position: relative;
     background: #eee;
-    left: .5rem;
-    top: .5rem;
+    margin: 1rem 1rem 0.5rem;
     border-radius: 0.5rem;
-    width: calc(100% - 3rem);
+    width: calc(100% - 4rem);
     border: 1px solid #e3e3e3;
 
     .btn {
@@ -624,18 +671,25 @@ export default {
   .hero-wrapper {
     position: relative;
     background-color: $lightWhiteColor;
-    padding-top: 4.25rem;
-    box-shadow: 0 0 1rem 0.4rem rgba(0, 0, 0, 0.05);
+    box-shadow: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    background-color: transparent;
 
     &::before {
-      content: '';
-      background-color: #C1C1C1;
+      content: "";
+      background-color: darken($whiteColor, 11%);
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 11.5rem;
+      height: 1px;
+      bottom: -0.5rem;
+      left: 1.5rem;
+      width: calc(100% - 3rem);
     }
+  }
+
+  .video-wrapper .unicon /deep/ svg {
+    fill: $whiteColor;
+    background-color: var(--brand-color);
   }
 
   .title {

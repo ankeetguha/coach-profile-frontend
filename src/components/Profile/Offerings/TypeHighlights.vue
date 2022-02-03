@@ -121,8 +121,26 @@ export default {
 .light-theme {
   .offering-type-highlights {
     .title {
-      color: lighten($blackColor, 45%);
+      color: #807e7e;
       opacity: 1;
+      display: table;
+      text-transform: none;
+      letter-spacing: 0;
+      background: #ececec;
+      padding: 0.4rem 0.5rem;
+      border-radius: 0.5rem;
+    }
+
+    .highlight {
+      .unicon {
+        /deep/ svg {
+          fill: var(--brand-color);
+        }
+      }
+
+      span {
+        color: lighten($blackColor, 5%);
+      }
     }
   }
 }

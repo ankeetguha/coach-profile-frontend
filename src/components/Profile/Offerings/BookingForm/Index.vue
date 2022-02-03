@@ -445,6 +445,28 @@ export default {
   }
 }
 
+//Light Theme
+.light-theme {
+  .booking-modal {
+    background-color: darken($whiteColor, 2%);
+  }
+
+  .hero-wrapper {
+    border-bottom-color: darken($whiteColor, 8%);
+    h3 {
+      color: $blackColor;
+    }
+  }
+
+  .btn-wrapper {
+    background-color: darken($whiteColor, 3%);
+
+    .btn-border {
+      color: lighten($blackColor, 30%);
+    }
+  }
+}
+
 //Desktop Styles
 @media screen and (min-width: $mobileWidth) {
   .header-wrapper {

@@ -219,7 +219,7 @@ export default {
     position: relative;
     text-align: center;
     color: $lightBlackColor;
-    background-color: $lightWhiteColor;
+    background-color: #E8E8E8;
     opacity: 1;
     padding: 0 1.5rem;
     margin: 0 auto 2rem;

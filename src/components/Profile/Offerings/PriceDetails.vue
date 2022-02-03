@@ -77,7 +77,7 @@ export default {
     font-size: $smallestFontSize;
     color: $whiteColor;
     opacity: 0.65;
-    margin-bottom: .15rem;
+    margin-bottom: 0.15rem;
   }
   .offering-price {
     color: $whiteColor;
@@ -99,6 +99,21 @@ export default {
 
   em {
     font-size: $smallestFontSize;
+  }
+}
+
+//Light Theme
+.light-theme {
+  .price-wrapper {
+    label {
+      opacity: 1;
+      color: lighten($blackColor, 30%);
+    }
+
+    .slashed-price,
+    .offering-price {
+      color: $blackColor;
+    }
   }
 }
 </style>

@@ -137,7 +137,7 @@ export default {
   .unicon {
     display: inline-block;
     vertical-align: middle;
-    margin-right: .25rem;
+    margin-right: 0.25rem;
 
     /deep/ svg {
       fill: $whiteColor;
@@ -153,6 +153,27 @@ export default {
     font-size: $smallerFontSize;
     color: $whiteColor;
     opacity: 0.65;
+  }
+}
+
+//Light Theme
+.light-theme {
+  .price-wrapper {
+    background-color: $whiteColor;
+    border: 1px solid darken($whiteColor, 8%);
+  }
+
+  .line-item {
+    label,
+    .amount {
+      color: lighten($blackColor, 35%);
+    }
+
+    &.total-price {
+      .amount {
+        color: lighten($blackColor, 0%);
+      }
+    }
   }
 }
 </style>

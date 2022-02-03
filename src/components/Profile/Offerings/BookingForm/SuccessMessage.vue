@@ -293,6 +293,24 @@ export default {
   }
 }
 
+//Light Theme
+.light-theme {
+  .success-message {
+    background-color: $whiteColor;
+    border-color: darken($whiteColor, 10%);
+  }
+
+  .info-wrapper {
+    h3 {
+      color: $blackColor;
+    }
+
+    p {
+      color: lighten($blackColor, 20%);
+    }
+  }
+}
+
 //Desktop Styles
 @media screen and (min-width: $mobileWidth) {
   .success-message {
