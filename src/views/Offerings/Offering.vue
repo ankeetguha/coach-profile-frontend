@@ -672,7 +672,7 @@ export default {
       top: 0;
       left: 0;
       width: 100%;
-      height: 40vh;
+      height: 15rem;
       background-color: var(--brand-color);
       background-image: url("/assets/images/light-theme/cover-bg.jpg");
       background-repeat: no-repeat;
@@ -685,7 +685,7 @@ export default {
       content: "";
       display: block;
       position: absolute;
-      top: calc(40vh - 4rem);
+      top: 11rem;
       left: 0;
       width: 100%;
       height: 3rem;
