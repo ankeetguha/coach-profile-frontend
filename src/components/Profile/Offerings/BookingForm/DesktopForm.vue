@@ -112,7 +112,6 @@ export default {
     padding: 0.5rem 0.75rem;
     border-radius: 0.5rem;
     font-weight: $mediumFontWeight;
-    color: $whiteColor;
     background-color: var(--brand-color);
   }
 }
@@ -147,6 +146,12 @@ export default {
 
   /deep/ .secure-wrapper span {
     color: $whiteColor;
+  }
+
+  .hero-wrapper {
+    span {
+      color: $whiteColor;
+    }
   }
 }
 
