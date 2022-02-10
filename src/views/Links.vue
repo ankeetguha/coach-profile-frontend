@@ -81,7 +81,7 @@ export default {
     this.meta.title = `${this.coach.fullName} - ${this.coach.coverTitle}`;
     this.meta.ogTitle = `${this.coach.fullName} - ${this.coach.coverTitle}`;
     this.meta.ogDescription = this.coach.description;
-    this.meta.ogImage = this.coach.plans[0].coverImageURL;
+    this.meta.ogImage = this.coach.offerings != undefined ? this.coach.offerings[0].coverImageURL : this.coach.plans[0].coverImageURL;
   },
   methods: {},
 };
