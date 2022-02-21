@@ -8,7 +8,7 @@
       </div>
 
       <!--START: Online Plan Details-->
-      <div v-if="offeringType == 'diy-plan'" class="offering-type-details">
+      <div v-if="offeringType == 'diy-plan' || offeringType == 'video-course'" class="offering-type-details">
         <h3>{{ offeringTitle }}</h3>
         <p>Login and access your plan to get started</p>
         <a

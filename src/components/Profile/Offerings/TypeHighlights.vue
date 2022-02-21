@@ -19,6 +19,23 @@
       </div>
       <!--END: Online Plans-->
 
+      <!--START: Video Course-->
+      <div
+        v-show="offeringType == 'video-course'"
+        class="highlights-list"
+        :class="offeringType"
+      >
+        <div class="highlight">
+          <unicon name="video"></unicon>
+          <span>Guided Videos</span>
+        </div>
+        <div class="highlight">
+          <unicon name="bolt-alt"></unicon>
+          <span>Client Dashboard</span>
+        </div>
+      </div>
+      <!--END: Video Course-->
+
       <!--START: E-Book-->
       <div
         v-show="offeringType == 'e-book'"
@@ -51,6 +68,8 @@ export default {
           return "E-Book";
         case "diy-plan":
           return "DIY Online Plan";
+        case "video-course":
+          return "Video Course";
         default:
           return null;
       }
@@ -109,7 +128,8 @@ export default {
     margin-top: 1rem;
 
     &.e-book,
-    &.diy-plan {
+    &.diy-plan,
+    &.video-course {
       /deep/ svg {
         fill: $yellowColor;
       }

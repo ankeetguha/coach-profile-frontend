@@ -3,10 +3,17 @@
    <!--START: Online Plan-->
     <OnlinePlan
       v-show="offering.offeringType == 'diy-plan'"
-      :onlinePlanID="offering.onlinePlan.onlinePlanID"
       :coachSlug="coachSlug"
     >
     </OnlinePlan>
+    <!--END: Online Plan-->
+
+    <!--START: Online Plan-->
+    <VideoCourse
+      v-show="offering.offeringType == 'video-course'"
+      :coachSlug="coachSlug"
+    >
+    </VideoCourse>
     <!--END: Online Plan-->
   </div>
 </template>
@@ -14,6 +21,7 @@
 <script>
 //Import components
 import OnlinePlan from "./OnlinePlan";
+import VideoCourse from "./VideoCourse";
 
 export default {
   name: "OfferingTypeFeatures",
@@ -23,6 +31,7 @@ export default {
   },
   components: {
     OnlinePlan,
+    VideoCourse
   },
   methods: {},
 };

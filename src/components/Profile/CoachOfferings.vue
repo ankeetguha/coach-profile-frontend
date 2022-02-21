@@ -72,6 +72,8 @@ export default {
           return "E-Book";
         case "diy-plan":
           return "Do It Yourself Plan";
+        case "video-course":
+          return "Video Course";
         default:
           return null;
       }

@@ -155,6 +155,30 @@ class CoachService {
         })
     }
 
+    static GetVideoCourse(fields) {
+        return new Promise((resolve, reject) => {
+            resolve(
+                (async() => {
+                    try {
+                        return await axios.post(`${apiURL}/coach/get-video-course`, {
+                                fields
+                            }, {
+                                withCredentials: true
+                            })
+                            .then((response) => {
+                                return response.data;
+                            }, (error) => {
+                                return error.response.data;
+                            });
+                    } catch (e) {
+                        console.log('err', e);
+                        reject(e);
+                    }
+                })()
+            );
+        })
+    }
+
     static SendMessage(fields) {
         return new Promise((resolve, reject) => {
             resolve(

@@ -10,6 +10,15 @@
     </OnlinePlanSampleWorkouts>
     <!--END: Online Plan-->
 
+    <!--START: Video Course-->
+    <VideoCourse
+      v-if="offering.offeringType == 'video-course'"
+      :offeringSlug="offering.slug"
+      :coachSlug="coachSlug"
+    >
+    </VideoCourse>
+    <!--END: Online Plan-->
+
     <!--START: E-Book-->
     <EBook v-if="offering.offeringType == 'e-book'"> </EBook>
     <!--END: E-Book-->
@@ -40,6 +49,7 @@ import OnlinePlanSampleWorkouts from "./OnlinePlanSampleWorkouts";
 import WorkoutExercises from "@/components/Plan/WorkoutExercises";
 
 import EBook from "./EBook";
+import VideoCourse from "./VideoCourse";
 import PersonalTraining from "./PersonalTraining";
 
 export default {
@@ -59,6 +69,7 @@ export default {
   components: {
     WorkoutExercises,
     OnlinePlanSampleWorkouts,
+    VideoCourse,
     EBook,
     PersonalTraining,
   },
