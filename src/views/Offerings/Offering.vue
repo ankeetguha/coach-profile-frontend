@@ -28,7 +28,11 @@
           <!--START: Cover-->
           <div
             class="cover-image-wrapper"
-            :class="{ extend: offering.coverVideoURL != undefined }"
+            :class="{
+              extend:
+                offering.coverVideoURL != undefined &&
+                offering.offeringType != 'video-course',
+            }"
             @click="showVideoPlayer"
           >
             <img
@@ -37,7 +41,10 @@
               alt="Cover Image"
             />
             <div
-              v-if="offering.coverVideoURL != undefined"
+              v-if="
+                offering.coverVideoURL != undefined &&
+                offering.offeringType != 'video-course'
+              "
               class="video-wrapper"
               :class="{ float: offering.coverImageURL != undefined }"
             >
@@ -84,6 +91,7 @@
         :coachSlug="coach.slug"
         :showSampleWorkouts="showOptions.sampleWorkouts"
         @toggleSampleWorkouts="toggleSampleWorkouts"
+        @playIntroVideo="showVideoPlayer"
       ></TypePreview>
       <!--END: Preview Type-->
 
@@ -294,7 +302,7 @@ export default {
     VideoPlayer,
     BookingForm,
     BookingDesktopForm,
-    InternalMenu
+    InternalMenu,
   },
   //Check for changes
   beforeRouteLeave(to, from, next) {
@@ -942,7 +950,7 @@ export default {
       box-shadow: 0 0 1.7rem -0.15rem #b4b4b4;
 
       .cover-image-wrapper {
-        box-shadow: 0 -1rem 0.7rem -0.15rem rgba(41, 41, 41,.35);
+        box-shadow: 0 -1rem 0.7rem -0.15rem rgba(41, 41, 41, 0.35);
         margin-left: 0;
         width: 100%;
       }
