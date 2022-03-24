@@ -3,6 +3,7 @@ import VueMeta from 'vue-meta'
 import App from '@/App.vue'
 import store from "@/store";
 import VueYoutube from 'vue-youtube'
+import VueCookie from 'vue-cookie';
 
 //Importing the main routes for the App
 import routerSubDirectory from '@/router/subdirectory';
@@ -21,6 +22,9 @@ Vue.mixin(GlobalFunctions);
 Vue.use(VueMeta, {
     refreshOnceOnNavigation: true
 })
+
+//Use cookies for analytics
+Vue.use(VueCookie);
 
 //Adding YouTube functionality
 Vue.use(VueYoutube)
