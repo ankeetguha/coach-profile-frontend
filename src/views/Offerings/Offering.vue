@@ -336,12 +336,12 @@ export default {
       const offeringSlug = this.$route.params.offering;
 
       //User Insights: Extacting user data for insights
-      const userInsights = this.$store.state.user;
+      const isUniqueVisitor = !this.hasUserVisitedOffering(offeringSlug);
 
       this.offering = await CoachService.GetOffering({
         offeringSlug: offeringSlug,
         coachSlug: this.coach.slug,
-        isUniqueVisitor: userInsights.isUniqueVisitor,
+        isUniqueVisitor: isUniqueVisitor,
       });
 
       this.initVariant();
@@ -400,7 +400,6 @@ export default {
         offeringSlug: this.offering.slug,
         coachSlug: this.coach.slug,
       });
-      // Route - insights/update-offering-attempt
     },
 
     closeBookingForm() {

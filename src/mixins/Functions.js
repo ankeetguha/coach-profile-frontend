@@ -9,7 +9,6 @@ export default {
   methods: {
     async getCoach(fields) {
       if (_.isEmpty(this.$store.state.coach)) {
-        
         //User Insights: Extacting user data for insights
         const user = await this.getUserInsights();
         this.$store.commit("updateUser", user);
@@ -145,6 +144,7 @@ export default {
       if (this.$cookie.get("isUniqueVisitor") == undefined) {
         isUniqueVisitor = true;
         this.$cookie.set("isUniqueVisitor", true, { expires: "1M" });
+        this.$cookie.set("visitedOfferings", null, { expires: "1M" });
       }
 
       let userLocation = null;
@@ -159,6 +159,31 @@ export default {
         location: userLocation,
       };
       return user;
+    },
+
+    //Manage cookies for offerings insights
+    hasUserVisitedOffering(offeringSlug) {
+      let visitedOfferings = JSON.parse(this.$cookie.get("visitedOfferings"));
+
+      //Check if the array is empty
+      if (visitedOfferings == null) {
+        this.$cookie.set("visitedOfferings", JSON.stringify([offeringSlug]), {
+          expires: "1M",
+        });
+        return false;
+      }
+      //Check if the slug exists in the array
+      else if (visitedOfferings.indexOf(offeringSlug) < 0) {
+        visitedOfferings.push(offeringSlug);
+        this.$cookie.set("visitedOfferings", JSON.stringify(visitedOfferings), {
+          expires: "1M",
+        });
+        return false;
+      }
+      //The slug exists and user has visited
+      else {
+        return true;
+      }
     },
 
     //Check if the device is mobile
