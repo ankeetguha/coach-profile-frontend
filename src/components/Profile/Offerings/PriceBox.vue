@@ -22,7 +22,10 @@
       <!--START: Offering Price-->
     </div>
     <div class="filler"></div>
-    <button class="btn btn-primary">Book Now</button>
+    <button v-if="activatePayment" class="btn btn-primary">Book Now</button>
+    <span v-else class="sold-out">
+      Sold Out
+    </span>
   </div>
 </template>
 
@@ -31,6 +34,7 @@ export default {
   name: "OfferingPriceBox",
   props: {
     price: Object,
+    activatePayment: Boolean
   },
 
   methods: {
@@ -142,6 +146,15 @@ export default {
   }
 }
 
+.sold-out {
+  display: inline-block;
+  color: $redColor;
+  background-color: #261b1a;
+  padding: .75rem 1.5rem;
+  border-radius: .75rem;
+  border: 1px solid $redColor;
+}
+
 //Light Theme
 .light-theme {
   .price-box {
@@ -168,10 +181,11 @@ export default {
   }
 }
 
+
 //Desktop Styles
 @media screen and (min-width: $mobileWidth) {
   .price-box {
-     display: none !important;
+    display: none !important;
   }
 }
 </style>

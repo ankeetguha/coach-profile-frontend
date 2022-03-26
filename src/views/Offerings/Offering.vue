@@ -1,6 +1,10 @@
 <template>
   <div>
-    <div class="offering" v-if="offering.title != null">
+    <div
+      v-if="offering.title != null"
+      class="offering"
+      :class="{ 'details-only': !coach.paymentsActive }"
+    >
       <!--START: Header-->
       <div class="header-wrapper">
         <router-link
@@ -159,37 +163,42 @@
       ></VideoPlayer>
       <!--END: Video Player-->
 
-      <!--START: Price CTA-->
-      <PriceBox
-        class="price-box"
-        :class="{ show: showOptions.priceBox }"
-        :price="selectedVariant"
-        @showBookingForm="showBookingForm"
-      ></PriceBox>
-      <!--END: Price CTA-->
-
       <!--START: Internal Menu-->
       <InternalMenu :offering="offering"></InternalMenu>
       <!--END: Internal Menu-->
 
-      <!--START: Booking Form-->
-      <BookingForm
-        :coach="coach"
-        :offering="offering"
-        :selectedVariant="selectedVariant"
-        :selectedVariantIndex="selectedVariantIndex"
-        :show="showOptions.bookingForm"
-        @updateBookingStatus="updateBookingStatus"
-        @closeForm="closeBookingForm"
-      ></BookingForm>
-      <BookingDesktopForm
-        :coach="coach"
-        :offering="offering"
-        :selectedVariant="selectedVariant"
-        :selectedVariantIndex="selectedVariantIndex"
-        @showBooking="showBookingForm"
-      ></BookingDesktopForm>
-      <!--END: Booking Form-->
+      <div v-if="coach.paymentsActive">
+        <!--START: Price CTA-->
+        <PriceBox
+          class="price-box"
+          :class="{ show: showOptions.priceBox }"
+          :price="selectedVariant"
+          :activatePayment="offering.activatePayment"
+          @showBookingForm="showBookingForm"
+        ></PriceBox>
+        <!--END: Price CTA-->
+
+        <!--START: Booking Form-->
+        <BookingForm
+          v-if="offering.activatePayment"
+          :coach="coach"
+          :offering="offering"
+          :selectedVariant="selectedVariant"
+          :selectedVariantIndex="selectedVariantIndex"
+          :show="showOptions.bookingForm"
+          @updateBookingStatus="updateBookingStatus"
+          @closeForm="closeBookingForm"
+        ></BookingForm>
+        <BookingDesktopForm
+          :coach="coach"
+          :offering="offering"
+          :selectedVariant="selectedVariant"
+          :selectedVariantIndex="selectedVariantIndex"
+          :activatePayment="offering.activatePayment"
+          @showBooking="showBookingForm"
+        ></BookingDesktopForm>
+        <!--END: Booking Form-->
+      </div>
     </div>
     <PageLoader class="page-loader" v-else></PageLoader>
   </div>
@@ -393,13 +402,15 @@ export default {
     },
 
     showBookingForm() {
-      this.showOptions.bookingForm = true;
+      if (this.offering.activatePayment) {
+        this.showOptions.bookingForm = true;
 
-      //User Insights: Extacting user data for insights
-      CoachService.updateBookingAttempt({
-        offeringSlug: this.offering.slug,
-        coachSlug: this.coach.slug,
-      });
+        //User Insights: Extacting user data for insights
+        CoachService.updateBookingAttempt({
+          offeringSlug: this.offering.slug,
+          coachSlug: this.coach.slug,
+        });
+      }
     },
 
     closeBookingForm() {
@@ -852,6 +863,21 @@ export default {
     margin-left: 13.5vw;
   }
 
+  .details-only {
+    .hero-wrapper-block,
+    .offering-type-preview,
+    .description-wrapper,
+    .equipments-wrapper,
+    .offering-type-features,
+    .offering-inclusions,
+    .offering-highlights,
+    .transformations-wrapper,
+    .offering-faqs {
+      width: 50%;
+      margin: auto;
+    }
+  }
+
   .transformations-wrapper {
     position: relative;
     z-index: 2;
@@ -903,6 +929,7 @@ export default {
 
   .title-info-wrapper {
     .title {
+      width: calc(100% - 10rem);
       font-size: $largerFontSize;
       line-height: 1.2;
     }

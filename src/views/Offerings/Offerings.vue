@@ -1,13 +1,21 @@
 <template>
   <!--START: Profile Wrapper-->
   <div v-if="coach.fullName != undefined" class="profile-content-wrapper">
-    
     <!--START: Offerings List-->
-    <CoachOfferings v-if="coach.offerings.length" :offerings="coach.offerings" :coachSlug="coach.slug"></CoachOfferings>
+    <CoachOfferings
+      v-if="coach.offerings.length"
+      :offerings="coach.offerings"
+      :coachSlug="coach.slug"
+      :paymentsActive="coach.paymentsActive"
+    ></CoachOfferings>
     <!--END: Offerings List-->
 
     <!--START: Plans List-->
-    <CoachPlans v-if="coach.plans.length > 0" :plans="coach.plans" :coachSlug="coach.slug"></CoachPlans>
+    <CoachPlans
+      v-if="coach.plans.length > 0"
+      :plans="coach.plans"
+      :coachSlug="coach.slug"
+    ></CoachPlans>
     <!--END: Plans List-->
 
     <!--START: Scroll End-->
@@ -113,7 +121,10 @@ export default {
     this.meta.title = `${this.coach.fullName} - ${this.coach.coverTitle}`;
     this.meta.ogTitle = `${this.coach.fullName} - ${this.coach.coverTitle}`;
     this.meta.ogDescription = this.coach.description;
-    this.meta.ogImage = this.coach.offerings != undefined ? this.coach.offerings[0].coverImageURL : this.coach.plans[0].coverImageURL;
+    this.meta.ogImage =
+      this.coach.offerings != undefined
+        ? this.coach.offerings[0].coverImageURL
+        : this.coach.plans[0].coverImageURL;
   },
   methods: {},
 };

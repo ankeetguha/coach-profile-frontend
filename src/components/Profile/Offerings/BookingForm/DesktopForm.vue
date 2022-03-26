@@ -17,11 +17,14 @@
       </div>
 
       <!--START: Button Actions-->
-      <div class="btn-wrapper">
+      <div v-if="activatePayment" class="btn-wrapper">
         <button type="button" class="btn btn-primary" @click="showBooking">
           Make Payment
         </button>
       </div>
+      <span v-else class="sold-out">
+      Sold Out
+    </span>
       <!--END: Button Actions-->
     </div>
   </div>
@@ -42,6 +45,7 @@ export default {
     offering: Object,
     selectedVariant: Object,
     selectedVariantIndex: Number,
+    activatePayment: Boolean
   },
 
   methods: {
@@ -136,6 +140,17 @@ export default {
       opacity: 0.25;
     }
   }
+}
+
+.sold-out {
+  display: block;
+  margin-top: 1rem;
+  text-align: center;
+  color: $redColor;
+  background-color: #261b1a;
+  padding: .75rem 1.5rem;
+  border-radius: .75rem;
+  border: 1px solid $redColor;
 }
 
 //Light theme

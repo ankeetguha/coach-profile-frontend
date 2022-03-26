@@ -17,6 +17,7 @@
             : convertToIndianNumber(getOfferingPrice.originalPrice)
         }}</em>
       </span>
+      <span v-if="activatePayment == false" class="sold-out">Sold Out</span>
     </div>
     <!--START: Offering Price-->
   </div>
@@ -27,6 +28,10 @@ export default {
   name: "OfferingPriceDetails",
   props: {
     price: Object,
+    activatePayment: {
+      type: Boolean,
+      default: true,
+    },
   },
 
   computed: {
@@ -100,6 +105,17 @@ export default {
   em {
     font-size: $smallestFontSize;
   }
+}
+
+.sold-out {
+  display: inline-block;
+  font-weight: $mediumFontWeight;
+  color: darken($redColor, 45%);
+  padding: 0.35rem;
+  border-radius: 0.5rem;
+  background-color: $redColor;
+  font-size: $smallerFontSize;
+  margin-left: 0.75rem;
 }
 
 //Light Theme

@@ -38,7 +38,11 @@
         </div>
         <div class="offering-details">
           <!--START: Price-->
-          <PriceDetails :price="offering.price"></PriceDetails>
+          <PriceDetails
+            v-if="paymentsActive"
+            :price="offering.price"
+            :activatePayment="offering.activatePayment"
+          ></PriceDetails>
           <button class="btn">
             View This <unicon name="angle-right"></unicon>
           </button>
@@ -58,6 +62,7 @@ export default {
   props: {
     coachSlug: String,
     offerings: Array,
+    paymentsActive: { type: Boolean, default: false },
   },
   components: {
     TypeHighlights,
