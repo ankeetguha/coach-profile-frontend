@@ -148,11 +148,18 @@ export default {
       }
 
       let userLocation = null;
-      await fetch("https://api.db-ip.com/v2/free/self")
-        .then((response) => response.json())
-        .then((response) => {
-          userLocation = response.city;
-        });
+
+      try {
+        await fetch("https://api.db-ip.com/v2/free/self")
+          .then((response) => response.json())
+          .then((response) => {
+            userLocation = response.city;
+          });
+      }
+      catch {
+        //Blocked by ad blocker
+        userLocation = null;
+      }
 
       const user = {
         isUniqueVisitor: isUniqueVisitor,
