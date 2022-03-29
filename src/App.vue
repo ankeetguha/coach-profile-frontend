@@ -122,6 +122,9 @@ export default {
     this.meta.ogDescription = this.coach.description;
     this.meta.ogImage = this.coach.offerings != undefined ? this.coach.offerings[0].coverImageURL : this.coach.plans[0].coverImageURL;
 
+    //Update Insights
+    this.updateCoachView({ slug: slug });
+
   },
 };
 </script>

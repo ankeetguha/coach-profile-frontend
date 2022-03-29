@@ -9,13 +9,6 @@ export default {
   methods: {
     async getCoach(fields) {
       if (_.isEmpty(this.$store.state.coach)) {
-        //User Insights: Extacting user data for insights
-        const user = await this.getUserInsights();
-        this.$store.commit("updateUser", user);
-
-        fields.isUniqueVisitor = user.isUniqueVisitor;
-        fields.location = user.location;
-
         const coach = await CoachService.GetCoach(fields);
 
         this.$store.commit("updateCoach", coach);
@@ -139,6 +132,18 @@ export default {
       return moment(date).format("Do MMM");
     },
 
+    //Update coach page view
+    async updateCoachView(fields) {
+      //User Insights: Extacting user data for insights
+      const user = await this.getUserInsights();
+      this.$store.commit("updateUser", user);
+
+      fields.isUniqueVisitor = user.isUniqueVisitor;
+      fields.location = user.location;
+
+      CoachService.UpdateCoachView(fields);
+    },
+
     async getUserInsights() {
       var isUniqueVisitor = false;
       if (this.$cookie.get("isUniqueVisitor") == undefined) {
@@ -155,8 +160,7 @@ export default {
           .then((response) => {
             userLocation = response.city;
           });
-      }
-      catch {
+      } catch {
         //Blocked by ad blocker
         userLocation = null;
       }

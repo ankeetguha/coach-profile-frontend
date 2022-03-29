@@ -344,13 +344,9 @@ export default {
     async getOffering() {
       const offeringSlug = this.$route.params.offering;
 
-      //User Insights: Extacting user data for insights
-      const isUniqueVisitor = !this.hasUserVisitedOffering(offeringSlug);
-
       this.offering = await CoachService.GetOffering({
         offeringSlug: offeringSlug,
         coachSlug: this.coach.slug,
-        isUniqueVisitor: isUniqueVisitor,
       });
 
       this.initVariant();
@@ -359,6 +355,14 @@ export default {
       this.meta.ogTitle = this.offering.title;
       this.meta.ogDescription = this.offering.description;
       this.meta.ogImage = this.offering.coverImageURL;
+
+      //User Insights: Extacting user data for insights
+      const isUniqueVisitor = !this.hasUserVisitedOffering(offeringSlug);
+      CoachService.UpdateOfferingView({
+        offeringSlug: offeringSlug,
+        coachSlug: this.coach.slug,
+        isUniqueVisitor: isUniqueVisitor,
+      });
     },
 
     initVariant() {
@@ -406,7 +410,7 @@ export default {
         this.showOptions.bookingForm = true;
 
         //User Insights: Extacting user data for insights
-        CoachService.updateBookingAttempt({
+        CoachService.UpdateBookingAttempt({
           offeringSlug: this.offering.slug,
           coachSlug: this.coach.slug,
         });
