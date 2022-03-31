@@ -160,6 +160,7 @@ export default {
     top: 50%;
     transform: translateY(-50%);
     right: 1rem;
+    color: $blackColor;
   }
 }
 
@@ -185,6 +186,7 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
+  cursor: pointer;
 
   /deep/ {
     svg {

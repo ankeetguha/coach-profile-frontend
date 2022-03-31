@@ -14,6 +14,7 @@
         <!--START: Form-->
         <ClientForm :fields="fields"></ClientForm>
         <DiscountForm
+          ref="discountForm"
           :coachSlug="coach.slug"
           :offeringSlug="offering.slug"
           :selectedVariantIndex="selectedVariantIndex"
@@ -225,7 +226,7 @@ export default {
         coachSlug: this.coach.slug,
         offeringSlug: this.offering.slug,
         selectedVariantIndex: this.selectedVariantIndex,
-        discountCode: this.discountDetails.code
+        discountCode: this.discountDetails.code,
       };
 
       //Show the payment loader
@@ -364,6 +365,7 @@ export default {
     },
 
     closeForm() {
+      this.$refs.discountForm.removeDiscount()
       if (!this.disableButton) this.$emit("closeForm");
     },
   },
