@@ -107,6 +107,31 @@ class CoachService {
         })
     }
 
+    static ValidateDiscountCode(fields) {
+        return new Promise((resolve, reject) => {
+            resolve(
+                (async() => {
+                    try {
+                        return await axios.post(`${apiURL}/coach/apply-discount-code`, {
+                                fields
+                            }, {
+                                withCredentials: true
+                            })
+                            .then((response) => {
+                                return response.data;
+                            }, (error) => {
+                                console.log(error);
+                                return false;
+                            });
+                    } catch (e) {
+                        console.log('err', e);
+                        reject(e);
+                    }
+                })()
+            );
+        })
+    }
+
     static GetOnlinePlan(fields) {
         return new Promise((resolve, reject) => {
             resolve(

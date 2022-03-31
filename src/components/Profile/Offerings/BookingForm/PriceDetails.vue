@@ -10,8 +10,19 @@
             >₹<em>{{ convertToIndianNumber(variant.originalPrice) }}</em>
           </span>
           <span v-if="variant.discountedPrice != undefined" class="amount"
-            >₹<em>{{ convertToIndianNumber(variant.discountedPrice) }}</em></span
+            >₹<em>{{
+              convertToIndianNumber(variant.discountedPrice)
+            }}</em></span
           >
+        </div>
+      </div>
+
+      <div v-if="discount.hasDiscount" class="line-item">
+        <label>Discount</label>
+        <div class="price-item">
+          <span class="amount"
+            >- ₹<em>{{ convertToIndianNumber(discount.amount) }}</em>
+          </span>
         </div>
       </div>
 
@@ -45,6 +56,7 @@ export default {
   name: "BookingPrice",
   props: {
     variant: Object,
+    discount: Object,
   },
   computed: {
     getPaymentPrice: function () {
@@ -52,6 +64,9 @@ export default {
       if (this.variant.discountedPrice != undefined) {
         paymentPrice = this.variant.discountedPrice;
       }
+
+      //Check if discounted amount has to be added
+      if (this.discount.hasDiscount) paymentPrice -= this.discount.amount;
 
       return paymentPrice;
     },

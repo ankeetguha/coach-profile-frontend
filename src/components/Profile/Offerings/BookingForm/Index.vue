@@ -13,10 +13,20 @@
 
         <!--START: Form-->
         <ClientForm :fields="fields"></ClientForm>
+        <DiscountForm
+          :coachSlug="coach.slug"
+          :offeringSlug="offering.slug"
+          :selectedVariantIndex="selectedVariantIndex"
+          @discountApplied="addDiscount"
+          @discountRemoved="removeDiscount"
+        ></DiscountForm>
         <!--END: Form-->
 
         <!--START: Price Details-->
-        <PriceDetails :variant="selectedVariant"></PriceDetails>
+        <PriceDetails
+          :variant="selectedVariant"
+          :discount="discountDetails"
+        ></PriceDetails>
         <!--END: Price Details-->
       </div>
 
@@ -86,6 +96,7 @@ import CoachService from "@/controllers/CoachService";
 
 //Import components
 import ClientForm from "./ClientForm";
+import DiscountForm from "./DiscountForm";
 import PriceDetails from "./PriceDetails";
 import PaymentLoader from "./PaymentLoader";
 import SuccessMessage from "./SuccessMessage";
@@ -104,6 +115,11 @@ export default {
         paymentLoader: false,
         status: false,
         successMessage: false,
+      },
+      discountDetails: {
+        code: null,
+        hasDiscount: false,
+        amount: 0,
       },
       paymentCompleted: false,
       fields: {
@@ -141,6 +157,7 @@ export default {
 
   components: {
     ClientForm,
+    DiscountForm,
     PriceDetails,
     PaymentLoader,
     StatusMessage,
@@ -208,6 +225,7 @@ export default {
         coachSlug: this.coach.slug,
         offeringSlug: this.offering.slug,
         selectedVariantIndex: this.selectedVariantIndex,
+        discountCode: this.discountDetails.code
       };
 
       //Show the payment loader
@@ -324,6 +342,18 @@ export default {
       this.$emit("updateBookingStatus", true);
       this.disableButton = true;
       this.showOptions.lineLoader = false;
+    },
+
+    addDiscount(discount) {
+      this.discountDetails.code = discount.code;
+      this.discountDetails.hasDiscount = true;
+      this.discountDetails.amount = discount.amount;
+    },
+
+    removeDiscount() {
+      this.discountDetails.code = null;
+      this.discountDetails.hasDiscount = false;
+      this.discountDetails.amount = 0;
     },
 
     closeSuccessMessage() {

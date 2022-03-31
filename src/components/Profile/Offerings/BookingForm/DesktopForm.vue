@@ -12,7 +12,10 @@
         <!--END: Title Wrapper-->
 
         <!--START: Price Details-->
-        <PriceDetails :variant="selectedVariant"></PriceDetails>
+        <PriceDetails
+          :variant="selectedVariant"
+          :discount="{ hasDiscount: false }"
+        ></PriceDetails>
         <!--END: Price Details-->
       </div>
 
@@ -22,9 +25,7 @@
           Make Payment
         </button>
       </div>
-      <span v-else class="sold-out">
-      Sold Out
-    </span>
+      <span v-else class="sold-out"> Sold Out </span>
       <!--END: Button Actions-->
     </div>
   </div>
@@ -45,7 +46,7 @@ export default {
     offering: Object,
     selectedVariant: Object,
     selectedVariantIndex: Number,
-    activatePayment: Boolean
+    activatePayment: Boolean,
   },
 
   methods: {
@@ -148,8 +149,8 @@ export default {
   text-align: center;
   color: $redColor;
   background-color: #261b1a;
-  padding: .75rem 1.5rem;
-  border-radius: .75rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
   border: 1px solid $redColor;
 }
 
