@@ -95,7 +95,7 @@ export default {
         const response = await CoachService.ValidateDiscountCode({
           coachSlug: this.coachSlug,
           offeringSlug: this.offeringSlug,
-          variantIndex: this.selectedVariantIndex,
+          selectedVariantIndex: this.selectedVariantIndex,
           discountCode: this.fields.discountCode.value,
         });
 
