@@ -72,7 +72,7 @@ export default {
     },
     getTaxes: function () {
       return Math.ceil(
-        this.getPaymentPrice / (0.9764 * 0.9764) - this.getPaymentPrice
+        this.getPaymentPrice * 1.05 - this.getPaymentPrice
       );
     },
   },
