@@ -142,7 +142,7 @@ export default {
 
 .coach-details-wrapper {
   text-align: center;
-  margin: 0 0 0.5rem;
+  margin: 0 1.5rem 0.5rem;
 }
 
 .hero-title {
@@ -180,6 +180,7 @@ export default {
   color: $lightWhiteColor;
   opacity: $lightOpacity;
   margin: -0.15rem 0 0.75rem;
+  line-height: 1.4;
 }
 
 .hero-description {

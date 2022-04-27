@@ -216,6 +216,10 @@ a {
     min-height: 1px;
 }
 
+.slick-slide * {
+    outline: none !important;
+}
+
 //Light Theme styles
 .light-theme {
     .label-small {
