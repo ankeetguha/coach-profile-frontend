@@ -62,7 +62,7 @@ $duration: 10s;
     var(--brand-color-dark-10)
   );
   padding-left: 100%;
-  z-index: 1;
+  z-index: 2;
   box-sizing: content-box;
 
   .ticker {

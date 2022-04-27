@@ -2,11 +2,12 @@
   <!--START: Hero Wrapper-->
   <div
     class="header-wrapper"
-    :class="
+    :class="[
       coach.offerTicker != undefined && coach.offerTicker.showOffer
         ? 'extend-header'
-        : ''
-    "
+        : '',
+      { 'cover-image-hero': coach.coverImageURL != undefined },
+    ]"
   >
     <div class="hero-wrapper">
       <div class="profile-image-wrapper">
@@ -90,7 +91,7 @@ export default {
 <style scoped lang="scss">
 .header-wrapper {
   position: relative;
-  z-index: 5;
+  z-index: 1;
   background: $blackColor;
   border-bottom-left-radius: 2.5rem;
   border-bottom-right-radius: 2.5rem;
@@ -221,7 +222,7 @@ export default {
   .header-wrapper,
   .social-list,
   .hero-wrapper {
-    background-color: #F7F7F7;
+    background-color: #f7f7f7;
   }
 
   .profile-image-wrapper::before {
@@ -291,6 +292,48 @@ export default {
         color: var(--brand-color-light-45);
       }
     }
+  }
+}
+
+.cover-image-hero {
+  position: relative;
+  margin-top: 135vw;
+  padding-top: 0;
+
+  &::before {
+    background: linear-gradient(180deg, transparent 0, rgba(15, 15, 15, 0.6) 55%);
+    content: "";
+    position: absolute;
+    top: -10rem;
+    left: 0;
+    width: 100%;
+    height: 10rem;
+    z-index: -2;
+  }
+  
+  .hero-title {
+    margin-bottom: 1rem;
+  }
+
+  .hero-wrapper {
+    transform: translateY(-3rem);
+    border-top-left-radius: 3rem;
+    border-top-right-radius: 3rem;
+    background-color: #1b1b1b;
+    z-index: 2;
+  }
+
+  .profile-image-wrapper {
+    transform: translateY(-3.5rem);
+    margin-bottom: -4rem;
+  }
+
+  .coach-details-wrapper {
+    margin-bottom: -2rem;
+  }
+
+  .social-list {
+    padding-top: 1.5rem;
   }
 }
 

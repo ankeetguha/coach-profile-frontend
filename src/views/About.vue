@@ -205,7 +205,7 @@ export default {
 }
 
 .about-description-wrapper {
-  margin: 2rem 2rem;
+  margin: 2rem 2rem 4rem;
 
   .label-small {
     font-size: $smallestFontSize;

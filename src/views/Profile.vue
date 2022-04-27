@@ -1,39 +1,45 @@
 <template>
   <div>
-    <!--START: Coach Header-->
-    <SiteHeader :coach="coach"></SiteHeader>
-    <!--END: Coach Header-->
+    <!--START: Cover Image Wrapper-->
+    <CoverImage v-if="coach.coverImageURL" :coach="coach"></CoverImage>
+    <!--END: Cover Image Wrapper-->
 
-    <!--START: Router Wrapper-->
-    <div
-      v-if="showRouteModal"
-      class="modal-route"
-      :class="{ show: showRouteModal }"
-    >
-      <div class="modal-content">
-        <router-view :coach="coach"></router-view>
+    <div class="main-body">
+      <!--START: Coach Header-->
+      <SiteHeader :coach="coach"></SiteHeader>
+      <!--END: Coach Header-->
+
+      <!--START: Router Wrapper-->
+      <div
+        v-if="showRouteModal"
+        class="modal-route"
+        :class="{ show: showRouteModal }"
+      >
+        <div class="modal-content">
+          <router-view :coach="coach"></router-view>
+        </div>
       </div>
+      <!--END: Router Wrapper-->
+
+      <!--START: Social Handles-->
+      <CoachPromotions :offerTicker="coach.offerTicker"></CoachPromotions>
+      <!--END: Social Handles-->
+
+      <!--START: Enquiry Form-->
+      <CoachEnquiry :coach="coach"></CoachEnquiry>
+      <!--END: Enquiry Form-->
+
+      <!--START: Coach Header-->
+      <SiteFooter
+        :coach="coach"
+        :class="
+          coach.offerTicker != undefined && coach.offerTicker.showOffer
+            ? 'extended-footer'
+            : ''
+        "
+      ></SiteFooter>
+      <!--END: Coach Header-->
     </div>
-    <!--END: Router Wrapper-->
-
-    <!--START: Social Handles-->
-    <CoachPromotions :offerTicker="coach.offerTicker"></CoachPromotions>
-    <!--END: Social Handles-->
-
-    <!--START: Enquiry Form-->
-    <CoachEnquiry :coach="coach"></CoachEnquiry>
-    <!--END: Enquiry Form-->
-
-    <!--START: Coach Header-->
-    <SiteFooter
-      :coach="coach"
-      :class="
-        coach.offerTicker != undefined && coach.offerTicker.showOffer
-          ? 'extended-footer'
-          : ''
-      "
-    ></SiteFooter>
-    <!--END: Coach Header-->
   </div>
 </template>
 
@@ -44,6 +50,7 @@ import _ from "lodash";
 //Import components
 import CoachPromotions from "@/components/Profile/CoachPromotions";
 import CoachEnquiry from "@/components/Profile/CoachEnquiry";
+import CoverImage from "@/components/CoverImage";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 
@@ -112,6 +119,7 @@ export default {
     },
   },
   components: {
+    CoverImage,
     SiteHeader,
     SiteFooter,
     CoachEnquiry,
@@ -126,13 +134,22 @@ export default {
     this.meta.title = `${this.coach.fullName} - ${this.coach.coverTitle}`;
     this.meta.ogTitle = `${this.coach.fullName} - ${this.coach.coverTitle}`;
     this.meta.ogDescription = this.coach.description;
-    this.meta.ogImage = this.coach.offerings != undefined ? this.coach.offerings[0].coverImageURL : this.coach.plans[0].coverImageURL;
+    this.meta.ogImage =
+      this.coach.offerings != undefined
+        ? this.coach.offerings[0].coverImageURL
+        : this.coach.plans[0].coverImageURL;
   },
   methods: {},
 };
 </script>
 
 <style lang="scss">
+.main-body {
+  position: relative;
+  background-color: #272727;
+  z-index: 5;
+}
+
 .modal-route {
   position: relative;
   padding: 2rem 0 0;
