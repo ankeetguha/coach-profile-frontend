@@ -64,6 +64,7 @@ a {
 }
 
 .bg-overlay {
+    display: none;
     z-index: -1;
     opacity: 0;
     transition: all $transitionSpeed;
@@ -77,6 +78,7 @@ a {
 }
 
 .bg-overlay.show {
+    display: block;
     opacity: .95;
     z-index: 100;
 }

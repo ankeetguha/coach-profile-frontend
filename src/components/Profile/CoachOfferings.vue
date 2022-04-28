@@ -272,11 +272,13 @@ export default {
 
   .block-title {
     font-size: $normalFontSize;
+    text-align: center;
   }
 
   .offerings-list {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 
     .offering {
       cursor: pointer;

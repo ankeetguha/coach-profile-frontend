@@ -297,14 +297,13 @@ export default {
 
 .cover-image-hero {
   position: relative;
-  margin-top: 135vw;
   padding-top: 0;
 
   &::before {
-    background: linear-gradient(180deg, transparent 0, rgba(15, 15, 15, 0.6) 55%);
+    background: linear-gradient(180deg, transparent 0, rgba(15, 15, 15, 0.9) 55%);
     content: "";
     position: absolute;
-    top: -10rem;
+    top: -6rem;
     left: 0;
     width: 100%;
     height: 10rem;
@@ -354,15 +353,19 @@ export default {
 
   .hero-wrapper {
     display: block;
+    transform: none !important;
+
     .profile-image-wrapper {
       margin-top: 0;
       width: 5.5rem;
       height: 5.5rem;
+      transform: none;
     }
 
     .coach-details-wrapper {
       text-align: left;
       margin-left: 2rem;
+      margin-bottom: 0;
     }
 
     .social-list {

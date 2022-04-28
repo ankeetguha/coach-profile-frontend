@@ -299,6 +299,10 @@ export default {
     }
   }
 
+  .transformation-block {
+    margin-bottom: 1.5rem;
+  }
+
 //Light Theme
   .light-theme {
     .label-small {
