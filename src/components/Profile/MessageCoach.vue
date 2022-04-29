@@ -9,9 +9,10 @@
         <span v-else-if="gender == 'Male'">him</span> a message and get them
         answered
       </p>
-      <a :href="`https://wa.me/+91${phoneNumber}`" class="btn btn-primary"
+      <a v-if="phoneNumber != undefined" :href="`https://wa.me/+91${phoneNumber}`" class="btn btn-primary"
         ><unicon name="whatsapp"></unicon>WhatsApp Coach</a
       >
+      <button v-else type="button" class="btn btn-primary" @click="messageCoach">Send A Message</button>
     </div>
   </div>
 </template>
@@ -24,6 +25,11 @@ export default {
     gender: String,
     phoneNumber: String,
   },
+  methods: {
+    messageCoach(){
+      this.$parent.$emit('messageCoach');
+    }
+  }
 };
 </script>
 
@@ -99,7 +105,8 @@ export default {
 //Light Theme styles
 .light-theme {
   .scroll-end-wrapper {
-    h3,p {
+    h3,
+    p {
       color: $blackColor;
     }
   }

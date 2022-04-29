@@ -20,7 +20,6 @@
 
     <!--START: Scroll End-->
     <MessageCoach
-      v-if="coach.showNumber == undefined || coach.showNumber == true"
       :name="coach.fullName"
       :gender="coach.gender"
       :phoneNumber="coach.phone"

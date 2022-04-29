@@ -16,7 +16,7 @@
         :class="{ show: showRouteModal }"
       >
         <div class="modal-content">
-          <router-view :coach="coach"></router-view>
+          <router-view :coach="coach" @messageCoach="messageCoach"></router-view>
         </div>
       </div>
       <!--END: Router Wrapper-->
@@ -26,7 +26,7 @@
       <!--END: Social Handles-->
 
       <!--START: Enquiry Form-->
-      <CoachEnquiry :coach="coach"></CoachEnquiry>
+      <CoachEnquiry ref="coachEnquiry" :coach="coach"></CoachEnquiry>
       <!--END: Enquiry Form-->
 
       <!--START: Coach Header-->
@@ -139,7 +139,11 @@ export default {
         ? this.coach.offerings[0].coverImageURL
         : this.coach.plans[0].coverImageURL;
   },
-  methods: {},
+  methods: {
+    messageCoach() {
+      this.$refs.coachEnquiry.showMessageModal();
+    }
+  },
 };
 </script>
 

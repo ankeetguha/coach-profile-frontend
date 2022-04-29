@@ -3,7 +3,7 @@
     <div
       class="message-floating-wrapper"
       :class="{ show: showForm && !showModal }"
-      @click="showModal = true"
+      @click="showMessageModal"
     >
       <span :class="{ show: showLabel }">Message</span>
       <unicon name="envelope" />
@@ -24,9 +24,7 @@
         <form v-on:submit.prevent="sendMessage()" class="coach-form">
           <FormBuilder :fields="fields"></FormBuilder>
 
-          <button class="btn btn-primary" type="submit">
-            Send Message
-          </button>
+          <button class="btn btn-primary" type="submit">Send Message</button>
         </form>
         <!--END: Message Form-->
       </div>
@@ -135,6 +133,9 @@ export default {
     window.removeEventListener("scroll", this.handleScroll);
   },
   methods: {
+    showMessageModal() {
+      this.showModal = true;
+    },
     handleScroll() {
       var windowScrollVal = window.top.scrollY;
 
@@ -322,7 +323,7 @@ form {
 
   .enquiry-modal-wrapper {
     background-color: $whiteColor;
-    
+
     .modal-wrapper {
       border-bottom: none;
       padding-bottom: 0;

@@ -185,6 +185,7 @@ export default {
 
 .transformation-image-wrapper {
   position: relative;
+  z-index: 10;
 
   .transformation-image-info {
     position: absolute;
