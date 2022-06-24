@@ -16,10 +16,9 @@
           alt="Skipper Plans Step"
         />
         <div class="plan-step-item-info">
-          <h3>Plan Access</h3>
+          <h3>Course Access</h3>
           <p>
-            Once you purchase a plan, you'll get access to all workouts and
-            knowledge resources needed to execute it
+            Once you purchase the course, you'll get access to all the modules via a secure dashboard
           </p>
         </div>
       </div>
@@ -31,8 +30,7 @@
         <div class="plan-step-item-info">
           <h3>Track Progress</h3>
           <p>
-            Start executing the plan and track all your workouts through the
-            workout calendar
+            You'll be able to track your course progress through your learner dashboard
           </p>
         </div>
       </div>
@@ -42,10 +40,9 @@
           alt="Skipper Plans Step"
         />
         <div class="plan-step-item-info">
-          <h3>Get Fit</h3>
+          <h3>Achieve Goal</h3>
           <p>
-            Get closer to your fitness goal by executing the plan. I'd love to
-            see a picture of you smashing your goal
+            Get closer to your goal by completing the course. It's the small steps that add up!
           </p>
         </div>
       </div>

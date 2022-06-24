@@ -171,6 +171,7 @@ export default {
     offering: Object,
     selectedVariant: Object,
     selectedVariantIndex: Number,
+    selectedSlot: Object,
     show: Boolean,
   },
 
@@ -182,7 +183,11 @@ export default {
   },
 
   created() {
-    if (this.coach.paymentsActive && this.offering.activatePayment) {
+    if (
+      this.coach.isSubscribed &&
+      this.coach.paymentsActive &&
+      this.offering.activatePayment
+    ) {
       this.initPaymentGateway();
     }
   },
@@ -227,16 +232,25 @@ export default {
         offeringSlug: this.offering.slug,
         selectedVariantIndex: this.selectedVariantIndex,
         discountCode: this.discountDetails.code,
+        selectedSlot: this.selectedSlot
       };
 
       //Show the payment loader
-      if (this.coach.paymentsActive && this.offering.activatePayment) {
+      if (
+        this.coach.isSubscribed &&
+        this.coach.paymentsActive &&
+        this.offering.activatePayment
+      ) {
         this.showOptions.paymentLoader = true;
         this.paymentCompleted = false;
       }
 
       const bookingResult = await CoachService.BookOffering(formFields);
-      if (this.coach.paymentsActive && this.offering.activatePayment) {
+      if (
+        this.coach.isSubscribed &&
+        this.coach.paymentsActive &&
+        this.offering.activatePayment
+      ) {
         this.launchPayment(bookingResult);
       }
     },
@@ -365,7 +379,7 @@ export default {
     },
 
     closeForm() {
-      this.$refs.discountForm.removeDiscount()
+      this.$refs.discountForm.removeDiscount();
       if (!this.disableButton) this.$emit("closeForm");
     },
   },
@@ -485,25 +499,30 @@ export default {
 
 //Light Theme
 .light-theme {
-  .booking-modal {
-    background-color: #e9e9e9;
-  }
-
-  .hero-wrapper {
-    border-bottom-color: darken($whiteColor, 8%);
-    h3 {
-      color: $blackColor;
+  .client-form /deep/ {
+    .field-title {
+      color: $whiteColor;
     }
   }
+  // .booking-modal {
+  //   background-color: #e9e9e9;
+  // }
 
-  .btn-wrapper {
-    background-color: darken($whiteColor, 3%);
+  // .hero-wrapper {
+  //   border-bottom-color: darken($whiteColor, 8%);
+  //   h3 {
+  //     color: $blackColor;
+  //   }
+  // }
 
-    .btn-border {
-      color: lighten($blackColor, 10%);
-      border-color: lighten($blackColor, 40%);
-    }
-  }
+  // .btn-wrapper {
+  //   background-color: darken($whiteColor, 3%);
+
+  //   .btn-border {
+  //     color: lighten($blackColor, 10%);
+  //     border-color: lighten($blackColor, 40%);
+  //   }
+  // }
 }
 
 //Desktop Styles

@@ -1,7 +1,7 @@
 <template>
   <!-- START: Transformation Images-->
   <div class="transformations-wrapper">
-    <label class="label-small"><em>🔥</em> Transformations</label>
+    <label class="label-small"><em>🔥</em> Testimonials</label>
     <VueSlickCarousel
       class="transformations-slider"
       :arrows="false"
@@ -247,6 +247,7 @@ export default {
       display: block;
       position: absolute;
       background: #efefef;
+      background: #272727;
       bottom: 0;
       left: 0;
       width: 100%;

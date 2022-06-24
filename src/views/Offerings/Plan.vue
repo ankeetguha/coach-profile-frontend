@@ -8,7 +8,7 @@
           :to="`/${!$store.state.isSubDomain ? coach.slug + '/' : ''}`"
         >
           <unicon name="angle-left"></unicon>
-          <span>Back To Plans</span>
+          <span>Back To Courses</span>
         </router-link>
         <a
           class="btn btn-text btn-small"
@@ -148,7 +148,7 @@
           v-if="plan.equipment != undefined && plan.equipment != ''"
           class="equipments-wrapper"
         >
-          <label class="label-small">Equipment</label>
+          <label class="label-small">What You'll Need</label>
           <div class="equipment-details">
             <unicon name="dumbbell"></unicon>
             <p>{{ plan.equipment }}</p>

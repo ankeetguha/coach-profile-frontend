@@ -4,17 +4,11 @@
       <span>Powered by</span>
       <router-link to="https://coach.skipperfit.com/sign-up"
         ><img
-          v-if="coach.darkMode == undefined || coach.darkMode == true"
           src="@/assets/images/logo.png"
           class="footer-logo"
           alt="Skipper Logo"
         />
-        <img
-          v-else
-          src="@/assets/images/logo-dark.png"
-          class="footer-logo"
-          alt="Skipper Logo"
-        />
+        
       </router-link>
       <div class="disclaimer">
         <div class="india-love">
@@ -25,10 +19,10 @@
               class="heart"
               alt="Skipper Love"
             />
-            in Bangalore, India
+            by Skipper
           </h3>
         </div>
-        &copy; 2021 AGZ Wellness Private Limited. All Rights Reserved.
+        &copy; 2021 AGZ Technologies Private Limited. All Rights Reserved.
       </div>
     </div>
   </footer>
@@ -137,12 +131,12 @@ span {
 //Light Theme styles
 .light-theme {
   footer {
-    background: #EFEFEF;
+    background: #272727;
   }
 
-  .india-love h3 {
-    color: lighten($blackColor, 30%);
-  }
+  // .india-love h3 {
+  //   color: lighten($blackColor, 30%);
+  // }
 }
 
 @media screen and (min-width: $mobileWidth) {

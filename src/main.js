@@ -18,6 +18,14 @@ import "@/assets/styles/_framework.scss";
 import GlobalFunctions from '@/mixins/Functions'
 Vue.mixin(GlobalFunctions);
 
+//Adding Font Awesome for icon picker
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+
+//Add Font Awesome Icon Picker
+import VueIconPicker from 'vue-icon-picker';
+Vue.component('vue-icon-loader', VueIconPicker);
+
 //Adding VueMeta for custom headers
 Vue.use(VueMeta, {
     refreshOnceOnNavigation: true
@@ -60,9 +68,10 @@ import {
     uniUsersAlt,
     uniLocationArrow,
     uniCalendarAlt,
-    uniAngleDown
+    uniAngleDown,
+    uniApps
 } from 'vue-unicons/dist/icons';
-Unicon.add([uniTrashAlt, uniAngleRight, uniAngleLeft, uniAngleUp, uniAngleDown, uniLock, uniFacebookF, uniInstagram, uniWhatsapp, uniTwitter, uniYoutube, uniTimes, uniPlay, uniCheck, uniDumbbell, uniHeart, uniSnapchatGhost, uniClock, uniEnvelope, uniPaperclip, uniVideo, uniBoltAlt, uniUser, uniPathfinder, uniImport, uniDesktop, uniUsersAlt, uniLocationArrow, uniCalendarAlt]);
+Unicon.add([uniTrashAlt, uniAngleRight, uniAngleLeft, uniAngleUp, uniAngleDown, uniLock, uniFacebookF, uniInstagram, uniWhatsapp, uniTwitter, uniYoutube, uniTimes, uniPlay, uniCheck, uniDumbbell, uniHeart, uniSnapchatGhost, uniClock, uniEnvelope, uniPaperclip, uniVideo, uniBoltAlt, uniUser, uniPathfinder, uniImport, uniDesktop, uniUsersAlt, uniLocationArrow, uniCalendarAlt, uniApps, uniClock]);
 Vue.use(Unicon);
 
 Vue.config.productionTip = false
@@ -81,6 +90,10 @@ const router = () => {
     return routes;
 };
 //END: Subdomain logic
+
+//Importing moment.js for time based functions
+import moment from 'moment-timezone';
+Vue.prototype.moment = moment;
 
 new Vue({
     store,

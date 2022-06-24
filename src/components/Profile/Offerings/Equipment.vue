@@ -1,9 +1,9 @@
 <template>
   <!--START: Equipment-->
   <div class="equipments-wrapper">
-    <label class="label-small">Equipment</label>
+    <label class="label-small">What You'll Need</label>
     <div class="equipment-details">
-      <unicon name="dumbbell"></unicon>
+      <unicon name="apps"></unicon>
       <p>{{ equipment }}</p>
     </div>
   </div>

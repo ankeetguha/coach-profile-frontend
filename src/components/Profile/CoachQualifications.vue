@@ -24,8 +24,8 @@
           <svg
             :data-src="require('@/assets/images/icons/badge-flash-circle.svg')"
             class="coach-qualification-badge-text"
-          />
-          <svg :data-src="require('@/assets/images/icons/badge-flash.svg')" />
+          ></svg>
+          <svg :data-src="require('@/assets/images/icons/badge-flash.svg')" ></svg>
         </div>
         <div class="coach-qualification-description">
           <label class="label-small">{{ certification.category }}</label>
@@ -44,8 +44,8 @@
           <svg
             :data-src="require('@/assets/images/icons/badge-flash-circle.svg')"
             class="coach-qualification-badge-text"
-          />
-          <svg :data-src="require('@/assets/images/icons/badge-flash.svg')" />
+          ></svg>
+          <svg :data-src="require('@/assets/images/icons/badge-flash.svg')" ></svg>
         </div>
         <div class="coach-qualification-description">
           <label class="label-small">{{ certification.category }}</label>
@@ -112,7 +112,7 @@ export default {
 }
 
 .coach-qualification::before {
-  background-color: var(--brand-color);
+  background-color: hsl(52deg, 100%, 53%);
   content: "";
   position: absolute;
   top: 50%;
@@ -142,7 +142,7 @@ export default {
   transform: translate(-50%, -50%);
 
   /deep/ g {
-    fill: var(--brand-color);
+    fill: hsl(52deg, 100%, 53%);
   }
 }
 
@@ -226,25 +226,25 @@ svg.coach-qualification-badge-text {
 //Light Theme styles
 .light-theme {
   .coach-qualifications-slider /deep/ .slick-slide {
-    background-color: $whiteColor;
-    box-shadow: 0 1.5rem 0.7rem -0.1rem rgba(183, 183, 183, 0.5);
-    border: 1px solid #e2e2e2;
+    // background-color: $whiteColor;
+    // box-shadow: 0 1.5rem 0.7rem -0.1rem rgba(183, 183, 183, 0.5);
+    // border: 1px solid #e2e2e2;
   }
   .coach-qualifications-wrapper {
-    background-color: #E8E8E8;
+    background: #E8E8E8;
     padding-bottom: 1rem;
     border-radius: 0;
     overflow: visible;
 
     .coach-qualification {
-      h3 {
-        color: $blackColor;
-        opacity: $mediumOpacity;
-      }
+      // h3 {
+      //   color: $blackColor;
+      //   opacity: $mediumOpacity;
+      // }
 
-      svg.coach-qualification-badge-text /deep/ g {
-        fill: $blackColor;
-      }
+      // svg.coach-qualification-badge-text /deep/ g {
+      //   fill: $blackColor;
+      // }
     }
 
     &.extended-wrapper {
@@ -257,6 +257,7 @@ svg.coach-qualification-badge-text {
       display: block;
       position: absolute;
       background: #efefef;
+      background-color: #272727;
       box-shadow: 0 -1rem 0.7rem -0.15rem rgba(208, 208, 208, 0.5);
       left: 0;
       width: 100%;
@@ -364,9 +365,14 @@ svg.coach-qualification-badge-text {
     }
 
     .coach-qualification {
-      background-color: $whiteColor;
-      box-shadow: 0 0 0.9rem -0.2rem rgb(183, 183, 183);
-      border: 1px solid #e2e2e2;
+      // background-color: $whiteColor;
+      // box-shadow: 0 0 0.9rem -0.2rem rgb(183, 183, 183);
+      // border: 1px solid #e2e2e2;
+
+      .label-small {
+        color: #FFF;
+        font-size: .75rem;
+      }
     }
 
     .coach-qualifications-wrapper {
@@ -377,8 +383,8 @@ svg.coach-qualification-badge-text {
       }
 
       &::before {
-        top: 13em;
-        height: calc(100% - 11rem);
+        top: 9em;
+        height: calc(100% - 7rem);
       }
     }
   }

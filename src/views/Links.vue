@@ -81,7 +81,10 @@ export default {
     this.meta.title = `${this.coach.fullName} - ${this.coach.coverTitle}`;
     this.meta.ogTitle = `${this.coach.fullName} - ${this.coach.coverTitle}`;
     this.meta.ogDescription = this.coach.description;
-    this.meta.ogImage = this.coach.offerings != undefined ? this.coach.offerings[0].coverImageURL : this.coach.plans[0].coverImageURL;
+    this.meta.ogImage =
+      this.coach.offerings != undefined
+        ? this.coach.offerings[0].coverImageURL
+        : this.coach.plans[0].coverImageURL;
   },
   methods: {},
 };
@@ -177,14 +180,14 @@ export default {
 .light-theme {
   .promotional-links-wrapper {
     position: relative;
-    padding-bottom: 2.5rem;
+    padding-bottom: 4.5rem;
 
     &::before {
       content: "";
-      display: none;
+      display: block;
       position: absolute;
-      background: #EFEFEF;
-      box-shadow: 0 -1rem 0.7rem -0.15rem rgba(212, 212, 212, .5);
+      background: #272727;
+      box-shadow: 0 -1rem 0.7rem -0.15rem rgba(212, 212, 212, 0.5);
       bottom: -1rem;
       left: 0;
       width: 100%;
@@ -196,7 +199,7 @@ export default {
   .promotional-link {
     background-color: $whiteColor;
     border: 1px solid darken($whiteColor, 10%);
-    color: var(--brand-color);
+    color: lighten($blackColor, 20%);
   }
 }
 
@@ -205,6 +208,10 @@ export default {
     margin: 0 auto;
     width: 50%;
     max-width: 30rem;
+  }
+
+  .light-theme .promotional-links-wrapper::before {
+    display: none;
   }
 }
 </style>

@@ -4,37 +4,28 @@
     <div class="specialities-list">
       <div
         class="speciality-item"
-        v-for="speciality in specialities"
-        :key="speciality.id"
+        v-for="expertise in coachExpertise"
+        :key="expertise.id"
       >
         <div class="speciality-img-wrapper">
-          <svg
-            :data-src="getImageExtension(speciality)"
+          <font-awesome-icon
+            :icon="`fa-fw fa-solid fa-${expertise.icon}`"
             class="speciality-img"
-          ></svg>
+          />
         </div>
-        <span>{{ speciality }}</span>
+        <span>{{ expertise.title }}</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-//Importing libraries
-import "external-svg-loader";
-
 export default {
-  name: "CoachSpecialities",
+  name: "CoachExpertise",
   props: {
-    specialities: Array,
+    coachExpertise: Array,
   },
-  methods: {
-    getImageExtension(fileName) {
-      return (
-        "/assets/images/" + fileName.replace(/\s+/g, "-").toLowerCase() + ".svg"
-      );
-    },
-  },
+  methods: {},
 };
 </script>
 
@@ -81,13 +72,9 @@ export default {
 
       .speciality-img {
         display: block;
-        width: 1.85rem;
-        height: auto;
-        fill: var(--brand-color);
-
-        /deep/ g {
-          fill: hsl(0deg, 0%, 85%)
-        }
+        width: 1.35rem;
+        height: 1.35rem;
+        color: var(--brand-color);
       }
     }
 
@@ -103,7 +90,7 @@ export default {
 .light-theme {
   .specialities-wrapper {
     background-color: $lightWhiteColor;
-    box-shadow: 0 -1rem 0.7rem -0.15rem rgba(162, 162, 162, .2);
+    box-shadow: 0 -1rem 0.7rem -0.15rem rgba(162, 162, 162, 0.2);
     border-top-left-radius: 3rem;
     border-top-right-radius: 3rem;
 
@@ -114,7 +101,12 @@ export default {
         border: 1px solid #cfcfcf;
       }
     }
-
+    .speciality-img-wrapper {
+      .speciality-img {
+        color: #828282;
+      }
+    }
+    
     span {
       color: $blackColor;
     }

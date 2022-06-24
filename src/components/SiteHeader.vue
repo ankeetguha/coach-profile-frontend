@@ -47,7 +47,7 @@
         :to="`/${!this.$store.state.isSubDomain ? coach.slug + '/' : ''}`"
         class="profile-menu-item"
       >
-        Plans
+        Courses
       </router-link>
       <router-link
         :to="`/${!this.$store.state.isSubDomain ? coach.slug + '/' : ''}about`"
@@ -375,6 +375,13 @@ export default {
 
     .hero-description {
       margin: 0;
+    }
+  }
+
+  .light-theme {
+    .header-wrapper {
+      background-color: #F9F9F9;
+      padding-bottom: 0;
     }
   }
 }

@@ -2,7 +2,6 @@
 import CoachService from "@/controllers/CoachService";
 
 //Importing libraries
-import moment from "moment";
 import _ from "lodash";
 
 export default {
@@ -129,7 +128,7 @@ export default {
 
     //Convert to date and month
     convertToMonthDate(date) {
-      return moment(date).format("Do MMM");
+      return this.moment(date).format("Do MMM");
     },
 
     //Update coach page view

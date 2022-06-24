@@ -111,7 +111,8 @@ export default {
   display: inline-block;
   font-weight: $mediumFontWeight;
   color: darken($redColor, 45%);
-  padding: 0.35rem;
+  padding: 0.35rem 0.5rem;
+
   border-radius: 0.5rem;
   background-color: $redColor;
   font-size: $smallerFontSize;
@@ -124,6 +125,14 @@ export default {
     label {
       opacity: 1;
       color: lighten($blackColor, 30%);
+    }
+
+    .sold-out {
+      color: #f23c27;
+      border-radius: 0.5rem;
+      border: 1px solid #f23b27;
+      background-color: #fdd2cd;
+      transform: translateY(-2px);
     }
 
     .slashed-price,

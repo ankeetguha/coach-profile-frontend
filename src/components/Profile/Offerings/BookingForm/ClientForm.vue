@@ -13,16 +13,16 @@ import FormBuilder from "@/components/form/FormBuilder";
 export default {
   name: "BookingClientForm",
   props: {
-      fields: Object
+    fields: Object,
   },
   components: {
-      FormBuilder
+    FormBuilder,
   },
   methods: {
-      bookOffering() {
-          this.$emit("bookOffering");
-      }
-  }
+    bookOffering() {
+      this.$emit("bookOffering");
+    },
+  },
 };
 </script>
 
@@ -31,6 +31,7 @@ export default {
 form {
   margin: 1rem 0 0;
 }
+
 </style>
 
             

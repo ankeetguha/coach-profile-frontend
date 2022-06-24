@@ -2,17 +2,22 @@
   <div class="scroll-end-wrapper">
     <em class="scroll-end-emoji">🤔</em>
     <div class="coach-message-wrapper">
-      <h3>Have Questions For Coach?</h3>
-      <p>
-        Send
-        <span v-if="gender == 'Female'">her</span>
-        <span v-else-if="gender == 'Male'">him</span> a message and get them
-        answered
-      </p>
-      <a v-if="phoneNumber != undefined" :href="`https://wa.me/+91${phoneNumber}`" class="btn btn-primary"
-        ><unicon name="whatsapp"></unicon>WhatsApp Coach</a
+      <h3>Have Questions For Me?</h3>
+      <p>Send me a message and get them answered</p>
+      <a
+        v-if="phoneNumber != undefined"
+        :href="`https://wa.me/+91${phoneNumber}`"
+        class="btn btn-primary"
+        ><unicon name="whatsapp"></unicon>WhatsApp Me</a
       >
-      <button v-else type="button" class="btn btn-primary" @click="messageCoach">Send A Message</button>
+      <button
+        v-else
+        type="button"
+        class="btn btn-primary"
+        @click="messageCoach"
+      >
+        Send A Message
+      </button>
     </div>
   </div>
 </template>
@@ -26,10 +31,10 @@ export default {
     phoneNumber: String,
   },
   methods: {
-    messageCoach(){
-      this.$parent.$emit('messageCoach');
-    }
-  }
+    messageCoach() {
+      this.$parent.$emit("messageCoach");
+    },
+  },
 };
 </script>
 
@@ -117,6 +122,17 @@ export default {
   }
   .scroll-end-emoji {
     font-size: 3.5rem;
+  }
+
+  .btn-primary {
+    font-size: 1rem;
+    transition: all $transitionSpeed;
+    color: darken(#0a4a1d, 10%);
+    background-color: $darkGreenColor;
+    border: 1px solid #5df1b1;
+    .unicon svg {
+      fill: darken($greenColor, 50%);
+    }
   }
 }
 

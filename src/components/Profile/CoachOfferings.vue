@@ -1,6 +1,6 @@
 <template>
   <div class="offerings-list-wrapper">
-    <label class="block-title">Explore Offerings</label>
+    <label class="block-title">Explore Courses</label>
     <div class="offerings-list">
       <router-link
         tag="div"
@@ -72,13 +72,15 @@ export default {
     getOfferingType(offeringType) {
       switch (offeringType) {
         case "personal-training":
-          return "Personal Training";
+          return "Service Offering";
         case "e-book":
           return "E-Book";
         case "diy-plan":
-          return "Do It Yourself Plan";
+          return "Fitness Course";
         case "video-course":
           return "Video Course";
+        case "consultation-call":
+          return "Appointment";
         default:
           return null;
       }
@@ -219,7 +221,7 @@ export default {
   .offering {
     border-radius: 1rem;
     box-shadow: 0 1rem 1.5rem -0.5rem #dedede;
-    border: none;
+    border: 1px solid #e3e3e3;
 
     .cover-image {
       border-radius: 0.75rem;
@@ -255,6 +257,7 @@ export default {
     .btn {
       color: $whiteColor;
       background-color: var(--brand-color);
+      background-color: $blackColor;
       padding: 0.4rem 0.85rem;
 
       .unicon /deep/ svg {
@@ -267,7 +270,7 @@ export default {
 //Desktop Styles
 @media screen and (min-width: $mobileWidth) {
   .offerings-list-wrapper {
-    margin: 0 5rem 4rem;
+    margin: 0 5rem 2rem;
   }
 
   .block-title {

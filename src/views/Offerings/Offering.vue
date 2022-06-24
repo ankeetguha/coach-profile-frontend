@@ -3,7 +3,7 @@
     <div
       v-if="offering.title != null"
       class="offering"
-      :class="{ 'details-only': !coach.paymentsActive }"
+      :class="{ 'details-only': !coach.isSubscribed || !coach.paymentsActive }"
     >
       <!--START: Header-->
       <div class="header-wrapper">
@@ -167,13 +167,14 @@
       <InternalMenu :offering="offering"></InternalMenu>
       <!--END: Internal Menu-->
 
-      <div v-if="coach.paymentsActive">
+      <div v-if="coach.isSubscribed && coach.paymentsActive">
         <!--START: Price CTA-->
         <PriceBox
           class="price-box"
           :class="{ show: showOptions.priceBox }"
           :price="selectedVariant"
           :activatePayment="offering.activatePayment"
+          :offeringType="offering.offeringType"
           @showBookingForm="showBookingForm"
         ></PriceBox>
         <!--END: Price CTA-->
@@ -185,6 +186,7 @@
           :offering="offering"
           :selectedVariant="selectedVariant"
           :selectedVariantIndex="selectedVariantIndex"
+          :selectedSlot="selectedSlot"
           :show="showOptions.bookingForm"
           @updateBookingStatus="updateBookingStatus"
           @closeForm="closeBookingForm"
@@ -198,6 +200,18 @@
           @showBooking="showBookingForm"
         ></BookingDesktopForm>
         <!--END: Booking Form-->
+
+        <!--START: Appointment Scheduler-->
+        <AppointmentScheduler
+          v-if="
+            offering.offeringType == 'consultation-call' &&
+            showAppointmentScheduler
+          "
+          :coachSlug="coach.slug"
+          :consultationCall="offering.consultationCall"
+          @slotBooked="appointmentSlotBooked"
+        ></AppointmentScheduler>
+        <!--END: Appointment Scheduler-->
       </div>
     </div>
     <PageLoader class="page-loader" v-else></PageLoader>
@@ -232,6 +246,8 @@ import InternalMenu from "@/components/Profile/Offerings/InternalMenu";
 import BookingForm from "@/components/Profile/Offerings/BookingForm/Index";
 import BookingDesktopForm from "@/components/Profile/Offerings/BookingForm/DesktopForm";
 
+import AppointmentScheduler from "@/components/Profile/Offerings/AppointmentScheduler";
+
 export default {
   name: "Offering",
   data() {
@@ -240,6 +256,8 @@ export default {
       selectedVariant: null,
       selectedVariantIndex: -1,
       bookingInProgress: false,
+      selectedSlot: {},
+      showAppointmentScheduler: false,
       showOptions: {
         videoPlayer: false,
         bookingForm: false,
@@ -312,6 +330,7 @@ export default {
     BookingForm,
     BookingDesktopForm,
     InternalMenu,
+    AppointmentScheduler,
   },
   //Check for changes
   beforeRouteLeave(to, from, next) {
@@ -405,8 +424,19 @@ export default {
       this.showOptions.description = !this.showOptions.description;
     },
 
+    appointmentSlotBooked(selectedSlot) {
+      this.selectedSlot = selectedSlot;
+      this.showBookingForm();
+    },
+
     showBookingForm() {
-      if (this.offering.activatePayment) {
+      if (
+        this.offering.offeringType == "consultation-call" &&
+        _.isEmpty(this.selectedSlot)
+      ) {
+        this.showAppointmentScheduler = true;
+      } else if (this.offering.activatePayment) {
+        this.showAppointmentScheduler = false;
         this.showOptions.bookingForm = true;
 
         //User Insights: Extacting user data for insights
@@ -745,6 +775,12 @@ export default {
     }
   }
 
+  .cover-image {
+    border: 5px solid #ffffff;
+    box-shadow: 0 0.5rem 0.7rem -0.5rem #b4b4b4;
+    width: calc(100% - 10px);
+  }
+
   .hero-wrapper-block {
     position: relative;
     z-index: 1;
@@ -753,9 +789,9 @@ export default {
   .header-wrapper {
     position: relative;
     background: #eee;
-    margin: 1rem 1rem 0.5rem;
-    border-radius: 0.5rem;
-    width: calc(100% - 4rem);
+    // margin: 1rem 1rem 0.5rem;
+    // border-radius: 0.5rem;
+    width: calc(100% - 2rem);
     border: 1px solid #e3e3e3;
 
     .btn {
@@ -782,7 +818,7 @@ export default {
       background-color: darken($whiteColor, 11%);
       position: absolute;
       height: 1px;
-      bottom: -0.5rem;
+      bottom: -0.35rem;
       left: 1.5rem;
       width: calc(100% - 3rem);
     }
@@ -835,7 +871,7 @@ export default {
   }
 
   .header-wrapper {
-    position: fixed;
+    position: fixed !important;
     top: 0;
     width: calc(100% - 2rem);
 
@@ -984,7 +1020,7 @@ export default {
 
     .hero-wrapper {
       z-index: 2;
-      padding: 2.5rem 0 3rem;
+      padding: 6rem 0 3rem;
       background: #fff;
       border-bottom-left-radius: 2rem;
       border-bottom-right-radius: 2rem;

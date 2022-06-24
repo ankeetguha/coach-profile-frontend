@@ -352,6 +352,30 @@ class CoachService {
         })
     }
 
+    static GetBookedSlots(fields) {
+        return new Promise((resolve, reject) => {
+            resolve(
+                (async() => {
+                    try {
+                        return await axios.post(`${apiURL}/coach/get-booked-slots`, {
+                                fields
+                            }, {
+                                withCredentials: true
+                            })
+                            .then((response) => {
+                                return response.data;
+                            }, (error) => {
+                                return error.response.data;
+                            });
+                    } catch (e) {
+                        console.log('err', e);
+                        reject(e);
+                    }
+                })()
+            );
+        })
+    }
+
 }
 
 export default CoachService;

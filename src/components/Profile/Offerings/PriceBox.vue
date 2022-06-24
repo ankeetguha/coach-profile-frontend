@@ -158,27 +158,28 @@ export default {
 //Light Theme
 .light-theme {
   .price-box {
-    background-color: $whiteColor;
+    // background-color: $whiteColor;
     box-shadow: 0 0 1rem 0.15rem #dbdbdb;
   }
+  
 
-  .price-icon {
-    display: none;
-  }
+  // .price-icon {
+  //   display: none;
+  // }
 
-  .price-wrapper {
-    label {
-      color: lighten($blackColor, 25%);
-    }
+  // .price-wrapper {
+  //   label {
+  //     color: lighten($blackColor, 25%);
+  //   }
 
-    .offering-price {
-      color: $blackColor;
-    }
-    .slashed-price {
-      font-weight: $mediumFontWeight;
-      color: lighten($blackColor, 25%);
-    }
-  }
+  //   .offering-price {
+  //     color: $blackColor;
+  //   }
+  //   .slashed-price {
+  //     font-weight: $mediumFontWeight;
+  //     color: lighten($blackColor, 25%);
+  //   }
+  // }
 }
 
 

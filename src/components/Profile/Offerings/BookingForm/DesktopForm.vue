@@ -157,6 +157,8 @@ export default {
 //Light theme
 .light-theme {
   .booking-modal {
+    background-color: #F9F9F9;
+    border: 1px solid #ECECEC;
     box-shadow: 0 0 0.7rem -0.15rem rgba(41, 41, 41, 0.35);
   }
 
@@ -165,6 +167,9 @@ export default {
   }
 
   .hero-wrapper {
+    h3 {
+      color: $blackColor;
+    }
     span {
       color: $whiteColor;
     }

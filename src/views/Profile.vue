@@ -16,7 +16,10 @@
         :class="{ show: showRouteModal }"
       >
         <div class="modal-content">
-          <router-view :coach="coach" @messageCoach="messageCoach"></router-view>
+          <router-view
+            :coach="coach"
+            @messageCoach="messageCoach"
+          ></router-view>
         </div>
       </div>
       <!--END: Router Wrapper-->
@@ -142,7 +145,7 @@ export default {
   methods: {
     messageCoach() {
       this.$refs.coachEnquiry.showMessageModal();
-    }
+    },
   },
 };
 </script>
@@ -214,6 +217,10 @@ export default {
   position: relative;
   background-color: #e8e8e8;
 
+  .main-body {
+    background-color: #e8e8e8;
+  }
+
   body::before {
     content: "";
     position: fixed;
@@ -236,7 +243,9 @@ export default {
   //Light Theme Styles
   .light-theme {
     position: relative;
-    background-color: $lightWhiteColor;
+    .main-body {
+      background-color: #f9f9f9;
+    }
   }
 }
 </style>

@@ -8,7 +8,10 @@
       </div>
 
       <!--START: Online Plan Details-->
-      <div v-if="offeringType == 'diy-plan' || offeringType == 'video-course'" class="offering-type-details">
+      <div
+        v-if="offeringType == 'diy-plan' || offeringType == 'video-course'"
+        class="offering-type-details"
+      >
         <h3>{{ offeringTitle }}</h3>
         <p>Login and access your plan to get started</p>
         <a
@@ -28,7 +31,11 @@
         <p>Access your E-Book downloads</p>
         <div v-if="mobilePlatform != 'iOS'">
           <!--START: Attachments for Android-->
-          <div v-for="attachment in attachments.list" :key="attachment.id" class="attachments-file-wrapper">
+          <div
+            v-for="attachment in attachments.list"
+            :key="attachment.id"
+            class="attachments-file-wrapper"
+          >
             <img src="@/assets/images/icons/file.png" alt="Attachment" />
             <label>{{ attachment.name }}</label>
             <a
@@ -45,7 +52,11 @@
 
         <!--START: Attachments for iOS-->
         <div v-else>
-          <div v-for="attachment in attachments.list" :key="attachment.id" class="attachments-file-wrapper">
+          <div
+            v-for="attachment in attachments.list"
+            :key="attachment.id"
+            class="attachments-file-wrapper"
+          >
             <div class="email-attachments-file">
               <img src="@/assets/images/icons/file.png" alt="Attachment" />
               <label>{{ attachment.name }}</label>
@@ -59,6 +70,16 @@
         <!--END: Attachments for iOS-->
       </div>
       <!--END: E-Book Details-->
+
+      <!--START: Consultation Call-->
+      <div
+        v-if="offeringType == 'consultation-call'"
+        class="offering-type-details"
+      >
+        <h3>{{ offeringTitle }}</h3>
+        <p>You will receieve an e-mail with details of your scheduled call</p>
+      </div>
+      <!--END: Consultation Call-->
 
       <!--START: Close Modal-->
       <unicon name="times" class="btn-close" @click="closeModal"></unicon>
@@ -99,7 +120,7 @@ export default {
       return content;
     },
     //Initialise the attachments
-    getAttachmentsPath: function() {
+    getAttachmentsPath: function () {
       let path = "/download";
       if (
         process.env.VUE_APP_MODE == "development" ||
@@ -116,7 +137,7 @@ export default {
       path += `?bookingID=${this.attachments.bookingID}&phone=${this.attachments.customerPhone}`;
       return path;
     },
-    
+
     getMobileOS: function () {
       const ua = navigator.userAgent;
       if (
@@ -227,8 +248,8 @@ export default {
   align-items: center;
   text-align: left;
   border-top: 1px solid #444;
-  padding-top: .5rem;
-  margin-top: .5rem;
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
 
   img {
     width: 2rem;
@@ -309,6 +330,7 @@ export default {
       color: lighten($blackColor, 20%);
     }
   }
+  
 }
 
 //Desktop Styles

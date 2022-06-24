@@ -46,6 +46,14 @@
       @closeWorkoutModal="closeWorkoutsModal"
     ></WorkoutExercises>
     <!--START: Workout Exercises-->
+
+    <!--START: Personal Training-->
+    <Appointment
+      v-if="offering.offeringType == 'consultation-call'"
+      :consultationCall="offering.consultationCall"
+    >
+    </Appointment>
+    <!--END: Personal Training-->
   </div>
 </template>
 
@@ -57,6 +65,7 @@ import WorkoutExercises from "@/components/Plan/WorkoutExercises";
 import EBook from "./EBook";
 import VideoCourse from "./VideoCourse";
 import PersonalTraining from "./PersonalTraining";
+import Appointment from "./Appointment";
 
 export default {
   name: "OfferingTypePreview",
@@ -78,7 +87,8 @@ export default {
     VideoCourse,
     EBook,
     PersonalTraining,
-  },
+    Appointment
+},
 
   methods: {
     playIntroVideo() {

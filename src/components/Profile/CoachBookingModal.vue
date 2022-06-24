@@ -29,7 +29,7 @@
             <span class="plan-date" v-else></span>
           </div>
 
-          <div v-if="!coach.paymentsActive" class="price-wrapper">
+          <div v-if="!coach.isSubscribed || !coach.paymentsActive" class="price-wrapper">
             <div
               v-if="
                 plan.isDiscountedPlan != undefined &&

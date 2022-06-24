@@ -63,13 +63,15 @@ export default {
     getOfferingType() {
       switch (this.offeringType) {
         case "personal-training":
-          return "Personal Training";
+          return "Service Offering";
         case "e-book":
           return "E-Book";
         case "diy-plan":
-          return "DIY Online Plan";
+          return "Fitness Course";
         case "video-course":
           return "Video Course";
+        case "consultation-call":
+          return "Appointment";
         default:
           return null;
       }
@@ -154,7 +156,7 @@ export default {
     .highlight {
       .unicon {
         /deep/ svg {
-          fill: var(--brand-color);
+          // fill: var(--brand-color);
         }
       }
 

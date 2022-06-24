@@ -6,7 +6,7 @@
       v-if="coach.offerings.length"
       :offerings="coach.offerings"
       :coachSlug="coach.slug"
-      :paymentsActive="coach.paymentsActive"
+      :paymentsActive="coach.isSubscribed && coach.paymentsActive"
     ></CoachOfferings>
     <!--END: Offerings List-->
 
@@ -26,8 +26,18 @@
     ></MessageCoach>
     <!--END: Scroll End-->
 
+    <!--START: Expertise-->
+    <CoachExpertise
+      v-if="coach.expertise.length"
+      :coachExpertise="coach.expertise"
+    ></CoachExpertise>
+    <!--END: Expertise-->
+    
     <!--START: Specialities-->
-    <CoachSpecialities :specialities="coach.specialities"></CoachSpecialities>
+    <CoachSpecialities
+      v-else-if="coach.specialities.length && coach.specialities[0] != null"
+      :specialities="coach.specialities"
+    ></CoachSpecialities>
     <!--END: Specialities-->
 
     <!--START: Transformations-->
@@ -48,6 +58,7 @@ import _ from "lodash";
 import CoachPlans from "@/components/Profile/CoachPlans";
 import CoachOfferings from "@/components/Profile/CoachOfferings";
 import MessageCoach from "@/components/Profile/MessageCoach";
+import CoachExpertise from "@/components/Profile/CoachExpertise";
 import CoachSpecialities from "@/components/Profile/CoachSpecialities";
 import CoachTransformations from "@/components/Profile/CoachTransformations";
 
@@ -110,6 +121,7 @@ export default {
     MessageCoach,
     CoachSpecialities,
     CoachTransformations,
+    CoachExpertise
   },
   async created() {
     //Get coach and change meta details

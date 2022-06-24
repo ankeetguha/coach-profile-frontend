@@ -20,13 +20,13 @@
       </div>
       <div class="coach-stat" v-if="coach.clientsTrained">
         <span>{{ coach.clientsTrained }}+</span>
-        <label>Clients Trained</label>
+        <label>Students</label>
       </div>
     </div>
     <!--END: Statistics-->
 
     <div class="about-description-wrapper">
-      <label class="label-small">About Coach</label>
+      <label class="label-small">About Me</label>
       <p class="about-description">
         {{ coach.description }}
       </p>

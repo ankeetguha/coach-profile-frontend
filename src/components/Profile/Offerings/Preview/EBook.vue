@@ -1,7 +1,7 @@
 <template>
   <div class="ebook-preview-wrapper">
     <div class="pattern">
-      <svg :data-src="require('@/assets/images/ebook-pattern.svg')" />
+      <svg :data-src="require('@/assets/images/ebook-pattern.svg')"></svg>
     </div>
     <div class="info-wrapper">
       <unicon name="paperclip"></unicon>
@@ -87,13 +87,13 @@ export default {
     background-color: $whiteColor;
     border-color: darken($whiteColor, 10%);
 
-     h3 {
-       color: $blackColor;
-     }
+    h3 {
+      color: $blackColor;
+    }
 
-     p {
-       color: lighten($blackColor, 10%);
-     }
+    p {
+      color: lighten($blackColor, 10%);
+    }
   }
 
   .pattern {
