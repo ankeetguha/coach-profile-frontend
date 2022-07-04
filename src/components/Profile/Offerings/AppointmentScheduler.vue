@@ -1,10 +1,15 @@
 <template>
   <div class="appointment-scheduler-wrapper">
     <div class="appointment-scheduler">
+      <unicon name="times" class="close-modal" @click="closeModal"></unicon>
+      <span v-if="showSlots" class="show-calendar" @click="showCalendar"
+        ><unicon name="angle-left"></unicon>Go Back</span
+      >
       <div class="scroll-modal">
+        <!--START: Calendar Picker-->
         <div v-if="!showSlots">
           <h3>Select date & time</h3>
-          <!--START: Calendar Picker-->
+
           <Datepicker
             placeholder="Select a date"
             class="datepicker"
@@ -39,7 +44,10 @@
           >
           <div
             class="timeslot"
-            :class="{ selected: index == selectedSlotIndex }"
+            :class="{
+              selected: index == selectedSlotIndex,
+              booked: timeSlot.bookedSlot == true,
+            }"
             v-for="(timeSlot, index) in timeSlots"
             :key="index"
             @click="slotSelected(index, timeSlot)"
@@ -83,9 +91,11 @@ export default {
       showSlots: false,
       offeringDays: [],
       timeSlots: [],
+      bookedSlots: [],
       selectedDay: null,
       selectedSlot: null,
       selectedSlotIndex: -1,
+      timeZone: "0000",
       appointment: {
         value: null,
         disabledDates: {
@@ -100,19 +110,19 @@ export default {
   },
   props: {
     consultationCall: Object,
-    coachSlug: String
+    coachSlug: String,
   },
   components: {
     Datepicker,
   },
   created() {
     this.initAvailableDays();
-    this.getBookedSlots();
   },
   methods: {
     //Set the available days from the offering
     initAvailableDays() {
       this.offeringDays = this.consultationCall.scheduler.days;
+      this.timeZone = this.consultationCall.timeZone;
 
       let enabledDays = [];
       let disabledDays = [];
@@ -128,66 +138,135 @@ export default {
       });
       this.appointment.availableDays.days = enabledDays;
       this.appointment.disabledDates.days = disabledDays;
+
+      this.getBookedSlots();
     },
 
     async getBookedSlots() {
       const response = await CoachService.GetBookedSlots({
         coachSlug: this.coachSlug,
       });
+      this.bookedSlots = response.data;
+    },
 
-      console.log(response);
+    checkBookedSlots() {
+      let bookedSlots = this.bookedSlots;
+      this.timeSlots.forEach(function (slot) {
+        bookedSlots.forEach(function (bookedSlot) {
+          let slotStartDate = new Date(slot.startTime.format());
+          let slotEndDate = new Date(slot.endTime.format());
+          let bookedSlotStartDate = new Date(bookedSlot.startDate);
+          let bookedSlotEndDate = new Date(bookedSlot.endDate);
+
+          if (
+            (bookedSlotStartDate >= slotStartDate &&
+              bookedSlotStartDate < slotEndDate) ||
+            (bookedSlotEndDate > slotStartDate &&
+              bookedSlotEndDate <= slotEndDate)
+          )
+            slot.bookedSlot = true;
+        });
+      });
     },
 
     //Select Date
     dateSelected(date) {
       this.selectedDay = date;
       var dateObj = new Date(date);
-      var clickedDay = this.moment(dateObj).day();
 
+      //Convert date with Monday to 0
+      var clickedDay = this.moment(dateObj).day();
       if (clickedDay == 0) clickedDay = 6;
       else clickedDay = clickedDay - 1;
 
-      const selectedDay = this.offeringDays[clickedDay];
-      this.constructTimeslots(selectedDay.timeSlots);
+      let selectedDays = [];
+      const initalClickedDay = clickedDay;
+
+      //Traverse through previous, current and next day
+      for (let i = 0; i < 3; i++) {
+        let currentDay = initalClickedDay - 1 + i;
+        if (currentDay == -1) currentDay = 6;
+        else if (currentDay == 7) currentDay = 0;
+
+        dateObj = new Date(date);
+        dateObj = new Date(
+          dateObj.setDate(dateObj.getDate() + (i - 1))
+        ).setHours(12, 0, 0, 0);
+        if (
+          this.offeringDays[currentDay].isActive &&
+          dateObj >= new Date().setHours(12, 0, 0, 0)
+        )
+          selectedDays.push({
+            day: this.offeringDays[currentDay],
+            date: this.moment(dateObj).format("Y-MM-DD"),
+          });
+      }
+
+      this.constructTimeslots(selectedDays);
+      this.checkBookedSlots();
     },
 
     //Construct time slots
-    constructTimeslots(timeSlots) {
+    constructTimeslots(selectedDays) {
       const slotDuration = this.consultationCall.duration;
       const ele = this;
 
       var overallSlots = [];
-      timeSlots.forEach(function (timeSlot) {
-        let startTime = ele.moment(timeSlot.startTime, "HH:mm A");
-        let endTime = ele.moment(timeSlot.endTime, "HH:mm A");
+      selectedDays.forEach(function (selectedDay) {
+        selectedDay.day.timeSlots.forEach(function (timeSlot) {
+          let startTime = ele.moment(timeSlot.startTime, "HH:mm A");
+          let endTime = ele.moment(timeSlot.endTime, "HH:mm A");
 
-        let timeDiff = ele.moment.duration(endTime.diff(startTime));
-        let hours = parseInt(timeDiff.asHours());
-        let minutesDiff = hours * 60;
+          let timeDiff = ele.moment.duration(endTime.diff(startTime));
+          let hours = parseInt(timeDiff.asHours());
+          let minutesDiff = hours * 60;
 
-        for (let i = 0; i < minutesDiff; i = i + slotDuration) {
-          let tempStartTime = _.cloneDeep(startTime);
-          let tempEndTime = _.cloneDeep(startTime);
-          let slotStartTime = tempStartTime.add(i, "minutes").format("hh:mm A");
-          let slotEndTime = tempEndTime
-            .add(i + slotDuration, "minutes")
-            .format("hh:mm A");
+          for (let i = 0; i < minutesDiff; i = i + slotDuration) {
+            let slotStartTime = ele.getSlotTime(
+              _.cloneDeep(startTime),
+              i,
+              selectedDay.date
+            );
+            let slotEndTime = ele.getSlotTime(
+              _.cloneDeep(startTime),
+              i + slotDuration,
+              selectedDay.date
+            );
 
-          overallSlots.push({
-            slot: `${slotStartTime} - ${slotEndTime}`,
-            startTime: slotStartTime,
-            endTime: slotEndTime,
-          });
-        }
+            //Check if the day is the same
+            if (slotStartTime.isSame(ele.selectedDay, "date"))
+              overallSlots.push({
+                slot: `${slotStartTime.format("h:mm A")} - ${slotEndTime.format(
+                  "h:mm A"
+                )}`,
+                startTime: slotStartTime,
+                endTime: slotEndTime,
+                bookedSlot: false,
+              });
+          }
+        });
       });
 
       this.timeSlots = overallSlots;
       this.showSlots = true;
     },
 
+    getSlotTime(slotTime, timeDiff, currentDate) {
+      let calculatedTime = slotTime.add(timeDiff, "minutes").format("hh:mm A");
+      calculatedTime = new Date(
+        `${this.moment(currentDate).format("Y-MM-DD")}T${this.convertTime(
+          calculatedTime
+        )}:00.000${this.moment.tz(currentDate, this.timeZone).format("Z")}`
+      );
+
+      return this.moment(calculatedTime);
+    },
+
     slotSelected(index, timeSlot) {
-      this.selectedSlotIndex = index;
-      this.selectedSlot = timeSlot;
+      if (!timeSlot.bookedSlot) {
+        this.selectedSlotIndex = index;
+        this.selectedSlot = timeSlot;
+      }
     },
 
     bookSlot() {
@@ -195,6 +274,33 @@ export default {
         date: this.selectedDay,
         slot: this.selectedSlot,
       });
+    },
+
+    convertTime(timeStr) {
+      const [time, modifier] = timeStr.split(" ");
+      let [hours, minutes] = time.split(":");
+      if (hours === "12") {
+        hours = "00";
+      }
+      if (modifier === "PM") {
+        hours = parseInt(hours, 10) + 12;
+      }
+      return `${hours}:${minutes}`;
+    },
+
+    showCalendar() {
+      this.showSlots = false;
+      this.timeSlots = [];
+      this.selectedDay = null;
+      this.selectedSlot = null;
+      this.selectedSlotIndex = -1;
+    },
+
+    closeModal() {
+      this.showSlots = false;
+      this.offeringDays = [];
+      this.timeSlots = [];
+      this.$emit("closeModal");
     },
   },
 
@@ -293,6 +399,49 @@ export default {
 
   &.selected {
     background-color: lighten($darkGreenColor, 40%);
+  }
+
+  &.booked {
+    font-weight: normal !important;
+    background-color: lighten($redColor, 35%);
+    color: $redColor;
+    border-color: $redColor;
+  }
+}
+.show-calendar {
+  position: absolute;
+  right: 0.25rem;
+  top: -2.25rem;
+  cursor: pointer;
+  z-index: 10;
+  color: $whiteColor;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: $smallerFontSize;
+
+  /deep/ {
+    svg {
+      fill: $whiteColor;
+      height: auto;
+      width: 1rem;
+    }
+  }
+}
+
+.close-modal {
+  position: absolute;
+  right: 0.25rem;
+  top: 0.25rem;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+
+  /deep/ svg {
+    border-radius: 0.75rem;
+    padding: 0.25rem;
+    fill: $lightWhiteColor;
+    background-color: $blackColor;
   }
 }
 .datepicker /deep/ {

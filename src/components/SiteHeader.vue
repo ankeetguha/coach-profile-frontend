@@ -225,6 +225,18 @@ export default {
     background-color: #f7f7f7;
   }
 
+  .cover-image-hero {
+    .hero-wrapper {
+      padding-top: 4.5rem;
+      background-color: #f7f7f7;
+
+      &::before,
+      &::after {
+        display: none;
+      }
+    }
+  }
+
   .profile-image-wrapper::before {
     border-color: $lightWhiteColor;
   }
@@ -300,7 +312,11 @@ export default {
   padding-top: 0;
 
   &::before {
-    background: linear-gradient(180deg, transparent 0, rgba(15, 15, 15, 0.9) 55%);
+    background: linear-gradient(
+      180deg,
+      transparent 0,
+      rgba(15, 15, 15, 0.9) 55%
+    );
     content: "";
     position: absolute;
     top: -6rem;
@@ -309,7 +325,7 @@ export default {
     height: 10rem;
     z-index: -2;
   }
-  
+
   .hero-title {
     margin-bottom: 1rem;
   }
@@ -380,7 +396,7 @@ export default {
 
   .light-theme {
     .header-wrapper {
-      background-color: #F9F9F9;
+      background-color: #f9f9f9;
       padding-bottom: 0;
     }
   }

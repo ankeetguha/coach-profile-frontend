@@ -36,6 +36,23 @@
       </div>
       <!--END: Video Course-->
 
+      <!--START: Online Course-->
+      <div
+        v-show="offeringType == 'online-course'"
+        class="highlights-list"
+        :class="offeringType"
+      >
+        <div class="highlight">
+          <unicon name="dumbbell"></unicon>
+          <span>Course Modules</span>
+        </div>
+        <div class="highlight">
+          <unicon name="bolt-alt"></unicon>
+          <span>Client Dashboard</span>
+        </div>
+      </div>
+      <!--END: Online Course-->
+
       <!--START: E-Book-->
       <div
         v-show="offeringType == 'e-book'"
@@ -70,6 +87,8 @@ export default {
           return "Fitness Course";
         case "video-course":
           return "Video Course";
+        case "online-course":
+          return "Online Course";
         case "consultation-call":
           return "Appointment";
         default:
@@ -129,12 +148,8 @@ export default {
     align-items: center;
     margin-top: 1rem;
 
-    &.e-book,
-    &.diy-plan,
-    &.video-course {
-      /deep/ svg {
-        fill: $yellowColor;
-      }
+    /deep/ svg {
+      fill: $yellowColor;
     }
   }
 }

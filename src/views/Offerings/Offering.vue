@@ -210,6 +210,7 @@
           :coachSlug="coach.slug"
           :consultationCall="offering.consultationCall"
           @slotBooked="appointmentSlotBooked"
+          @closeModal="closeAppointmentModal"
         ></AppointmentScheduler>
         <!--END: Appointment Scheduler-->
       </div>
@@ -427,6 +428,10 @@ export default {
     appointmentSlotBooked(selectedSlot) {
       this.selectedSlot = selectedSlot;
       this.showBookingForm();
+    },
+
+    closeAppointmentModal() {
+      this.showAppointmentScheduler = false;
     },
 
     showBookingForm() {

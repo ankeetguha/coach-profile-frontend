@@ -86,6 +86,14 @@
       ></TelephoneField>
       <!-- END: Phone Number Input -->
 
+      <!-- START: Phone Number Input -->
+      <CountryTelephoneField
+        v-else-if="field.type == 'country-tel'"
+        :field="field"
+        @fieldChanged="fieldChanged()"
+      ></CountryTelephoneField>
+      <!-- END: Phone Number Input -->
+
       <!-- START: Multiple Select Dropdown Input -->
       <Dropdown
         v-else-if="field.type == 'dropdown'"
@@ -143,6 +151,7 @@ import RadioButton from "./RadioButton";
 import ToggleButton from "./ToggleButton";
 import MoneyField from "./MoneyField";
 import TelephoneField from "./TelephoneField";
+import CountryTelephoneField from "./CountryTelephoneField";
 import FileUploadLarge from "./FileUploadLarge";
 import Dropdown from "./Dropdown";
 import MultipleSelectDropdown from "./MultipleSelectDropdown";
@@ -166,6 +175,7 @@ export default {
     ToggleButton,
     MoneyField,
     TelephoneField,
+    CountryTelephoneField,
     FileUploadLarge,
     Dropdown,
     MultipleSelectDropdown,

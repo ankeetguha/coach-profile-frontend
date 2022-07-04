@@ -26,6 +26,7 @@
     "vue-cookie": "^1.1.4",
     "vue-icon-picker": "^1.0.0",
     "vue-meta": "^2.4.0",
+    "vue-phone-number-input": "^1.1.12",
     "vue-router": "^3.5.2",
     "vue-slick-carousel": "^1.0.6",
     "vue-unicons": "^3.2.1",

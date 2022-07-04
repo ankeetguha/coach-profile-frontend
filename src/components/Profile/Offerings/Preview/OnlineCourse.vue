@@ -2,33 +2,13 @@
   <div v-if="modules.length != 0" class="course-preview-wrapper">
     <div class="title-wrapper">
       <h3 class="title">
-        <label>{{ modules.length }} Modules</label>Video Course Modules
+        <label>{{ modules.length }} Modules</label>Online Course Modules
       </h3>
     </div>
     <div class="modules">
-      <!--START: Intro Video-->
-      <div
-        v-if="introVideoURL != null"
-        class="intro-video-wrapper"
-        @click="playIntroVideo"
-      >
-        <label class="label-small">Watch: Introduction</label>
-        <div class="intro-video">
-          <img :src="getYoutubeThumbnail(introVideoURL, 'max')" />
-          <div class="video-wrapper float">
-            <unicon name="play" class="play-btn"></unicon>
-            <div class="video-info">
-              <span>Watch the Video</span>
-              <h3>Plan Introduction</h3>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--END: Intro Video-->
-
       <div v-for="(module, index) in modules" :key="index" class="module">
         <span>{{ index + 1 }}</span>
-        <h3>{{ module }}</h3>
+        <h3>{{ module.title }}</h3>
         <unicon class="locked-icon" name="lock"></unicon>
       </div>
     </div>
@@ -40,75 +20,33 @@
 import CoachService from "@/controllers/CoachService";
 
 export default {
-  name: "VideoCoursePreview",
+  name: "OnlineCoursePreview",
   data() {
     return {
       showOnlinePlanLoader: false,
-      hasVideoCourse: false,
       modules: [],
     };
   },
   props: {
     offeringSlug: String,
     coachSlug: String,
-    introVideoURL: String,
   },
   components: {},
   async created() {
-    await this.getVideoCourse();
+    await this.getOnlineCourse();
   },
   methods: {
-    async getVideoCourse() {
-      var response = await CoachService.GetVideoCourse({
+    async getOnlineCourse() {
+      var response = await CoachService.GetOnlineCourse({
         coachSlug: this.coachSlug,
         offeringSlug: this.offeringSlug,
       });
 
       if (!response.hasError) {
         this.modules = response.data;
-        this.hasVideoCourse = true;
-      } else this.hasVideoCourse = false;
+      }
 
       this.showOnlinePlanLoader = false;
-    },
-
-    playIntroVideo() {
-      this.$emit("playIntroVideo");
-    },
-
-    getYoutubeThumbnail(url, quality) {
-      if (url) {
-        var video_id, thumbnail, result;
-        if ((result = url.match(/youtube\.com.*(\?v=|\/embed\/)(.{11})/))) {
-          video_id = result.pop();
-        } else if ((result = url.match(/youtu.be\/(.{11})/))) {
-          video_id = result.pop();
-        }
-
-        if (video_id) {
-          if (typeof quality == "undefined") {
-            quality = "high";
-          }
-
-          var quality_key = "maxresdefault"; // Max quality
-          if (quality == "low") {
-            quality_key = "sddefault";
-          } else if (quality == "medium") {
-            quality_key = "mqdefault";
-          } else if (quality == "high") {
-            quality_key = "hqdefault";
-          }
-
-          thumbnail =
-            "http://img.youtube.com/vi/" +
-            video_id +
-            "/" +
-            quality_key +
-            ".jpg";
-          return thumbnail;
-        }
-      }
-      return false;
     },
   },
 };

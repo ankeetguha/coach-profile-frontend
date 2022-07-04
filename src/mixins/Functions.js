@@ -61,6 +61,10 @@ export default {
             return false;
           else return true;
 
+        case "country-tel":
+          if (field.required && !field.isValid) return false;
+          else return true;
+
         case "toggle":
         case "checkbox":
           return true;

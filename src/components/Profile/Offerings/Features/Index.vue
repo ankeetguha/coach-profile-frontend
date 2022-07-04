@@ -15,6 +15,15 @@
     >
     </VideoCourse>
     <!--END: Online Plan-->
+
+    
+    <!--START: Online Course-->
+    <OnlineCourse
+      v-show="offering.offeringType == 'online-course'"
+      :coachSlug="coachSlug"
+    >
+    </OnlineCourse>
+    <!--END: Online Course-->
   </div>
 </template>
 
@@ -22,6 +31,7 @@
 //Import components
 import OnlinePlan from "./OnlinePlan";
 import VideoCourse from "./VideoCourse";
+import OnlineCourse from "./OnlineCourse";
 
 export default {
   name: "OfferingTypeFeatures",
@@ -31,7 +41,8 @@ export default {
   },
   components: {
     OnlinePlan,
-    VideoCourse
+    VideoCourse,
+    OnlineCourse
   },
   methods: {},
 };

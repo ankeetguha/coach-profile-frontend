@@ -79,6 +79,8 @@ export default {
           return "Fitness Course";
         case "video-course":
           return "Video Course";
+        case "online-course":
+          return "Online Course";
         case "consultation-call":
           return "Appointment";
         default:

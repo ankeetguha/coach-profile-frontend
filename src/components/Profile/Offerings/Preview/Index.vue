@@ -23,7 +23,16 @@
       @playIntroVideo="playIntroVideo"
     >
     </VideoCourse>
-    <!--END: Online Plan-->
+    <!--END: Video Course-->
+
+    <!--START: Online Course-->
+    <OnlineCourse
+      v-if="offering.offeringType == 'online-course'"
+      :offeringSlug="offering.slug"
+      :coachSlug="coachSlug"
+    >
+    </OnlineCourse>
+    <!--END: Online Course-->
 
     <!--START: E-Book-->
     <EBook v-if="offering.offeringType == 'e-book'"> </EBook>
@@ -64,6 +73,7 @@ import WorkoutExercises from "@/components/Plan/WorkoutExercises";
 
 import EBook from "./EBook";
 import VideoCourse from "./VideoCourse";
+import OnlineCourse from "./OnlineCourse";
 import PersonalTraining from "./PersonalTraining";
 import Appointment from "./Appointment";
 
@@ -85,6 +95,7 @@ export default {
     WorkoutExercises,
     OnlinePlanSampleWorkouts,
     VideoCourse,
+    OnlineCourse,
     EBook,
     PersonalTraining,
     Appointment
