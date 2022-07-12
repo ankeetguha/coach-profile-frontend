@@ -8,8 +8,7 @@ export default {
   methods: {
     async getCoach(fields) {
       if (_.isEmpty(this.$store.state.coach)) {
-        const coach = await CoachService.GetCoach(fields);
-
+        let coach = await CoachService.GetCoach(fields);
         this.$store.commit("updateCoach", coach);
 
         return coach;

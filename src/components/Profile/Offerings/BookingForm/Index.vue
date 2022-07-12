@@ -187,7 +187,7 @@ export default {
     if (
       this.coach.isSubscribed &&
       this.coach.paymentsActive &&
-      this.offering.activatePayment
+      this.offering.soldOut != true
     ) {
       this.initPaymentGateway();
     }
@@ -233,26 +233,36 @@ export default {
         offeringSlug: this.offering.slug,
         selectedVariantIndex: this.selectedVariantIndex,
         discountCode: this.discountDetails.code,
-        selectedSlot: this.selectedSlot
+        selectedSlot: this.selectedSlot,
       };
 
       //Show the payment loader
       if (
         this.coach.isSubscribed &&
         this.coach.paymentsActive &&
-        this.offering.activatePayment
+        this.offering.soldOut != true
       ) {
         this.showOptions.paymentLoader = true;
         this.paymentCompleted = false;
       }
 
       const bookingResult = await CoachService.BookOffering(formFields);
+      console.log(bookingResult);
       if (
         this.coach.isSubscribed &&
         this.coach.paymentsActive &&
-        this.offering.activatePayment
+        this.offering.soldOut != true
       ) {
-        this.launchPayment(bookingResult);
+        if (bookingResult.type != "booking") this.launchPayment(bookingResult);
+        else {
+          if (this.offering.offeringType == "e-book") {
+            this.attachmentsResponse = bookingResult;
+          }
+
+          this.showOptions.status = false;
+          this.showOptions.successMessage = true;
+          this.resetFields(this.fields);
+        }
       }
     },
 

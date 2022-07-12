@@ -22,7 +22,7 @@
       <!--START: Offering Price-->
     </div>
     <div class="filler"></div>
-    <button v-if="activatePayment" class="btn btn-primary">Book Now</button>
+    <button v-if="!soldOut" class="btn btn-primary">Book Now</button>
     <span v-else class="sold-out">
       Sold Out
     </span>
@@ -34,7 +34,7 @@ export default {
   name: "OfferingPriceBox",
   props: {
     price: Object,
-    activatePayment: Boolean
+    soldOut: Boolean
   },
 
   methods: {

@@ -17,7 +17,7 @@
             : convertToIndianNumber(getOfferingPrice.originalPrice)
         }}</em>
       </span>
-      <span v-if="activatePayment == false" class="sold-out">Sold Out</span>
+      <span v-if="soldOut" class="sold-out">Sold Out</span>
     </div>
     <!--START: Offering Price-->
   </div>
@@ -28,7 +28,7 @@ export default {
   name: "OfferingPriceDetails",
   props: {
     price: Object,
-    activatePayment: {
+    soldOut: {
       type: Boolean,
       default: true,
     },

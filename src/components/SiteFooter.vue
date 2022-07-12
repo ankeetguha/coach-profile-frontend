@@ -8,7 +8,6 @@
           class="footer-logo"
           alt="Skipper Logo"
         />
-        
       </router-link>
       <div class="disclaimer">
         <div class="india-love">
@@ -22,6 +21,19 @@
             by Skipper
           </h3>
         </div>
+
+        <div class="policies-wrapper">
+          <router-link
+            v-for="(policy, index) in policies"
+            :key="index"
+            class="policy-link"
+            :to="`/${!$store.state.isSubDomain ? coach.slug + '/' : ''}${
+              policy.url
+            }`"
+            >{{ policy.title }}
+          </router-link>
+        </div>
+
         &copy; 2021 AGZ Technologies Private Limited. All Rights Reserved.
       </div>
     </div>
@@ -31,8 +43,39 @@
 <script>
 export default {
   name: "SiteFooter",
+  data() {
+    return {
+      policies: {},
+      policyMap: {
+        privacyPolicy: {
+          url: "privacy-policy",
+          title: "Privacy Policy",
+        },
+        termsOfUse: {
+          url: "terms-of-use",
+          title: "Terms Of Use",
+        },
+        cancellationPolicy: {
+          url: "cancellation-policy",
+          title: "Cancellation Policy",
+        },
+      },
+    };
+  },
   props: {
     coach: Object,
+  },
+  created() {
+    this.initPolicies();
+  },
+  methods: {
+    initPolicies() {
+      for (var policy in this.coach.policies) {
+        if (this.coach.policies[policy] != null) {
+          this.policies[policy] = this.policyMap[policy];
+        }
+      }
+    },
   },
 };
 </script>
@@ -125,6 +168,14 @@ span {
 
   100% {
     transform: scale(1);
+  }
+}
+
+.policies-wrapper {
+  margin: 0.75rem 0;
+
+  a {
+    border: none;
   }
 }
 

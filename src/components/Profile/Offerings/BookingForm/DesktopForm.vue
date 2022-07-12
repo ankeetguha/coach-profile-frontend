@@ -20,7 +20,7 @@
       </div>
 
       <!--START: Button Actions-->
-      <div v-if="activatePayment" class="btn-wrapper">
+      <div v-if="!soldOut" class="btn-wrapper">
         <button type="button" class="btn btn-primary" @click="showBooking">
           Make Payment
         </button>
@@ -46,7 +46,7 @@ export default {
     offering: Object,
     selectedVariant: Object,
     selectedVariantIndex: Number,
-    activatePayment: Boolean,
+    soldOut: Boolean,
   },
 
   methods: {

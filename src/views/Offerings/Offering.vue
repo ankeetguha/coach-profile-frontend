@@ -30,34 +30,12 @@
       <div class="hero-wrapper">
         <div class="hero-wrapper-block">
           <!--START: Cover-->
-          <div
-            class="cover-image-wrapper"
-            :class="{
-              extend:
-                offering.coverVideoURL != undefined &&
-                offering.offeringType != 'video-course',
-            }"
-            @click="showVideoPlayer"
-          >
+          <div class="cover-image-wrapper">
             <img
               :src="offering.coverImageURL"
               class="cover-image"
               alt="Cover Image"
             />
-            <div
-              v-if="
-                offering.coverVideoURL != undefined &&
-                offering.offeringType != 'video-course'
-              "
-              class="video-wrapper"
-              :class="{ float: offering.coverImageURL != undefined }"
-            >
-              <unicon name="play" class="play-btn"></unicon>
-              <div class="video-info">
-                <span>Watch the Video</span>
-                <h3>Plan Introduction</h3>
-              </div>
-            </div>
           </div>
           <!--END: Cover-->
 
@@ -88,6 +66,15 @@
           <!--END: Variants-->
         </div>
       </div>
+
+      <VideoPreview
+        :introVideoURL="
+          offering.coverVideoURL != undefined && offering.coverVideoURL != null
+            ? offering.coverVideoURL
+            : null
+        "
+        @playIntroVideo="showVideoPlayer"
+      ></VideoPreview>
 
       <!--START: Preview Type-->
       <TypePreview
@@ -173,7 +160,7 @@
           class="price-box"
           :class="{ show: showOptions.priceBox }"
           :price="selectedVariant"
-          :activatePayment="offering.activatePayment"
+          :soldOut="offering.soldOut == null ? false : offering.soldOut"
           :offeringType="offering.offeringType"
           @showBookingForm="showBookingForm"
         ></PriceBox>
@@ -181,7 +168,7 @@
 
         <!--START: Booking Form-->
         <BookingForm
-          v-if="offering.activatePayment"
+          v-if="offering.soldOut != true"
           :coach="coach"
           :offering="offering"
           :selectedVariant="selectedVariant"
@@ -196,7 +183,7 @@
           :offering="offering"
           :selectedVariant="selectedVariant"
           :selectedVariantIndex="selectedVariantIndex"
-          :activatePayment="offering.activatePayment"
+          :soldOut="offering.soldOut == null ? false : offering.soldOut"
           @showBooking="showBookingForm"
         ></BookingDesktopForm>
         <!--END: Booking Form-->
@@ -248,6 +235,7 @@ import BookingForm from "@/components/Profile/Offerings/BookingForm/Index";
 import BookingDesktopForm from "@/components/Profile/Offerings/BookingForm/DesktopForm";
 
 import AppointmentScheduler from "@/components/Profile/Offerings/AppointmentScheduler";
+import VideoPreview from "../../components/Profile/Offerings/VideoPreview.vue";
 
 export default {
   name: "Offering",
@@ -332,6 +320,7 @@ export default {
     BookingDesktopForm,
     InternalMenu,
     AppointmentScheduler,
+    VideoPreview,
   },
   //Check for changes
   beforeRouteLeave(to, from, next) {
@@ -440,7 +429,7 @@ export default {
         _.isEmpty(this.selectedSlot)
       ) {
         this.showAppointmentScheduler = true;
-      } else if (this.offering.activatePayment) {
+      } else if (this.offering.soldOut != true) {
         this.showAppointmentScheduler = false;
         this.showOptions.bookingForm = true;
 
@@ -745,6 +734,10 @@ export default {
   }
 }
 
+.intro-video-wrapper {
+  margin: 2rem 1.5rem 1rem;
+}
+
 //Light Theme styles
 .light-theme {
   .offering {
@@ -903,7 +896,8 @@ export default {
   .offering-inclusions,
   .offering-highlights,
   .transformations-wrapper,
-  .offering-faqs {
+  .offering-faqs,
+  .intro-video-wrapper {
     width: 42vw;
     margin-left: 13.5vw;
   }
@@ -917,9 +911,11 @@ export default {
     .offering-inclusions,
     .offering-highlights,
     .transformations-wrapper,
-    .offering-faqs {
+    .offering-faqs,
+    .intro-video-wrapper {
       width: 50%;
-      margin: auto;
+      margin-left: auto;
+      margin-right: auto;
     }
   }
 

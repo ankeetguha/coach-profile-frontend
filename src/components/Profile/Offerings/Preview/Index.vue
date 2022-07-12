@@ -15,12 +15,6 @@
       v-if="offering.offeringType == 'video-course'"
       :offeringSlug="offering.slug"
       :coachSlug="coachSlug"
-      :introVideoURL="
-        offering.coverVideoURL != undefined && offering.coverVideoURL != null
-          ? offering.coverVideoURL
-          : null
-      "
-      @playIntroVideo="playIntroVideo"
     >
     </VideoCourse>
     <!--END: Video Course-->
@@ -102,9 +96,6 @@ export default {
 },
 
   methods: {
-    playIntroVideo() {
-      this.$emit("playIntroVideo");
-    },
     showWorkoutsModal() {
       this.$emit("toggleSampleWorkouts", true);
     },

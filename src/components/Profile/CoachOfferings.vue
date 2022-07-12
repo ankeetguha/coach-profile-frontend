@@ -41,7 +41,7 @@
           <PriceDetails
             v-if="paymentsActive"
             :price="offering.price"
-            :activatePayment="offering.activatePayment"
+            :soldOut="offering.soldOut == null ? false : offering.soldOut"
           ></PriceDetails>
           <button class="btn">
             View This <unicon name="angle-right"></unicon>
