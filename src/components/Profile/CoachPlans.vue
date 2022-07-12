@@ -34,16 +34,16 @@
                 plan.isDiscountedPlan == false
               "
             >
-              ₹
+              {{getCoachCurrency()}}
               <em>{{ convertToIndianNumber(plan.planPrice) }}</em>
             </span>
             <div v-else>
               <span class="plan-price slashed-price">
-                ₹
+                {{getCoachCurrency()}}
                 <em>{{ convertToIndianNumber(plan.planPrice) }}</em>
               </span>
               <span class="plan-price">
-                ₹
+                {{getCoachCurrency()}}
                 <em>{{ convertToIndianNumber(plan.discountedPrice) }}</em>
               </span>
             </div>

@@ -91,7 +91,7 @@ input[readonly] {
     outline: none;
     height: auto;
     color: #282828;
-    background-color: #f7f6ff;
+    background-color: #f6f6f6;
     padding: 0.75rem 1.15rem;
     border: 1px solid #e7e6ef;
     border-radius: 0.75rem !important;

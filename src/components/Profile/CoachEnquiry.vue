@@ -16,7 +16,7 @@
           <div class="intro-wrapper">
             <h3>Ask a question</h3>
             <p>
-              Questions about plans, coaching styles, timings. Ask me anything!
+              Questions about courses, classes and more. Ask me anything!
             </p>
           </div>
         </div>
@@ -86,7 +86,7 @@ export default {
           hasError: false,
         },
         phone: {
-          type: "tel",
+          type: "country-tel",
           title: "Phone Number*",
           placeholder: "Your 10 digit number",
           required: true,

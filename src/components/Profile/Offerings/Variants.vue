@@ -35,13 +35,13 @@
             }"
           >
             <span class="original-price"
-              ><span class="currency-icon">₹</span
+              ><span class="currency-icon">{{getCoachCurrency()}}</span
               >{{ convertToIndianNumber(variant.originalPrice) }}</span
             >
             <span
               v-if="variant.discountedPrice != undefined"
               class="discounted-price"
-              ><span class="currency-icon">₹</span
+              ><span class="currency-icon">{{getCoachCurrency()}}</span
               >{{ convertToIndianNumber(variant.discountedPrice) }}</span
             >
           </div>

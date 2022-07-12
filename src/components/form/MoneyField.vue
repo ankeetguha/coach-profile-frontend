@@ -1,7 +1,7 @@
 <template>
   <div class="field-wrapper">
     <div class="field-money-item">
-      <span class="money-label">₹</span>
+      <span class="money-label">{{getCoachCurrency()}}</span>
       <input
         type="number"
         :name="field.name"

@@ -1,12 +1,12 @@
 <template>
   <div class="price-box" @click="showBookingForm">
     <div class="price-info-wrapper">
-      <span class="price-icon">₹</span>
+      <span class="price-icon">{{getCoachCurrency()}}</span>
       <!--START: Offering Price-->
       <div class="price-wrapper">
         <label>Get this for </label>
         <span class="offering-price">
-          ₹<em>{{
+          {{getCoachCurrency()}}<em>{{
             getOfferingPrice.discountedPrice != null
               ? convertToIndianNumber(getOfferingPrice.discountedPrice)
               : convertToIndianNumber(getOfferingPrice.originalPrice)
@@ -16,7 +16,7 @@
           class="slashed-price"
           v-show="getOfferingPrice.discountedPrice != null"
         >
-          <em>₹</em>{{ convertToIndianNumber(getOfferingPrice.originalPrice) }}
+          <em>{{getCoachCurrency()}}</em>{{ convertToIndianNumber(getOfferingPrice.originalPrice) }}
         </span>
       </div>
       <!--START: Offering Price-->

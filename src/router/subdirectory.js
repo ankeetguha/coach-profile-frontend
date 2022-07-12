@@ -12,6 +12,7 @@ import Download from "@/views/Download";
 
 //Coach Policies
 import Policy from "@/views/Policy";
+import Contact from "@/views/Contact";
 
 Vue.use(VueRouter);
 
@@ -55,6 +56,14 @@ export default new VueRouter({
         {
           path: "/:slug/download",
           component: Download,
+          props: true,
+          meta: {
+            showRouteModal: true,
+          },
+        },
+        {
+          path: "/:slug/contact",
+          component: Contact,
           props: true,
           meta: {
             showRouteModal: true,

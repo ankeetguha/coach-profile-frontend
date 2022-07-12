@@ -1,6 +1,6 @@
 <template>
   <div class="price-details">
-    <span class="price-icon">₹</span>
+    <span class="price-icon">{{getCoachCurrency()}}</span>
     <!--START: Offering Price-->
     <div class="price-wrapper">
       <label>Get this for </label>
@@ -8,10 +8,10 @@
         class="slashed-price"
         v-show="getOfferingPrice.discountedPrice != null"
       >
-        <em>₹</em>{{ convertToIndianNumber(getOfferingPrice.originalPrice) }}
+        <em>{{getCoachCurrency()}}</em>{{ convertToIndianNumber(getOfferingPrice.originalPrice) }}
       </span>
       <span class="offering-price">
-        ₹<em>{{
+        {{getCoachCurrency()}}<em>{{
           getOfferingPrice.discountedPrice != null
             ? convertToIndianNumber(getOfferingPrice.discountedPrice)
             : convertToIndianNumber(getOfferingPrice.originalPrice)

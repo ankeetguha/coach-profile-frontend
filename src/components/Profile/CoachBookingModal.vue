@@ -37,15 +37,15 @@
               "
             >
               <span class="plan-price">
-                ₹<em>{{ convertToIndianNumber(plan.discountedPrice) }}</em>
+                {{getCoachCurrency()}}<em>{{ convertToIndianNumber(plan.discountedPrice) }}</em>
               </span>
               <span class="plan-price slashed-price">
-                ₹<em>{{ convertToIndianNumber(plan.planPrice) }}</em>
+                {{getCoachCurrency()}}<em>{{ convertToIndianNumber(plan.planPrice) }}</em>
               </span>
             </div>
             <div v-else>
               <span class="plan-price">
-                ₹<em>{{ convertToIndianNumber(plan.planPrice) }}</em>
+                {{getCoachCurrency()}}<em>{{ convertToIndianNumber(plan.planPrice) }}</em>
               </span>
             </div>
             <span class="plan-date" v-if="plan.hasDates == true"

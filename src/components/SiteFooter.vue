@@ -32,6 +32,11 @@
             }`"
             >{{ policy.title }}
           </router-link>
+          <router-link
+            class="policy-link"
+            :to="`/${!$store.state.isSubDomain ? coach.slug + '/' : ''}contact`"
+            >Contact
+          </router-link>
         </div>
 
         &copy; 2021 AGZ Technologies Private Limited. All Rights Reserved.

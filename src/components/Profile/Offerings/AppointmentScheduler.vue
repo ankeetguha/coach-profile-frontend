@@ -9,7 +9,6 @@
         <!--START: Calendar Picker-->
         <div v-if="!showSlots">
           <h3>Select date & time</h3>
-
           <Datepicker
             placeholder="Select a date"
             class="datepicker"
@@ -100,6 +99,7 @@ export default {
         value: null,
         disabledDates: {
           to: new Date(new Date().setDate(new Date().getDate() - 1)),
+          from: new Date(new Date().setDate(new Date().getDate() + 30)),
           days: [],
         },
         availableDays: {
@@ -139,7 +139,35 @@ export default {
       this.appointment.availableDays.days = enabledDays;
       this.appointment.disabledDates.days = disabledDays;
 
+      this.calculateDateLimits();
       this.getBookedSlots();
+    },
+
+    calculateDateLimits() {
+      if (
+        this.consultationCall.date.startDate != undefined &&
+        this.consultationCall.date.startDate != null
+      ) {
+        let startDate = new Date(
+          this.moment(this.consultationCall.date.startDate, "x").format(
+            "DD MMM YYYY hh:mm a"
+          )
+        );
+        if (startDate > new Date(new Date().setDate(new Date().getDate() - 1)))
+          this.appointment.disabledDates.to = startDate;
+      }
+
+      if (
+        this.consultationCall.date.endDate != undefined &&
+        this.consultationCall.date.endDate != null
+      ) {
+        let endDate = new Date(
+          this.moment(this.consultationCall.date.endDate, "x").format(
+            "DD MMM YYYY hh:mm a"
+          )
+        );
+        this.appointment.disabledDates.from = endDate;
+      }
     },
 
     async getBookedSlots() {
