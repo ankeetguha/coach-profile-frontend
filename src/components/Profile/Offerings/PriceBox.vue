@@ -22,6 +22,7 @@
       <!--START: Offering Price-->
     </div>
     <div class="filler"></div>
+    {{soldOut}}
     <button v-if="!soldOut" class="btn btn-primary">Book Now</button>
     <span v-else class="sold-out">
       Sold Out

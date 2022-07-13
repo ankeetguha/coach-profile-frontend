@@ -247,7 +247,6 @@ export default {
       }
 
       const bookingResult = await CoachService.BookOffering(formFields);
-      console.log(bookingResult);
       if (
         this.coach.isSubscribed &&
         this.coach.paymentsActive &&
@@ -280,42 +279,46 @@ export default {
 
     //Launch Razorpay Modal
     launchPayment(bookingResult) {
-      var razorpayOptions = {
-        key: process.env.VUE_RZP_KEY,
-        name: this.coach.fullName,
-        description: this.offering.title,
-        order_id: bookingResult.rzpOrderID,
-        prefill: {
-          name: this.fields.name.value,
-          email: this.fields.email.value,
-          contact: this.fields.phone.value,
-        },
-        handler: function (response) {
-          window.app.registerPayment(response, bookingResult.orderID);
-        },
-        modal: {
-          ondismiss: function () {
-            window.app.resetPaymentModal();
+      if (bookingResult.paymentURL == undefined) {
+        var razorpayOptions = {
+          key: process.env.VUE_RZP_KEY,
+          name: this.coach.fullName,
+          description: this.offering.title,
+          order_id: bookingResult.rzpOrderID,
+          prefill: {
+            name: this.fields.name.value,
+            email: this.fields.email.value,
+            contact: this.fields.phone.value,
           },
-        },
-        notes: {
-          "Coach Name": this.coach.fullName,
-          "Plan Name": this.offering.title,
-        },
-        theme: {
-          color: "#1e1e1e",
-        },
-      };
+          handler: function (response) {
+            window.app.registerPayment(response, bookingResult.orderID);
+          },
+          modal: {
+            ondismiss: function () {
+              window.app.resetPaymentModal();
+            },
+          },
+          notes: {
+            "Coach Name": this.coach.fullName,
+            "Plan Name": this.offering.title,
+          },
+          theme: {
+            color: "#1e1e1e",
+          },
+        };
 
-      var rzp = new window.Razorpay(razorpayOptions);
-      rzp.open();
-      this.showOptions.paymentLoader = false;
-      this.showOptions.lineLoader = true;
+        var rzp = new window.Razorpay(razorpayOptions);
+        rzp.open();
+        this.showOptions.paymentLoader = false;
+        this.showOptions.lineLoader = true;
 
-      //Handle failed payments
-      rzp.on("payment.failed", function (response) {
-        window.app.failedPayment(response, bookingResult.orderID);
-      });
+        //Handle failed payments
+        rzp.on("payment.failed", function (response) {
+          window.app.failedPayment(response, bookingResult.orderID);
+        });
+      } else {
+        window.location = bookingResult.paymentURL;
+      }
     },
 
     //Verify and register a payment

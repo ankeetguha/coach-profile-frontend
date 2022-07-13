@@ -178,6 +178,7 @@
           @updateBookingStatus="updateBookingStatus"
           @closeForm="closeBookingForm"
         ></BookingForm>
+        
         <BookingDesktopForm
           :coach="coach"
           :offering="offering"

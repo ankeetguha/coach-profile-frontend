@@ -574,4 +574,11 @@ export default {
     border-right: 10px solid $greyColor !important;
   }
 }
+
+//Desktop Styles
+@media screen and (min-width: $mobileWidth) {
+  .appointment-scheduler {
+    width: 30rem;
+  }
+}
 </style>
