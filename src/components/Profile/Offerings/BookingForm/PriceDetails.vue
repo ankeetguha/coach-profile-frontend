@@ -7,10 +7,12 @@
           <span
             class="amount"
             :class="{ 'slashed-amount': variant.discountedPrice != undefined }"
-            >{{getCoachCurrency()}}<em>{{ convertToIndianNumber(variant.originalPrice) }}</em>
+            >{{ getCoachCurrency()
+            }}<em>{{ convertToIndianNumber(variant.originalPrice) }}</em>
           </span>
           <span v-if="variant.discountedPrice != undefined" class="amount"
-            >{{getCoachCurrency()}}<em>{{
+            >{{ getCoachCurrency()
+            }}<em>{{
               convertToIndianNumber(variant.discountedPrice)
             }}</em></span
           >
@@ -21,7 +23,8 @@
         <label>Discount</label>
         <div class="price-item">
           <span class="amount"
-            >- {{getCoachCurrency()}}<em>{{ convertToIndianNumber(discount.amount) }}</em>
+            >- {{ getCoachCurrency()
+            }}<em>{{ convertToIndianNumber(discount.amount) }}</em>
           </span>
         </div>
       </div>
@@ -30,7 +33,8 @@
         <label>Internet Handling Fees</label>
         <div class="price-item">
           <span class="amount"
-            >+ {{getCoachCurrency()}}<em>{{ convertToIndianNumber(getTaxes) }}</em>
+            >+ {{ getCoachCurrency()
+            }}<em>{{ convertToIndianNumber(getTaxes) }}</em>
           </span>
         </div>
       </div>
@@ -39,7 +43,8 @@
         <label>Total</label>
         <div class="price-item">
           <span class="amount"
-            >{{getCoachCurrency()}}<em>{{ convertToIndianNumber(getPaymentPrice + getTaxes) }}</em>
+            >{{ getCoachCurrency()
+            }}<em>{{ convertToIndianNumber(getPaymentPrice + getTaxes) }}</em>
           </span>
         </div>
       </div>
@@ -71,9 +76,12 @@ export default {
       return paymentPrice;
     },
     getTaxes: function () {
-      return Math.ceil(
-        this.getPaymentPrice * 1.05 - this.getPaymentPrice
-      );
+      if (this.getPaymentMethod == "razorpay")
+        return Math.ceil(this.getPaymentPrice * 1.05 - this.getPaymentPrice);
+      else return 0;
+    },
+    getPaymentMethod: function () {
+      return this.$store.state.coach.defaultPaymentMethod;
     },
   },
 };

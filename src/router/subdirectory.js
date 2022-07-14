@@ -10,6 +10,10 @@ import About from "@/views/About";
 import Links from "@/views/Links";
 import Download from "@/views/Download";
 
+//Transactions
+import TransactionSuccess from "@/views/Transaction/Success";
+import TransactionCancel from "@/views/Transaction/Cancel";
+
 //Coach Policies
 import Policy from "@/views/Policy";
 import Contact from "@/views/Contact";
@@ -70,28 +74,45 @@ export default new VueRouter({
           },
         },
         {
+          path: "/:slug/transaction-success/",
+          component: TransactionSuccess,
+          props: true,
+          meta: {
+            showRouteModal: true,
+          },
+        },
+        {
+          path: "/:slug/transaction-failure",
+          component: TransactionCancel,
+          props: true,
+          meta: {
+            showRouteModal: true,
+          },
+        },
+        {
           path: "/:slug/privacy-policy",
           name: "Privacy Policy",
           component: Policy,
           meta: {
             showRouteModal: true,
           },
-        }, {
-            path: "/:slug/terms-of-use",
-            name: "Terms Of Use",
-            component: Policy,
-            meta: {
-              showRouteModal: true,
-            },
+        },
+        {
+          path: "/:slug/terms-of-use",
+          name: "Terms Of Use",
+          component: Policy,
+          meta: {
+            showRouteModal: true,
           },
-          {
-            path: "/:slug/cancellation-policy",
-            name: "Cancellation Policy",
-            component: Policy,
-            meta: {
-              showRouteModal: true,
-            },
-          }
+        },
+        {
+          path: "/:slug/cancellation-policy",
+          name: "Cancellation Policy",
+          component: Policy,
+          meta: {
+            showRouteModal: true,
+          },
+        },
       ],
     },
 

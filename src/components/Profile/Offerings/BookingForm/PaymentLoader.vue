@@ -8,7 +8,8 @@
 
       <div class="vendor-info">
         Powered By
-        <img src="@/assets/images/razorpay-logo.jpg" alt="Razorpay" />
+        <img v-if="getPaymentMethod == 'razorpay'" src="@/assets/images/razorpay-logo.jpg" alt="Razorpay" />
+        <img v-else src="@/assets/images/stripe-logo.jpg" alt="Stripe" />
       </div>
 
       <!--START: Line Loader -->
@@ -46,6 +47,11 @@ export default {
   components: {
     LineLoader,
   },
+  computed: {
+    getPaymentMethod: function () {
+      return this.$store.state.coach.defaultPaymentMethod;
+    },
+  }
 };
 </script>
 
