@@ -17,7 +17,7 @@
         <div class="filler"></div>
         <a
           class="btn btn-text btn-small"
-          href="https://dashboard.skipperfit.com/client/login"
+          href="https://app.skipperfit.com/client/login"
           target="_blank"
         >
           <unicon name="user"></unicon>
@@ -27,10 +27,23 @@
       <!--END: Header-->
 
       <!--START: Hero-->
-      <div class="hero-wrapper">
+      <div
+        class="hero-wrapper"
+        :class="{
+          'no-image-wrapper':
+            offering.coverImageURL == undefined ||
+            offering.coverImageURL == null
+        }"
+      >
         <div class="hero-wrapper-block">
           <!--START: Cover-->
-          <div class="cover-image-wrapper">
+          <div
+            v-if="
+              offering.coverImageURL != undefined &&
+              offering.coverImageURL != null
+            "
+            class="cover-image-wrapper"
+          >
             <img
               :src="offering.coverImageURL"
               class="cover-image"
@@ -178,7 +191,7 @@
           @updateBookingStatus="updateBookingStatus"
           @closeForm="closeBookingForm"
         ></BookingForm>
-        
+
         <BookingDesktopForm
           :coach="coach"
           :offering="offering"
@@ -805,12 +818,15 @@ export default {
   .hero-wrapper {
     position: relative;
     z-index: 11;
-    background-color: $lightWhiteColor;
     box-shadow: none;
     padding-bottom: 1rem;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     background-color: transparent;
+
+    &.no-image-wrapper {
+      background-color: $lightWhiteColor;
+    }
 
     &::before {
       content: "";

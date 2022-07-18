@@ -6,9 +6,13 @@
       <h3>{{ title }}</h3>
       <p>{{ description }}</p>
 
-      <div class="vendor-info">
+      <div v-if="finalPrice != 0" class="vendor-info">
         Powered By
-        <img v-if="getPaymentMethod == 'razorpay'" src="@/assets/images/razorpay-logo.jpg" alt="Razorpay" />
+        <img
+          v-if="getPaymentMethod == 'razorpay'"
+          src="@/assets/images/razorpay-logo.jpg"
+          alt="Razorpay"
+        />
         <img v-else src="@/assets/images/stripe-logo.jpg" alt="Stripe" />
       </div>
 
@@ -34,24 +38,56 @@ export default {
     return {
       title: this.paymentCompleted
         ? "DO NOT close this page"
-        : "Redirecting To Payment Gateway",
+        : this.getFinalPrice != 0
+        ? "Redirecting To Payment Gateway"
+        : "Completing Your Booking",
       description: this.paymentCompleted
         ? "We're processing your booking."
-        : "Don't close this page. We're sending you to the payment gateway",
+        : "Don't close this page. " + this.getFinalPrice != 0
+        ? " We're sending you to the payment gateway"
+        : "",
     };
   },
   props: {
     show: Boolean,
+    finalPrice: Number,
     paymentCompleted: Boolean,
   },
   components: {
     LineLoader,
   },
+  watch: {
+    show: function () {
+      this.getTitles();
+    },
+  },
+  created() {
+    this.getTitles();
+  },
   computed: {
     getPaymentMethod: function () {
       return this.$store.state.coach.defaultPaymentMethod;
     },
-  }
+
+    getFinalPrice: function () {
+      return this.finalPrice;
+    },
+  },
+  methods: {
+    getTitles() {
+      this.title = this.paymentCompleted
+        ? "DO NOT close this page"
+        : this.getFinalPrice != 0
+        ? "Redirecting To Payment Gateway"
+        : "Completing Your Booking";
+      this.description = this.paymentCompleted
+        ? "We're processing your booking."
+        : "Don't close this page. " + this.getFinalPrice != 0
+        ? " We're sending you to the payment gateway"
+        : "";
+
+    },
+  },
 };
 </script>
 

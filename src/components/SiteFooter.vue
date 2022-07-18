@@ -2,7 +2,7 @@
   <footer>
     <div class="footer-info">
       <span>Powered by</span>
-      <router-link to="https://dashboard.skipperfit.com/sign-up"
+      <router-link to="https://app.skipperfit.com/sign-up"
         ><img
           src="@/assets/images/logo.png"
           class="footer-logo"

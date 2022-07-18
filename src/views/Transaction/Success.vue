@@ -21,7 +21,7 @@
           <p>Login and access your plan to get started</p>
           <a
             class="btn btn-primary"
-            href="https://dashboard.skipperfit.com/client/login"
+            href="https://app.skipperfit.com/client/login"
             target="_blank"
           >
             <unicon name="user"></unicon>

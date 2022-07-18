@@ -15,6 +15,7 @@
         <PriceDetails
           :variant="selectedVariant"
           :discount="{ hasDiscount: false }"
+          ref="priceDetails"
         ></PriceDetails>
         <!--END: Price Details-->
       </div>
@@ -22,7 +23,9 @@
       <!--START: Button Actions-->
       <div v-if="!soldOut" class="btn-wrapper">
         <button type="button" class="btn btn-primary" @click="showBooking">
-          Make Payment
+          <span v-if="finalPrice != 0">Make Payment</span>
+          <span v-else>Complete Booking</span>
+          
         </button>
       </div>
       <span v-else class="sold-out"> Sold Out </span>
@@ -39,6 +42,16 @@ export default {
   name: "OfferingBookingDesktopForm",
   components: {
     PriceDetails,
+  },
+
+  data() {
+    return {
+      finalPrice: null,
+    };
+  },
+
+  mounted() {
+    this.finalPrice = this.$refs["priceDetails"].getPaymentPrice;
   },
 
   props: {
@@ -157,8 +170,8 @@ export default {
 //Light theme
 .light-theme {
   .booking-modal {
-    background-color: #F9F9F9;
-    border: 1px solid #ECECEC;
+    background-color: #f9f9f9;
+    border: 1px solid #ececec;
     box-shadow: 0 0 0.7rem -0.15rem rgba(41, 41, 41, 0.35);
   }
 

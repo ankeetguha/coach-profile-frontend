@@ -12,7 +12,7 @@
         </router-link>
         <a
           class="btn btn-text btn-small"
-          href="https://dashboard.skipperfit.com/client/login"
+          href="https://app.skipperfit.com/client/login"
           target="_blank"
         >
           <unicon name="user"></unicon>

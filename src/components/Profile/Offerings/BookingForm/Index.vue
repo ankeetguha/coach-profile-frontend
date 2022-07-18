@@ -27,6 +27,7 @@
         <PriceDetails
           :variant="selectedVariant"
           :discount="discountDetails"
+          ref="priceDetails"
         ></PriceDetails>
         <!--END: Price Details-->
       </div>
@@ -47,7 +48,8 @@
           :disabled="disableButton"
           @click="saveBooking"
         >
-          Make Payment
+          <span v-if="finalPrice != 0">Make Payment</span>
+          <span v-else>Complete Booking</span>
         </button>
       </div>
       <!--END: Button Actions-->
@@ -55,6 +57,7 @@
       <!--START: Payment Loader -->
       <PaymentLoader
         :paymentCompleted="paymentCompleted"
+        :finalPrice="finalPrice"
         :show="showOptions.paymentLoader"
       ></PaymentLoader>
       <!--END: Payment Loader -->
@@ -111,6 +114,7 @@ export default {
   data() {
     return {
       disableButton: false,
+      finalPrice: null,
       showOptions: {
         lineLoader: false,
         paymentLoader: false,
@@ -193,6 +197,10 @@ export default {
     }
   },
 
+  mounted() {
+    this.getFinalPrice();
+  },
+
   methods: {
     async saveBooking() {
       if (!this.disableButton) {
@@ -242,6 +250,7 @@ export default {
         this.coach.paymentsActive &&
         this.offering.soldOut != true
       ) {
+        this.getFinalPrice();
         this.showOptions.paymentLoader = true;
         this.paymentCompleted = false;
       }
@@ -383,6 +392,10 @@ export default {
       this.discountDetails.code = null;
       this.discountDetails.hasDiscount = false;
       this.discountDetails.amount = 0;
+    },
+
+    getFinalPrice() {
+      this.finalPrice = this.$refs["priceDetails"].getPaymentPrice;
     },
 
     closeSuccessMessage() {

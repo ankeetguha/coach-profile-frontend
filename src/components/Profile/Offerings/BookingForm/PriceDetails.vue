@@ -63,6 +63,7 @@ export default {
     variant: Object,
     discount: Object,
   },
+  
   computed: {
     getPaymentPrice: function () {
       let paymentPrice = this.variant.originalPrice;

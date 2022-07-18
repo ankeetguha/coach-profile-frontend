@@ -135,13 +135,13 @@ export default new VueRouter({
     {
       path: "/",
       beforeEnter() {
-        location.href = "https://dashboard.skipperfit.com/sign-up";
+        location.href = "https://app.skipperfit.com/sign-up";
       },
     },
     {
       path: "*",
       beforeEnter() {
-        location.href = "https://dashboard.skipperfit.com/sign-up";
+        location.href = "https://app.skipperfit.com/sign-up";
       },
     },
   ],
