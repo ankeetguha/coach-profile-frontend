@@ -139,7 +139,7 @@ export default {
   /deep/ {
     * {
       font-size: $normalFontSize;
-      //   color: darken($whiteColor, 18%) !important;
+      color: darken($whiteColor, 18%) !important;
     }
 
     p,
@@ -189,8 +189,13 @@ export default {
     p {
       color: $blackColor;
     }
-    p {
-      opacity: $lightOpacity;
+  }
+
+  .description {
+    /deep/ {
+      * {
+        color: $blackColor !important;
+      }
     }
   }
 }

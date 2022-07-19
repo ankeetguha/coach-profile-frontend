@@ -95,6 +95,7 @@ export default {
 .module-container h3 {
     margin: 0 1.5rem .5rem;
     font-size: $largeFontSize;
+    color: #FFF;
 }
 .coach-contact /deep/ {
     .bg-overlay {
@@ -115,5 +116,18 @@ export default {
             display: none;
         }
     }
+}
+
+.module-container {
+  max-width: 45rem;
+  margin: auto;
+}
+
+
+//Light Theme styles
+.light-theme {
+  .module-container h3 {
+    color: $blackColor;
+  }
 }
 </style>
